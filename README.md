@@ -10,23 +10,23 @@ All data obtained via the API is handled locally on the device from which the sc
 
 ## Installation
 
-Download and unpack the contents ([Zip file](https://github.com/jklick-so/so4t_tag_report/archive/refs/heads/main.zip))
+[Download](https://github.com/jklick-so/so4t_tag_report/archive/refs/heads/main.zip) and unpack the contents
 
-**Installing dependencies**
+**Installing Dependencies**
 
-There's only a single depedency: the [Requests](https://pypi.org/project/requests/) library for Python. If you already have it installed, you can skip is part.
+There's only a single depedency: the [Requests](https://pypi.org/project/requests/) library for Python. If you already have it installed, you can skip to API authentication.
 * Open a terminal window
 * Navigate to the directory where you unpacked the files
 * Run the following command to install the Python dependencies (namely the Requests module): `pip3 install -r requirements.txt`
 
-**API authentication**
+**API Authentication**
 
 To use the script, you'll want to store your instance URL and API key/token as environment variables. For the Basic and Business tiers, an API token is required. For Enterprise, you'll need to obtain both an API key and an API token.
 
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
 * For Enteprise, you'll need to create both a key and a token. Documentation for creating both can be found within your instance at this url: https://[your_site]/api/docs/authentication
 
-**Setting up environment variables**
+**Setting Environment Variables**
 
 Now that you have authentication for the API, securely store it within your environment variables. The environment the variables the script looks for are as follows:
 * SO_URL
