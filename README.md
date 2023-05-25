@@ -24,7 +24,7 @@ There's only a single depedency: the [Requests](https://pypi.org/project/request
 For the Basic and Business tiers, you'll need an API token. For Enterprise, you'll need to obtain both an API key and an API token.
 
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
-* For Enteprise, you'll need to create both a key and a token. Documentation for creating both can be found within your instance at this url: `https://[your_site]/api/docs/authentication`
+* For Enteprise, documentation for creating the key and token can be found within your instance, at this url: `https://[your_site]/api/docs/authentication`
 
 **Setting Environment Variables**
 
