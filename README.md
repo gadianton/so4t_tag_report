@@ -1,7 +1,7 @@
 # so4t_tag_report
-An API script for Stack Overflow for Teams that outputs a report (CSV file) of how well each tag is performing. You can see an example of what the output looks like here.
+An API script for Stack Overflow for Teams that outputs a report (CSV file) of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
 
-All data obtained via the API is handled locally on the device from which the script is run. No data is transmitted to other parties, such as Stack Overflow.
+All data obtained via the API is handled locally on the device from which the script is run. The script does not transmit data to other parties, such as Stack Overflow.
 
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
@@ -61,4 +61,4 @@ Now, it's time to run the script and generate the tag report.
 The script can take several minutes to run, particularly gathering data from the API. As the script runs, it will continue to update the terminal window with what it's doing.
 
 ## Outputs
-When the script completes, it will indicate the the CSV has been exported, along with the name of file. You can see an example of what the output looks like here.
+When the script completes, it will indicate the the CSV has been exported, along with the name of file. You can see an example of what the output looks like [here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv).
