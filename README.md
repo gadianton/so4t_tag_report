@@ -13,18 +13,21 @@ All data obtained via the API is handled locally on the device from which the sc
 Download as a ZIP file and unpack the contents
 
 **Installing dependencies**
+
 There's only a single depedency: the [Requests](https://pypi.org/project/requests/) library for Python. If you already have it installed, you can skip is part.
 * Open a terminal window
 * Navigate to the directory where you unpacked the files
 * Run the following command to install the Python dependencies (namely the Requests module): `pip3 install -r requirements.txt`
 
 **API authentication**
+
 To use the script, you'll want to store your instance URL and API key/token as environment variables. For the Basic and Business tiers, an API token is required. For Enterprise, you'll need to obtain both an API key and an API token.
 
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
 * For Enteprise, you'll need to create both a key and a token. Documentation for creating both can be found within your instance at this url: https://[your_site]/api/docs/authentication
 
 **Setting up environment variables**
+
 Now that you have authentication for the API, securely store it within your environment variables. The environment the variables the script looks for are as follows:
 * SO_URL
 * SO_TOKEN
@@ -36,13 +39,15 @@ Note regarding URLs:
 
 > NOTE: the follow instructions are for setting _temporary_ environment variables. After setting the environment variables, leave your terminal window open for the subsequent steps.
 
-MacOS/Linux
+**MacOS/Linux**
+
 Open a terminal window and run the following commands:
 * `export SO_URL="https://YOUR.INSTANCE.URL"`
 * `export SO_TOKEN="YOUR_API_TOKEN"`
 * \[Enterprise Only\] `export SO_KEY="YOUR_API_KEY"`
 
-Windows
+**Windows**
+
 Open a command prompt (cmd.exe) and run the following commands
 * `set SO_URL="https://YOUR.INSTANCE.URL"`
 * `set SO_TOKEN="YOUR_API_TOKEN"`
