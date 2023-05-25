@@ -28,10 +28,10 @@ To use the script, you'll want to store your instance URL and API key/token as e
 
 **Setting Environment Variables**
 
-Now that you have authentication for the API, securely store it within your environment variables. The environment the variables the script looks for are as follows:
-* SO_URL
-* SO_TOKEN
-* SO_KEY
+Now that you have authentication for the API, securely store it within your environment variables. The script leverages the following environment variable names:
+* `SO_URL`
+* `SO_TOKEN`
+* `SO_KEY` (only for Enterprise; Business/Basic can skip this)
 
 Note regarding URLs:
 * For Basic and Business, the URL will follow this format: `https://stackoverflowteams.com/c/your-instance-slug`
