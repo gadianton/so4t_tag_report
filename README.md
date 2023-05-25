@@ -31,7 +31,7 @@ For the Basic and Business tiers, you'll need an API token. For Enterprise, you'
 Now that you have authentication for the API, securely store it within your environment variables. The script leverages the following environment variable names:
 * `SO_URL`
 * `SO_TOKEN`
-* `SO_KEY` (only for Enterprise; Business/Basic can skip this)
+* `SO_KEY` (only for Enterprise; Basic/Business can skip this)
 
 Note regarding URLs:
 * For Basic and Business, the URL will follow this format: `https://stackoverflowteams.com/c/your-instance-slug`
