@@ -34,8 +34,8 @@ Now that you have authentication for the API, securely store it within your envi
 * `SO_KEY` (only for Enterprise; Basic/Business can skip this)
 
 URLs are normally in the following formats:
-* Basic and Business: `https://stackoverflowteams.com/c/**your-instance-slug**`
-* Enterprise: `https://your-subdomain.stackenterprise.co`
+* Basic and Business: `https://stackoverflowteams.com/c/YOUR-URL-SLUG`
+* Enterprise: `https://YOUR-SUBDOMAIN.stackenterprise.co`
 
 > NOTE: since this script is predominantly run in one-off scenarios, the following instructions are for setting _temporary_ environment variables. After setting the environment variables, leave your terminal window open for the subsequent steps. If you'd like to store these environment variables permanently, you're welcome to do so -- it won't hurt anything.
 
