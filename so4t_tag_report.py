@@ -100,7 +100,7 @@ class V2Client(object):
             # Failure to backoff will result in a 502 Error
             if response.json().get('backoff'):
                 print("Backoff request received from endpoint. Waiting 15 seconds...")
-                time.sleep(15)
+                os.times.sleep(15)
             params['page'] += 1
 
         return items
