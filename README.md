@@ -17,7 +17,7 @@ All data obtained via the API is handled locally on the device from which the sc
 There's only a single depedency: the [Requests](https://pypi.org/project/requests/) library for Python. If you already have it installed, you can skip to API authentication.
 * Open a terminal window
 * Navigate to the directory where you unpacked the files
-* Run the following command to install the Python dependencies (namely the Requests module): `pip3 install -r requirements.txt`
+* Install the dependencies: `pip3 install -r requirements.txt`
 
 **API Authentication**
 
