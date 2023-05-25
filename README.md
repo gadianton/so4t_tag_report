@@ -6,7 +6,7 @@ All data obtained via the API is handled locally on the device from which the sc
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
 * Python 3.x ([download](https://www.python.org/downloads/))
-* Operating system can be Linux, MacOS, or Windows
+* Operating system: Linux, MacOS, or Windows
 
 ## Installation
 
