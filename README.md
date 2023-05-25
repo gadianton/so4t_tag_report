@@ -37,7 +37,7 @@ Note regarding URLs:
 * For Basic and Business, the URL will follow this format: `https://stackoverflowteams.com/c/your-instance-slug`
 * For Enterprise, the URL will *usually* follow this format: `https://your-subdomain.stackenterprise.co`
 
-> NOTE: the follow instructions are for setting _temporary_ environment variables. After setting the environment variables, leave your terminal window open for the subsequent steps.
+> NOTE: the following instructions are for setting _temporary_ environment variables. After setting the environment variables, leave your terminal window open for the subsequent steps.
 
 **MacOS/Linux**
 
