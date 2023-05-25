@@ -10,7 +10,7 @@ All data obtained via the API is handled locally on the device from which the sc
 
 ## Installation
 
-Download as a ZIP file and unpack the contents
+Download and unpack the contents ([Zip file](https://github.com/jklick-so/so4t_tag_report/archive/refs/heads/main.zip))
 
 **Installing dependencies**
 
