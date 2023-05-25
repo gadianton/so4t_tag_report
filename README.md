@@ -61,4 +61,4 @@ Now, it's time to run the script and generate the tag report.
 The script can take several minutes to run, particularly gathering data from the API. As the script runs, it will continue to update the terminal window with what it's doing.
 
 ## Outputs
-When the script completes, it will indicate the the CSV has been exported, long with the name of file. You can see an example of what the output looks like here.
+When the script completes, it will indicate the the CSV has been exported, along with the name of file. You can see an example of what the output looks like here.
