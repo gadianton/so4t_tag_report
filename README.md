@@ -48,7 +48,7 @@ Open a terminal window and run the following commands:
 
 **Windows**
 
-Open a command prompt (cmd.exe) and run the following commands
+Open a command prompt (cmd.exe) and run the following commands:
 * `set SO_URL="https://YOUR.INSTANCE.URL"`
 * `set SO_TOKEN="YOUR_API_TOKEN"`
 * \[Enterprise Only\] `set SO_KEY="YOUR_API_KEY"`
