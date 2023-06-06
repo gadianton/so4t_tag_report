@@ -1,21 +1,72 @@
+'''
+This Python script is offered with no formal support. 
+If you run into difficulties, reach out to the person who provided you with this script.
+Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
+'''
+
+# Standard library imports
+import argparse
+import csv
 import json
 import time
+
+# Third-party imports
 import requests
-import csv
-import os
 
 
-def collector():
+def main():
 
-    url = os.environ.get('SO_URL')
-    key = os.environ.get('SO_KEY')
-    token = os.environ.get('SO_TOKEN')
+    args = get_args()
+    api_data = collector(args)
+    create_tag_report(api_data)
+
+
+def get_args():
+
+    parser = argparse.ArgumentParser(
+        prog='so4t_tag_report.py',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description='Uses the Stack Overflow for Teams API to create \
+        a CSV report with performance metrics for each tag.',
+        epilog = 'Example for Stack Overflow Business: \n'
+                'python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" '
+                '--token "uDtDJCATuydTpj2RzXFOaA))" \n\n'
+                'Example for Stack Overflow Enterprise: \n'
+                'python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" '
+                '--key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDJCATuydTpj2RzXFOaA))"\n\n')
+    parser.add_argument('--url', 
+                        type=str,
+                        help='[REQUIRED] Base URL for your Stack Overflow for Teams instance')
+    parser.add_argument('--token',
+                        type=str,
+                        help='[REQUIRED] API token for your Stack Overflow for Teams instance')
+    parser.add_argument('--key',
+                    type=str,
+                    help='[Only required for Enterprise] API key for your Stack Overflow for Teams instance')
+
+    return parser.parse_args()
+
+
+def collector(args):
+
+    url = args.url
+    token = args.token
+
+    if not url or not token:
+        print("Missing required arguments. Please provide a URL and API token.")
+        print("See --help for more information")
+        exit()
 
     # SO Business uses a single token for both API v2 and v3
     # SO Enterprise uses a key for API v2 and a token for API v3
     if 'stackoverflowteams.com' in url:
         v2client = V2Client(url, token)
     else:
+        key = args.key # maybe move this into else statement (for SOE)
+        if not key:
+            print("Missing required argument. Please provide an API key.")
+            print("See --help for more information")
+            exit()
         v2client = V2Client(url, key)
     v3client = V3Client(url, token)
     
@@ -27,7 +78,7 @@ def collector():
     for tag in api_data['tags']:
         tag['smes'] = v3client.get_tag_smes(tag['id'])
 
-    # Uncomment to export data to JSON files
+    # Uncomment the following two lines to export data to JSON files
     # for data_name, data in api_data.items():
     #     export_to_json(data_name, data)
 
@@ -189,7 +240,7 @@ def create_tag_report(api_data):
 
     tag_metrics, tag_users = calculate_tag_metrics(tags, questions, articles)
 
-    # Uncomment to export data to JSON
+    # Uncomment the following two lines to export data to JSON
     # export_to_json('tag_metrics', tag_metrics)
     # export_to_json('tag_users', tag_users)
 
@@ -432,5 +483,5 @@ def export_to_json(data_name, data):
 
 if __name__ == '__main__':
 
-    api_data = collector()
-    create_tag_report(api_data)
+    main()
+
