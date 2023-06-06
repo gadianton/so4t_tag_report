@@ -34,6 +34,6 @@ Run the script using the following format, replacing the URL, token, and/or key 
 * For Basic and Business: `python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" --token "uDtDkCATuydvpj2RzXFOaA))"`
 * For Enterprise: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDkCATuydvpj2RzXFOaA))"`
 
-The script can take several minutes to run, particularly as it gathers data from via the API. As it runs, it will continue to update the terminal window with the tasks it's performing.
+The script can take several minutes to run, particularly as it gathers data via the API. As it runs, it will continue to update the terminal window with the tasks it's performing.
 
 When the script completes, it will indicate the the CSV has been exported, along with the name of file. You can see an example of what the output looks like [here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv).
