@@ -28,6 +28,13 @@ For the Basic and Business tiers, you'll need an API token. For Enterprise, you'
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
 * For Enteprise, documentation for creating the key and token can be found within your instance, at this url: `https://[your_site]/api/docs/authentication`
 
+Creating an access token for Enterpise can sometimes be tricky for people who haven't done it before. Here are some (hopefully) straightforward instructions:
+* Go to the page where you created your API key. Take note of the "Client ID" associated with your API key.
+* Go to the following URL, replacing the `client_id` in the URL with the one you obtained in the previous step:
+`https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
+* You may be prompted to login to Stack Overflow Enterprise, if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
+* In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=**sRsbqFUEk7FW4c9N3zirWQ))**`
+
 ## Usage
 In a terminal window, navigate to the directory where you unpacked the script. 
 Run the script using the following format, replacing the URL, token, and/or key with your own:
