@@ -4,7 +4,7 @@ If you run into difficulties, reach out to the person who provided you with this
 Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 '''
 
-# Standard library imports
+# Standard Python libraries
 import argparse
 import csv
 import json
@@ -12,7 +12,7 @@ import os
 import time
 from statistics import median
 
-# Third-party imports
+# Third-party libraries
 import requests
 
 
@@ -25,7 +25,11 @@ def main():
     else:
         api_data = get_api_data(args)
 
-    create_tag_report(api_data)
+    if args.days:
+        api_data = filter_api_data_by_date(api_data, args.days)
+        create_tag_report(api_data, args.days)
+    else:
+        create_tag_report(api_data)
 
 
 def get_args():
@@ -43,16 +47,23 @@ def get_args():
                 '--key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDJCATuydTpj2RzXFOaA))"\n\n')
     parser.add_argument('--url', 
                         type=str,
-                        help='Base URL for your Stack Overflow for Teams instance. Required if --no-api is not used')
+                        help='Base URL for your Stack Overflow for Teams instance. '
+                        'Required if --no-api is not used')
     parser.add_argument('--token',
                         type=str,
-                        help='API token for your Stack Overflow for Teams instance. Required if --no-api is not used')
+                        help='API token for your Stack Overflow for Teams instance. '
+                        'Required if --no-api is not used')
     parser.add_argument('--key',
                     type=str,
                     help='API key value. Required if using Enterprise and --no-api is not used')
     parser.add_argument('--no-api',
                         action='store_true',
-                        help='If API data has already been collected, skip API calls and use existing JSON files')
+                        help='If API data has already been collected, skip API calls and use '
+                        'existing JSON data. This negates the need for --url, --token, or --key.')
+    parser.add_argument('--days',
+                        type=int,
+                        help='Only include metrics for content created within the past X days. '
+                        'Default is to include all history')
 
     return parser.parse_args()
 
@@ -108,6 +119,37 @@ class V2Client(object):
             self.token = None
             self.api_key = api_key
 
+        self.ssl_verify = self.test_connection()
+
+
+    def test_connection(self):
+
+        url = self.api_url + "/tags"
+        ssl_verify = True
+
+        params = {}
+        if self.token:
+            headers = {'X-API-Access-Token': self.token}
+            params['team'] = self.team_slug
+        else:
+            headers = {'X-API-Key': self.api_key}
+
+        print("Testing API 2.3 connection...")
+        try:
+            response = requests.get(url, params=params, headers=headers)
+        except requests.exceptions.SSLError:
+            print("SSL error. Trying again without SSL verification...")
+            response = requests.get(url, params=params, headers=headers, verify=False)
+            ssl_verify = False
+        
+        if response.status_code == 200:
+            print("API connection successful")
+            return ssl_verify
+        else:
+            print("Unable to connect to API. Please check your URL and API key.")
+            print(response.text)
+            raise SystemExit
+
 
     def get_all_questions(self, filter_id=''):
 
@@ -144,7 +186,11 @@ class V2Client(object):
         items = []
         while True: # Keep performing API calls until all items are received
             print(f"Getting page {params['page']} from {endpoint_url}")
-            response = requests.get(endpoint_url, headers=headers, params=params)
+            if self.ssl_verify:
+                response = requests.get(endpoint_url, headers=headers, params=params)
+            else:
+                response = requests.get(endpoint_url, headers=headers, params=params, verify=False)
+            
             if response.status_code != 200:
                 print(f"/{endpoint_url} API call failed with status code: {response.status_code}.")
                 print(response.text)
@@ -177,6 +223,32 @@ class V3Client(object):
         else:
             self.api_url = base_url + "/api/v3"
 
+        self.ssl_verify = self.test_connection()
+
+    
+    def test_connection(self):
+
+        endpoint = "/tags"
+        endpoint_url = self.api_url + endpoint
+        headers = {'Authorization': f'Bearer {self.token}'}
+        ssl_verify = True
+
+        print("Testing API v3 connection...")
+        try:
+            response = requests.get(endpoint_url, headers=headers)
+        except requests.exceptions.SSLError:
+            print("SSL error. Trying again without SSL verification...")
+            response = requests.get(endpoint_url, headers=headers, verify=False)
+            ssl_verify = False
+        
+        if response.status_code == 200:
+            print("API connection successful")
+            return ssl_verify
+        else:
+            print("Unable to connect to API. Please check your URL and API key.")
+            print(response.text)
+            raise SystemExit
+
 
     def get_all_tags(self):
 
@@ -208,10 +280,18 @@ class V3Client(object):
 
         data = []
         while True:
-            if method == 'get':
-                response = get_response(endpoint_url, headers=headers, params=params)
+            if self.ssl_verify:
+                if method == 'get':
+                    response = get_response(endpoint_url, headers=headers, params=params)
+                else:
+                    response = get_response(endpoint_url, headers=headers, json=params)
             else:
-                response = get_response(endpoint_url, headers=headers, json=params)
+                if method == 'get':
+                    response = get_response(endpoint_url, headers=headers, params=params, 
+                                            verify=False)
+                else:
+                    response = get_response(endpoint_url, headers=headers, json=params, 
+                                            verify=False)
 
             # check for rate limiting thresholds
             # print(response.headers) 
@@ -240,7 +320,26 @@ class V3Client(object):
         return data
 
 
-def create_tag_report(api_data):
+def filter_api_data_by_date(api_data, days):
+
+    today = int(time.time())
+    start_date = today - (days * 24 * 60 * 60)  # convert days to seconds
+
+    questions = [question for question in api_data['questions'] 
+                 if question['creation_date'] > start_date]
+    api_data['questions'] = questions
+
+    articles = [article for article in api_data['articles']
+                if article['creation_date'] > start_date]
+    api_data['articles'] = articles
+
+    # Uncomment to export filtered data to JSON
+    # export_to_json('filtered_api_data', api_data)
+
+    return api_data
+
+
+def create_tag_report(api_data, days=None):
 
     questions = api_data['questions']
     tags = api_data['tags']
@@ -249,7 +348,11 @@ def create_tag_report(api_data):
     tags, tag_metrics = calculate_tag_metrics(tags, questions, articles)
 
     export_to_json('tags', tags)
-    export_to_csv('tag_metrics', tag_metrics)
+
+    if days:
+        export_to_csv(f'tag_metrics_past_{days}_days', tag_metrics)
+    else:
+        export_to_csv('tag_metrics', tag_metrics)
 
 
 def calculate_tag_metrics(tags, questions, articles):
@@ -514,20 +617,21 @@ def validate_tag_user(tag, user):
 
 def export_to_csv(data_name, data):
 
-    file_name = data_name + '.csv'
-    csv_header = [header.replace('_', ' ').title() for header in list(data[0].keys())]
+    date = time.strftime("%Y-%m-%d")
+    file_name = f"{date}_{data_name}.csv"
 
+    csv_header = [header.replace('_', ' ').title() for header in list(data[0].keys())]
     with open(file_name, 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(csv_header)
         for tag_data in data:
             writer.writerow(list(tag_data.values()))
         
-
     print(f'CSV file created: {file_name}')
 
 
 def export_to_json(data_name, data):
+    
     file_name = data_name + '.json'
     directory = 'data'
 
@@ -542,6 +646,7 @@ def export_to_json(data_name, data):
 
 
 def read_json(file_name):
+    
     directory = 'data'
     file_path = os.path.join(directory, file_name)
     with open(file_path, 'r') as f:
