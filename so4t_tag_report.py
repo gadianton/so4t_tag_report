@@ -1,5 +1,5 @@
 '''
-This Python script is offered with no formal support. 
+This Python script is offered with no formal support from Stack Overflow. 
 If you run into difficulties, reach out to the person who provided you with this script.
 Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 '''
@@ -8,7 +8,9 @@ Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 import argparse
 import csv
 import json
+import os
 import time
+from statistics import median
 
 # Third-party imports
 import requests
@@ -17,7 +19,12 @@ import requests
 def main():
 
     args = get_args()
-    api_data = collector(args)
+
+    if args.no_api:
+        api_data = read_json('api_data.json')
+    else:
+        api_data = get_api_data(args)
+
     create_tag_report(api_data)
 
 
@@ -36,18 +43,21 @@ def get_args():
                 '--key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDJCATuydTpj2RzXFOaA))"\n\n')
     parser.add_argument('--url', 
                         type=str,
-                        help='[REQUIRED] Base URL for your Stack Overflow for Teams instance')
+                        help='Base URL for your Stack Overflow for Teams instance. Required if --no-api is not used')
     parser.add_argument('--token',
                         type=str,
-                        help='[REQUIRED] API token for your Stack Overflow for Teams instance')
+                        help='API token for your Stack Overflow for Teams instance. Required if --no-api is not used')
     parser.add_argument('--key',
                     type=str,
-                    help='[Only required for Enterprise] API key for your Stack Overflow for Teams instance')
+                    help='API key value. Required if using Enterprise and --no-api is not used')
+    parser.add_argument('--no-api',
+                        action='store_true',
+                        help='If API data has already been collected, skip API calls and use existing JSON files')
 
     return parser.parse_args()
 
 
-def collector(args):
+def get_api_data(args):
 
     url = args.url
     token = args.token
@@ -78,9 +88,7 @@ def collector(args):
     for tag in api_data['tags']:
         tag['smes'] = v3client.get_tag_smes(tag['id'])
 
-    # Uncomment the following two lines to export data to JSON files
-    # for data_name, data in api_data.items():
-    #     export_to_json(data_name, data)
+    export_to_json('api_data', api_data)
 
     return api_data
 
@@ -238,25 +246,48 @@ def create_tag_report(api_data):
     tags = api_data['tags']
     articles = api_data['articles']
 
-    tag_metrics, tag_users = calculate_tag_metrics(tags, questions, articles)
+    tags, tag_metrics = calculate_tag_metrics(tags, questions, articles)
 
-    # Uncomment the following two lines to export data to JSON
-    # export_to_json('tag_metrics', tag_metrics)
-    # export_to_json('tag_users', tag_users)
-
+    export_to_json('tags', tags)
     export_to_csv('tag_metrics', tag_metrics)
 
 
 def calculate_tag_metrics(tags, questions, articles):
-    
-    tag_metrics = {}
-    tag_contributors = {}
-    tag_users = {}
+
+    tags = process_tags(tags)
+    tags = process_questions(tags, questions)
+    tags = process_articles(tags, articles)
 
     for tag in tags:
-        tag_name = tag['name']
-        tag_metrics[tag_name] = {
-            'tag': tag_name,
+        tag['metrics']['unique_askers'] = len(tag['contributors']['askers'])
+        tag['metrics']['unique_answerers'] = len(tag['contributors']['answerers'])
+        tag['metrics']['unique_commenters'] = len(tag['contributors']['commenters'])
+        tag['metrics']['unique_article_contributors'] = len(
+            tag['contributors']['article_contributors'])
+        tag['metrics']['unique_contributors'] = len(set(
+            tag['contributors']['askers'] + 
+            tag['contributors']['answerers'] +
+            tag['contributors']['commenters'] + 
+            tag['contributors']['article_contributors']))
+        
+        try:
+            tag['metrics']['median_answer_time_hours'] = round(median(tag['answer_times']),2)
+        except ValueError: # if there are no answers for a tag
+            pass
+
+    tag_metrics = [tag['metrics'] for tag in tags]
+
+    # sort tag_metrics by total page views
+    tag_metrics = sorted(tag_metrics, key=lambda k: k['total_page_views'], reverse=True)
+    
+    return tags, tag_metrics
+
+
+def process_tags(tags):
+
+    for tag in tags:
+        tag['metrics'] = {
+            'tag_name': tag['name'],
             'total_page_views': 0,
             'individual_smes': 0,
             'group_smes': 0,
@@ -272,15 +303,17 @@ def calculate_tag_metrics(tags, questions, articles):
             'question_comments': 0,
             'questions_no_answers': 0,
             'questions_accepted_answer': 0,
+            'questions_self_answered': 0,
             'answer_count': 0,
             'answer_upvotes': 0,
             'answer_downvotes': 0,
             'answer_comments': 0,
+            'median_answer_time_hours': 0,
             'article_count': 0,
             'article_upvotes': 0,
-            'article_comments': 0
+            'article_comments': 0,
         }
-        tag_contributors[tag_name] = {
+        tag['contributors'] = {
             'askers': [],
             'answerers': [],
             'article_contributors': [],
@@ -288,101 +321,126 @@ def calculate_tag_metrics(tags, questions, articles):
             'individual_smes': [],
             'group_smes': []
         }
-        tag_users[tag_name] = {}
+        tag['users'] = {}
+        tag['answer_times'] = []
 
         # calculate total unique SMEs, including individuals and groups
         for user in tag['smes']['users']:
-            tag_contributors[tag_name]['individual_smes'] = add_user_to_list(
-                user['id'], tag_contributors[tag_name]['individual_smes'])
+            tag['contributors']['individual_smes'] = add_user_to_list(
+                user['id'], tag['contributors']['individual_smes'])
         for group in tag['smes']['userGroups']:
             for user in group['users']:
-                tag_contributors[tag_name]['group_smes'] = add_user_to_list(
-                    user['id'], tag_contributors[tag_name]['group_smes'])
+                tag['contributors']['group_smes'] = add_user_to_list(
+                    user['id'], tag['contributors']['group_smes'])
         
-        tag_metrics[tag_name]['individual_smes'] = len(
-            tag_contributors[tag_name]['individual_smes'])
-        tag_metrics[tag_name]['group_smes'] = len(tag_contributors[tag_name]['group_smes'])
-        tag_metrics[tag_name]['total_unique_smes'] = len(set(
-            tag_contributors[tag_name]['individual_smes'] + tag_contributors[tag_name]['group_smes']
-        ))
+        tag['metrics']['individual_smes'] = len(
+            tag['contributors']['individual_smes'])
+        tag['metrics']['group_smes'] = len(tag['contributors']['group_smes'])
+        tag['metrics']['total_unique_smes'] = len(set(
+            tag['contributors']['individual_smes'] + tag['contributors']['group_smes']))
+        
+    return tags
 
-    # calculate tag metrics for questions
+
+def process_questions(tags, questions):
+
     for question in questions:
         for tag in question['tags']:
-            tag_users, tag_contributors, asker_id = validate_tag_user(
-                tag_users, tag_contributors, tag, question['owner']
-            )
-            tag_metrics[tag]['question_count'] += 1
-            tag_users[tag][asker_id]['questions'] += 1
-            tag_metrics[tag]['total_page_views'] += question['view_count']
-            tag_metrics[tag]['question_upvotes'] += question['up_vote_count']
-            tag_users[tag][asker_id]['question_upvotes'] += question['up_vote_count']
-            tag_metrics[tag]['question_downvotes'] += question['down_vote_count']
-            tag_contributors[tag]['askers'] = add_user_to_list(
-                asker_id, tag_contributors[tag]['askers']
-            )
-            if question.get('comments'):
-                tag_metrics[tag]['question_comments'] += len(question['comments'])
-                for comment in question['comments']:
-                    tag_users, tag_contributors, commenter_id = validate_tag_user(
-                        tag_users, tag_contributors, tag, comment['owner']
-                    )
-                    tag_contributors[tag]['commenters'] = add_user_to_list(
-                        commenter_id, tag_contributors[tag]['commenters']
-                    )
-                    tag_users[tag][commenter_id]['comments'] += 1
-                    tag_users[tag][commenter_id]['comment_upvotes'] += comment['score']
+            tag_index = get_tag_index(tags, tag)
+            tag_data = tags[tag_index]
+            tag_data, asker_id = validate_tag_user(tag_data, question['owner'])
             
+            tag_data['contributors']['askers'] = add_user_to_list(
+                asker_id, tag_data['contributors']['askers'])
 
+            tag_data['users'][asker_id]['question_upvotes'] += question['up_vote_count']
+            tag_data['users'][asker_id]['questions'] += 1
+
+            tag_data['metrics']['question_count'] += 1
+            tag_data['metrics']['total_page_views'] += question['view_count']
+            tag_data['metrics']['question_upvotes'] += question['up_vote_count']
+            tag_data['metrics']['question_downvotes'] += question['down_vote_count']
+
+            if question.get('comments'):
+                tag_data['metrics']['question_comments'] += len(question['comments'])
+                for comment in question['comments']:
+                    tag_data, commenter_id = validate_tag_user(tag_data, comment['owner'])
+                    tag_data['contributors']['commenters'] = add_user_to_list(
+                        commenter_id, tag_data['contributors']['commenters'])
+                    
+                    tag_data['users'][commenter_id]['comments'] += 1
+                    tag_data['users'][commenter_id]['comment_upvotes'] += comment['score']
+            
             # calculate tag metrics for answers
             if question.get('answers'):
-                for answer in question['answers']:
-                    tag_users, tag_contributors, answerer_id = validate_tag_user(
-                        tag_users, tag_contributors, tag, answer['owner']
-                    )
-                    tag_contributors[tag]['answerers'] = add_user_to_list(
-                        answerer_id, tag_contributors[tag]['answerers']
-                    )
-                    if answer['is_accepted']:
-                        tag_metrics[tag]['questions_accepted_answer'] += 1
-                        tag_users[tag][answerer_id]['answers_accepted'] += 1
-                    tag_metrics[tag]['answer_count'] += 1
-                    tag_users[tag][answerer_id]['answers'] += 1
-                    tag_metrics[tag]['answer_upvotes'] += answer['up_vote_count']
-                    tag_users[tag][answerer_id]['answer_upvotes'] += answer['up_vote_count']
-                    tag_metrics[tag]['answer_downvotes'] += answer['down_vote_count']
-
-                    if answer.get('comments'):
-                        tag_metrics[tag]['answer_comments'] += len(answer['comments'])
-                        for comment in answer['comments']:
-                            tag_users, tag_contributors, commenter_id = validate_tag_user(
-                                tag_users, tag_contributors, tag, comment['owner']
-                            )
-                            tag_contributors[tag]['commenters'] = add_user_to_list(
-                                commenter_id, tag_contributors[tag]['commenters']
-                            )
-                            tag_users[tag][commenter_id]['comments'] += 1
-                            tag_users[tag][commenter_id]['comment_upvotes'] += comment['score']
+                tag_data = process_answers(tag_data, question['answers'], question)
             else:
-                tag_metrics[tag]['questions_no_answers'] += 1
-    
-    # calculate tag metrics for articles
+                tag_data['metrics']['questions_no_answers'] += 1
+
+            tags[tag_index] = tag_data
+
+    return tags
+
+        
+def process_answers(tag_data, answers, question):
+
+    answer_times = []
+    for answer in answers:
+        tag_data, answerer_id = validate_tag_user(
+            tag_data, answer['owner'])
+        tag_data['contributors']['answerers'] = add_user_to_list(
+            answerer_id, tag_data['contributors']['answerers'])
+        if answer['is_accepted']:
+            tag_data['metrics']['questions_accepted_answer'] += 1
+            tag_data['users'][answerer_id]['answers_accepted'] += 1
+        tag_data['metrics']['answer_count'] += 1
+        tag_data['users'][answerer_id]['answers'] += 1
+        tag_data['metrics']['answer_upvotes'] += answer['up_vote_count']
+        tag_data['users'][answerer_id]['answer_upvotes'] += answer['up_vote_count']
+        tag_data['metrics']['answer_downvotes'] += answer['down_vote_count']
+
+        if answer.get('comments'):
+            tag_data['metrics']['answer_comments'] += len(answer['comments'])
+            for comment in answer['comments']:
+                tag_data, commenter_id = validate_tag_user(
+                    tag_data, comment['owner']
+                )
+                tag_data['contributors']['commenters'] = add_user_to_list(
+                    commenter_id, tag_data['contributors']['commenters']
+                )
+                tag_data['users'][commenter_id]['comments'] += 1
+                tag_data['users'][commenter_id]['comment_upvotes'] += comment['score']
+
+        answer_times.append(answer['creation_date'] - question['creation_date'])
+
+    # Use the fastest answer time as the answer time for the question
+    if min(answer_times) > 0:
+        answer_time_in_hours = min(answer_times)/60/60
+        tag_data['answer_times'].append(answer_time_in_hours)
+    else: # zero answer time means the answer was posted at same time as question
+        tag_data['metrics']['questions_self_answered'] += 1
+
+    return tag_data
+
+
+def process_articles(tags, articles):
+
     for article in articles:
         for tag in article['tags']:
-            tag_users, tag_contributors, article_author_id = validate_tag_user(
-                tag_users, tag_contributors, tag, article['owner']
+            tag_index = get_tag_index(tags, tag)
+            tag_data = tags[tag_index]
+            tag_data, article_author_id = validate_tag_user(tag_data, article['owner'])
+            tag_data['metrics']['total_page_views'] += article['view_count']
+            tag_data['metrics']['article_count'] += 1
+            tag_data['users'][article_author_id]['articles'] += 1
+            tag_data['metrics']['article_upvotes'] += article['score']
+            tag_data['users'][article_author_id]['article_upvotes'] += article['score']
+            tag_data['metrics']['article_comments'] += article['comment_count']
+            tag_data['contributors']['article_contributors'] = add_user_to_list(
+                article_author_id, tag_data['contributors']['article_contributors']
             )
-            tag_metrics[tag]['total_page_views'] += article['view_count']
-            tag_metrics[tag]['article_count'] += 1
-            tag_users[tag][article_author_id]['articles'] += 1
-            tag_metrics[tag]['article_upvotes'] += article['score']
-            tag_users[tag][article_author_id]['article_upvotes'] += article['score']
-            tag_metrics[tag]['article_comments'] += article['comment_count']
-            tag_contributors[tag]['article_contributors'] = add_user_to_list(
-                article_author_id, tag_contributors[tag]['article_contributors']
-            )
-            tag_metrics[tag]['unique_article_contributors'] = len(
-                tag_contributors[tag]['article_contributors'])
+            tag_data['metrics']['unique_article_contributors'] = len(
+                tag_data['contributors']['article_contributors'])
 
             # As of 2023.05.23, Article comments are currently innaccurate due to a bug in the API
             # if article.get('comments'):
@@ -391,23 +449,17 @@ def calculate_tag_metrics(tags, questions, articles):
             #         tag_contributors[tag]['commenters'] = add_user_to_list(
             #             commenter_id, tag_contributors[tag]['commenters']
             #         )
+        
+            tags[tag_index] = tag_data
 
-    # calculate unique tag contributors across all types of content
-    for tag, tag_data in tag_metrics.items():
-        tag_data['unique_askers'] = len(tag_contributors[tag]['askers'])
-        tag_data['unique_answerers'] = len(tag_contributors[tag]['answerers'])
-        tag_data['unique_commenters'] = len(tag_contributors[tag]['commenters'])
-        tag_data['unique_article_contributors'] = len(
-            tag_contributors[tag]['article_contributors'])
-        tag_data['unique_contributors'] = len(set(
-            tag_contributors[tag]['askers'] + tag_contributors[tag]['answerers'] +
-            tag_contributors[tag]['commenters'] + tag_contributors[tag]['article_contributors']
-        ))
+    return tags
 
-    tags_sorted_by_view_count = sorted(
-        tag_metrics.items(), key = lambda x: x[1]['total_page_views'], reverse=True)
-    
-    return tags_sorted_by_view_count, tag_users
+
+def get_tag_index(tags, tag_name):
+
+    for index, tag in enumerate(tags):
+        if tag['name'] == tag_name:
+            return index
 
 
 def add_user_to_list(user_id, user_list):
@@ -426,7 +478,7 @@ def add_user_to_list(user_id, user_list):
     return user_list
 
 
-def validate_tag_user(tag_users, tag_contributors, tag, user):
+def validate_tag_user(tag, user):
 
     try:
         user_id = user['user_id']
@@ -435,8 +487,8 @@ def validate_tag_user(tag_users, tag_contributors, tag, user):
         user['display_name'] = None
         user['link'] = None
     
-    if user_id not in tag_users[tag]:
-        tag_users[tag][user_id] = {
+    if user_id not in tag['users']:
+        tag['users'][user_id] = {
             'id': user_id,
             'name': user['display_name'],
             'profile_url': user['link'],
@@ -452,33 +504,49 @@ def validate_tag_user(tag_users, tag_contributors, tag, user):
             'sme_individual': False,
             'sme_group': False
         }
-        if user_id in tag_contributors[tag]['individual_smes']:
-            tag_users[tag][user_id]['sme_individual'] = True
-        if user_id in tag_contributors[tag]['group_smes']:
-            tag_users[tag][user_id]['sme_group'] = True
+        if user_id in tag['contributors']['individual_smes']:
+            tag['users'][user_id]['sme_individual'] = True
+        if user_id in tag['contributors']['group_smes']:
+            tag['users'][user_id]['sme_group'] = True
 
-    return tag_users, tag_contributors, user_id
+    return tag, user_id
 
 
 def export_to_csv(data_name, data):
 
     file_name = data_name + '.csv'
-    csv_header = list(data[0][1].keys())
+    csv_header = [header.replace('_', ' ').title() for header in list(data[0].keys())]
 
     with open(file_name, 'w', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(csv_header)
         for tag_data in data:
-            writer.writerow(list(tag_data[1].values()))
+            writer.writerow(list(tag_data.values()))
+        
 
     print(f'CSV file created: {file_name}')
 
 
 def export_to_json(data_name, data):
     file_name = data_name + '.json'
+    directory = 'data'
 
-    with open(file_name, 'w') as f:
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    file_path = os.path.join(directory, file_name)
+
+    with open(file_path, 'w') as f:
         json.dump(data, f)
+
+    print(f'JSON file created: {file_name}')
+
+
+def read_json(file_name):
+    directory = 'data'
+    file_path = os.path.join(directory, file_name)
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    return data
 
 
 if __name__ == '__main__':
