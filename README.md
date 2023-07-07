@@ -16,7 +16,6 @@ This script is offered with no formal support from Stack Overflow. If you run in
 
 **Installing Dependencies**
 
-There's only a single dependency: the [Requests](https://pypi.org/project/requests/) library for Python. If you already have it installed, you can skip to API authentication.
 * Open a terminal window (or, for Windows, a command prompt)
 * Navigate to the directory where you unpacked the files
 * Install the dependencies: `pip3 install -r requirements.txt`
@@ -38,8 +37,8 @@ Creating an access token for Enterpise can sometimes be tricky for people who ha
 ## Basic Usage
 In a terminal window, navigate to the directory where you unpacked the script. 
 Run the script using the following format, replacing the URL, token, and/or key with your own:
-* For Basic and Business: `python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" --token "uDtDkCATuydvpj2RzXFOaA))"`
-* For Enterprise: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDkCATuydvpj2RzXFOaA))"`
+* For Basic and Business: `python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" --token "YOUR_TOKEN"`
+* For Enterprise: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN"`
 
 The script can take several minutes to run, particularly as it gathers data via the API. As it runs, it will continue to update the terminal window with the tasks it's performing.
 
@@ -54,7 +53,7 @@ By default, the CSV report aggregates all historical data for the tags. If you'd
 In conjunction with the `--days` argument, `--no-api` allows you to use leverage preexisting JSON data from an earlier series of API calls (via this script). This is significantly faster than running all the API calls again; in fact, it's nearly instantaneous. If you were looking to generate tag metrics based on a variety of time ranges (via `--days`), using the `--no-api` argument would sigificantly speed up the process. 
 
 Example:
-* You generate an initial CSV report via the Basic Usage instructions: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDkCATuydvpj2RzXFOaA))"`
+* You generate an initial CSV report via the Basic Usage instructions: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN"`
 * As part of collecting data via the API, an `api_data.json` file is generated and stored locally. For subsequent runs of the script where you're trying to generate the report for different time ranges, you can use the preexisting `api_data.json` data by leveraging the `--no-api` argument.
 * To quickly generate a CSV report for the past 30 days: `python3 so4t_tag_report.py --no-api --days 30`
 * Then, you generate a report for the past 90 days: `python3 so4t_tag_report.py --no-api --days 90`

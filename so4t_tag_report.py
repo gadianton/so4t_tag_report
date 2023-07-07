@@ -18,13 +18,16 @@ import requests
 
 def main():
 
+    # Get command-line arguments
     args = get_args()
 
+    # If --no-api is used, skip API calls and use existing JSON data
     if args.no_api:
         api_data = read_json('api_data.json')
     else:
         api_data = get_api_data(args)
 
+    # If --days is used, filter API data by date
     if args.days:
         api_data = filter_api_data_by_date(api_data, args.days)
         create_tag_report(api_data, args.days)
@@ -41,10 +44,10 @@ def get_args():
         a CSV report with performance metrics for each tag.',
         epilog = 'Example for Stack Overflow Business: \n'
                 'python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" '
-                '--token "uDtDJCATuydTpj2RzXFOaA))" \n\n'
+                '--token "YOUR_TOKEN" \n\n'
                 'Example for Stack Overflow Enterprise: \n'
                 'python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" '
-                '--key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDJCATuydTpj2RzXFOaA))"\n\n')
+                '--key "YOUR_KEY" --token "YOUR_TOKEN"\n\n')
     parser.add_argument('--url', 
                         type=str,
                         help='Base URL for your Stack Overflow for Teams instance. '
@@ -70,27 +73,11 @@ def get_args():
 
 def get_api_data(args):
 
-    url = args.url
-    token = args.token
-
-    if not url or not token:
-        print("Missing required arguments. Please provide a URL and API token.")
-        print("See --help for more information")
-        exit()
-
-    # SO Business uses a single token for both API v2 and v3
-    # SO Enterprise uses a key for API v2 and a token for API v3
-    if 'stackoverflowteams.com' in url:
-        v2client = V2Client(url, token)
-    else:
-        key = args.key # maybe move this into else statement (for SOE)
-        if not key:
-            print("Missing required argument. Please provide an API key.")
-            print("See --help for more information")
-            exit()
-        v2client = V2Client(url, key)
-    v3client = V3Client(url, token)
+    # Import V2Client and V3Client classes to make API calls
+    v2client = V2Client(args)
+    v3client = V3Client(args)
     
+    # Get all questions, articles, tags, and SMEs
     api_data = {}
     api_data['questions'] = v2client.get_all_questions(
         filter_id='!-(C9p6W5zHzR.xzw(UcCeR(6Z.YqYklUgN-bcu69o-O71EcDlgKKXF)q3H')
@@ -99,6 +86,7 @@ def get_api_data(args):
     for tag in api_data['tags']:
         tag['smes'] = v3client.get_tag_smes(tag['id'])
 
+    # Export API data to JSON file
     export_to_json('api_data', api_data)
 
     return api_data
@@ -106,18 +94,35 @@ def get_api_data(args):
 
 class V2Client(object):
 
-    def __init__(self, base_url, api_key):
+    def __init__(self, args):
 
-        if "stackoverflowteams.com" in base_url:
+        if not args.url:
+            print("Missing required argument. Please provide a URL.")
+            print("See --help for more information")
+            raise SystemExit
+        
+        if "stackoverflowteams.com" in args.url:
+            self.soe = False
             self.api_url = "https://api.stackoverflowteams.com/2.3"
-            self.team_slug = base_url.split("https://stackoverflowteams.com/c/")[1]
-            self.token = api_key
+            self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
+            self.token = args.token
             self.api_key = None
+            self.headers = {'X-API-Access-Token': self.token}
+            if not self.token:
+                print("Missing required argument. Please provide an API token.")
+                print("See --help for more information")
+                raise SystemExit
         else:
-            self.api_url = base_url + "/api/2.3"
+            self.soe = True
+            self.api_url = args.url + "/api/2.3"
             self.team_slug = None
             self.token = None
-            self.api_key = api_key
+            self.api_key = args.key
+            self.headers = {'X-API-Key': self.api_key}
+            if not self.api_key:
+                print("Missing required argument. Please provide an API key.")
+                print("See --help for more information")
+                raise SystemExit
 
         self.ssl_verify = self.test_connection()
 
@@ -177,19 +182,14 @@ class V2Client(object):
             params['filter'] = filter_id
 
         # SO Business uses a token, SO Enterprise uses a key
-        if self.token:
-            headers = {'X-API-Access-Token': self.token}
+        if not self.soe:
             params['team'] = self.team_slug
-        else:
-            headers = {'X-API-Key': self.api_key}
 
         items = []
         while True: # Keep performing API calls until all items are received
             print(f"Getting page {params['page']} from {endpoint_url}")
-            if self.ssl_verify:
-                response = requests.get(endpoint_url, headers=headers, params=params)
-            else:
-                response = requests.get(endpoint_url, headers=headers, params=params, verify=False)
+            response = requests.get(endpoint_url, headers=self.headers, params=params, 
+                                    verify=self.ssl_verify)
             
             if response.status_code != 200:
                 print(f"/{endpoint_url} API call failed with status code: {response.status_code}.")
@@ -197,16 +197,17 @@ class V2Client(object):
                 print(f"Failed request URL and params: {response.request.url}")
                 break
 
-            items_data = response.json().get('items')
-            items += items_data
+            items += response.json().get('items')
             if not response.json().get('has_more'):
                 break
 
             # If the endpoint gets overloaded, it will send a backoff request in the response
-            # Failure to backoff will result in a 502 Error
+            # Failure to backoff will result in a 502 error
             if response.json().get('backoff'):
-                print("Backoff request received from endpoint. Waiting 15 seconds...")
-                time.sleep(15)
+                backoff_time = response.json().get('backoff') + 1
+                print(f"API backoff request received. Waiting {backoff_time} seconds...")
+                time.sleep(backoff_time)
+
             params['page'] += 1
 
         return items
@@ -214,14 +215,25 @@ class V2Client(object):
 
 class V3Client(object):
 
-    def __init__(self, base_url, token):
+    def __init__(self, args):
 
-        self.token = token
-        if "stackoverflowteams.com" in base_url:
-            self.team_slug = base_url.split("https://stackoverflowteams.com/c/")[1]
+        if not args.url:
+            print("Missing required argument. Please provide a URL.")
+            print("See --help for more information")
+            raise SystemExit
+
+        if not args.token:
+            print("Missing required argument. Please provide an API token.")
+            print("See --help for more information")
+            raise SystemExit
+        else:
+            self.token = args.token
+
+        if "stackoverflowteams.com" in args.url:
+            self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
             self.api_url = f"https://api.stackoverflowteams.com/v3/teams/{self.team_slug}"
         else:
-            self.api_url = base_url + "/api/v3"
+            self.api_url = args.url + "/api/v3"
 
         self.ssl_verify = self.test_connection()
 
@@ -280,18 +292,12 @@ class V3Client(object):
 
         data = []
         while True:
-            if self.ssl_verify:
-                if method == 'get':
-                    response = get_response(endpoint_url, headers=headers, params=params)
-                else:
-                    response = get_response(endpoint_url, headers=headers, json=params)
+            if method == 'get':
+                response = get_response(endpoint_url, headers=headers, params=params, 
+                                        verify=self.ssl_verify)
             else:
-                if method == 'get':
-                    response = get_response(endpoint_url, headers=headers, params=params, 
-                                            verify=False)
-                else:
-                    response = get_response(endpoint_url, headers=headers, json=params, 
-                                            verify=False)
+                response = get_response(endpoint_url, headers=headers, json=params, 
+                                        verify=self.ssl_verify)
 
             # check for rate limiting thresholds
             # print(response.headers) 
@@ -325,6 +331,7 @@ def filter_api_data_by_date(api_data, days):
     today = int(time.time())
     start_date = today - (days * 24 * 60 * 60)  # convert days to seconds
 
+    # Filter questions and articles by creation date
     questions = [question for question in api_data['questions'] 
                  if question['creation_date'] > start_date]
     api_data['questions'] = questions
@@ -347,7 +354,7 @@ def create_tag_report(api_data, days=None):
 
     tags, tag_metrics = calculate_tag_metrics(tags, questions, articles)
 
-    export_to_json('tags', tags)
+    export_to_json('tag_data', tags)
 
     if days:
         export_to_csv(f'tag_metrics_past_{days}_days', tag_metrics)
