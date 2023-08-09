@@ -32,7 +32,7 @@ Creating an access token for Enterpise can sometimes be tricky for people who ha
 * Go to the following URL, replacing the base URL, the `client_id`, and base URL of the `redirect_uri` with your own:
 `https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
 * You may be prompted to login to Stack Overflow Enterprise, if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
-* In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=sRsbqFUEk7FW4c9N3zirWQ))`
+* In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
 
 ## Basic Usage
 In a terminal window, navigate to the directory where you unpacked the script. 
@@ -48,7 +48,7 @@ When the script completes, it will indicate the CSV has been exported, along wit
 There are two additional arguments you can add to the command line: `--days` and `--no-api`. All arguments (and instructions) can also be found by running the `--help` argument: `python3 so4t_tag_report.py --help`
 
 By default, the CSV report aggregates all historical data for the tags. If you'd like to filter this based on a certain amount of history, the `--days` argument can be used to indicate how many days of history you want to use for the CSV report. If you wanted to pull just the last 90 days worth of data, it would look like this:
-`python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "1oklfRnLqQX49QehDBWzP3Q((" --token "uDtDkCATuydvpj2RzXFOaA))" --days 90`
+`python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --days 90`
 
 In conjunction with the `--days` argument, `--no-api` allows you to use leverage preexisting JSON data from an earlier series of API calls (via this script). This is significantly faster than running all the API calls again; in fact, it's nearly instantaneous. If you were looking to generate tag metrics based on a variety of time ranges (via `--days`), using the `--no-api` argument would sigificantly speed up the process. 
 
