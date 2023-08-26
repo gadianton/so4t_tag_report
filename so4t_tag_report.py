@@ -151,7 +151,7 @@ class V2Client(object):
             print("API connection successful")
             return ssl_verify
         else:
-            print("Unable to connect to API. Please check your URL and API key.")
+            print("Unable to connect to API. Please check your URL and API key/token.")
             print(response.text)
             raise SystemExit
 
@@ -228,6 +228,7 @@ class V3Client(object):
             raise SystemExit
         else:
             self.token = args.token
+            self.headers = {'Authorization': f'Bearer {self.token}'}
 
         if "stackoverflowteams.com" in args.url:
             self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
@@ -242,22 +243,21 @@ class V3Client(object):
 
         endpoint = "/tags"
         endpoint_url = self.api_url + endpoint
-        headers = {'Authorization': f'Bearer {self.token}'}
         ssl_verify = True
 
         print("Testing API v3 connection...")
         try:
-            response = requests.get(endpoint_url, headers=headers)
+            response = requests.get(endpoint_url, headers=self.headers)
         except requests.exceptions.SSLError:
             print("SSL error. Trying again without SSL verification...")
-            response = requests.get(endpoint_url, headers=headers, verify=False)
+            response = requests.get(endpoint_url, headers=self.headers, verify=False)
             ssl_verify = False
         
         if response.status_code == 200:
             print("API connection successful")
             return ssl_verify
         else:
-            print("Unable to connect to API. Please check your URL and API key.")
+            print("Unable to connect to API. Please check your URL and API token.")
             print(response.text)
             raise SystemExit
 
@@ -286,17 +286,16 @@ class V3Client(object):
 
     def send_api_call(self, method, endpoint, params={}):
 
-        get_response = getattr(requests, method, None)
+        get_response = getattr(requests, method, None) # get the method from the requests library
         endpoint_url = self.api_url + endpoint
-        headers = {'Authorization': f'Bearer {self.token}'}
 
         data = []
         while True:
             if method == 'get':
-                response = get_response(endpoint_url, headers=headers, params=params, 
+                response = get_response(endpoint_url, headers=self.headers, params=params, 
                                         verify=self.ssl_verify)
             else:
-                response = get_response(endpoint_url, headers=headers, json=params, 
+                response = get_response(endpoint_url, headers=self.headers, json=params, 
                                         verify=self.ssl_verify)
 
             # check for rate limiting thresholds
