@@ -25,7 +25,7 @@ def main():
     if args.no_api:
         api_data = read_json('api_data.json')
     else:
-        api_data = get_api_data(args)
+        api_data = data_collector(args)
 
     # If --days is used, filter API data by date
     if args.days:
@@ -71,7 +71,7 @@ def get_args():
     return parser.parse_args()
 
 
-def get_api_data(args):
+def data_collector(args):
 
     # Import V2Client and V3Client classes to make API calls
     v2client = V2Client(args)
@@ -79,17 +79,84 @@ def get_api_data(args):
     
     # Get all questions, articles, tags, and SMEs
     api_data = {}
-    api_data['questions'] = v2client.get_all_questions(
-        filter_id='!-(C9p6W5zHzR.xzw(UcCeR(6Z.YqYklUgN-bcu69o-O71EcDlgKKXF)q3H')
-    api_data['articles'] = v2client.get_all_articles(filter_id='!.FtrDbhbGaLQMYD--XljcS.1ETL-U')
-    api_data['tags'] = v3client.get_all_tags()
-    for tag in api_data['tags']:
-        tag['smes'] = v3client.get_tag_smes(tag['id'])
+    api_data['questions'] = get_questions_answers_comments(v2client)
+    api_data['articles'] = get_articles(v2client)
+    api_data['tags'] = get_tags(v3client)
 
     # Export API data to JSON file
     export_to_json('api_data', api_data)
 
     return api_data
+
+
+def get_questions_answers_comments(v2client):
+
+    if v2client.soe: # Stack Overflow Enterprise requires the generation of a custom filter
+        filter_attributes = [
+            "answer.body",
+            "answer.body_markdown",
+            "answer.comment_count",
+            "answer.comments",
+            "answer.down_vote_count",
+            "answer.last_editor",
+            "answer.link",
+            "answer.share_link",
+            "answer.up_vote_count",
+            "comment.body",
+            "comment.body_markdown",
+            "comment.link",
+            "question.answers",
+            "question.body",
+            "question.body_markdown",
+            "question.comment_count",
+            "question.comments",
+            "question.down_vote_count",
+            "question.favorite_count",
+            "question.last_editor",
+            "question.notice",
+            "question.share_link",
+            "question.up_vote_count"
+        ]
+        filter_string = v2client.create_filter(filter_attributes)
+    else: # Stack Overflow Business or Basic
+        filter_string = '!X9DEEiFwy0OeSWoJzb.QMqab2wPSk.X2opZDa2L'
+    questions = v2client.get_all_questions(filter_string)
+
+    return questions
+
+
+def get_articles(v2client):
+
+    if v2client.soe:
+        filter_attributes = [
+            "article.body",
+            "article.body_markdown",
+            "article.comment_count",
+            "article.comments",
+            "article.last_editor",
+            "comment.body",
+            "comment.body_markdown",
+            "comment.link"
+        ]
+        filter_string = v2client.create_filter(filter_attributes)
+    else: # Stack Overflow Business or Basic
+        filter_string = '!*Mg4Pjg9LXr9d_(v'
+
+    articles = v2client.get_all_articles(filter_string)
+
+    return articles
+
+
+def get_tags(v3client):
+
+    # API v3 has additional tag data that API v2 does not have
+    tags = v3client.get_all_tags()
+
+    # get subject matter experts (SMEs) for each tag
+    for tag in tags:
+        tag['smes'] = v3client.get_tag_smes(tag['id']) 
+
+    return tags
 
 
 class V2Client(object):
@@ -154,44 +221,80 @@ class V2Client(object):
             print("Unable to connect to API. Please check your URL and API key/token.")
             print(response.text)
             raise SystemExit
+        
+
+    def create_filter(self, filter_attributes='', base='default'):
+        # filter_attributes should be a list variable containing strings of the attributes
+        # base can be 'default', 'withbody', 'none', or 'total'
+
+        endpoint = "/filters/create"
+        endpoint_url = self.api_url + endpoint
+
+        params = {
+            'base': base,
+            'unsafe': False
+        }
+
+        if filter_attributes:
+            # convert list of attributes to semi-colon separated string
+            params['include'] = ';'.join(filter_attributes)
+
+        response = self.get_items(endpoint_url, params)
+        filter_string = response[0]['filter']
+        print(f"Filter created: {filter_string}")
+
+        return filter_string
 
 
-    def get_all_questions(self, filter_id=''):
+    def get_all_questions(self, filter_string=''):
 
         endpoint = "/questions"
         endpoint_url = self.api_url + endpoint
-    
-        return self.get_items(endpoint_url, filter_id)
 
-
-    def get_all_articles(self, filter_id=''):
-
-        endpoint = "/articles"
-        endpoint_url = self.api_url + endpoint
-
-        return self.get_items(endpoint_url, filter_id)
-
-
-    def get_items(self, endpoint_url, filter_id):
-        
         params = {
             'page': 1,
             'pagesize': 100,
         }
-        if filter_id:
-            params['filter'] = filter_id
+        if filter_string:
+            params['filter'] = filter_string
+    
+        return self.get_items(endpoint_url, params)
 
-        # SO Business uses a token, SO Enterprise uses a key
+
+    def get_all_articles(self, filter_string=''):
+
+        endpoint = "/articles"
+        endpoint_url = self.api_url + endpoint
+
+        params = {
+            'page': 1,
+            'pagesize': 100,
+        }
+        if filter_string:
+            params['filter'] = filter_string
+
+        return self.get_items(endpoint_url, params)
+
+
+    def get_items(self, endpoint_url, params):
+        
+        # SO Business and Basic require a team slug parameter
         if not self.soe:
             params['team'] = self.team_slug
 
         items = []
         while True: # Keep performing API calls until all items are received
-            print(f"Getting page {params['page']} from {endpoint_url}")
+            if params.get('page'):
+                print(f"Getting page {params['page']} from {endpoint_url}")
+            else:
+                print(f"Getting data from {endpoint_url}")
             response = requests.get(endpoint_url, headers=self.headers, params=params, 
                                     verify=self.ssl_verify)
             
             if response.status_code != 200:
+                # Many API call failures result in an HTTP 400 status code (Bad Request)
+                # To understand the reason for the 400 error, specific API error codes can be 
+                # found here: https://api.stackoverflowteams.com/docs/error-handling
                 print(f"/{endpoint_url} API call failed with status code: {response.status_code}.")
                 print(response.text)
                 print(f"Failed request URL and params: {response.request.url}")
@@ -202,7 +305,7 @@ class V2Client(object):
                 break
 
             # If the endpoint gets overloaded, it will send a backoff request in the response
-            # Failure to backoff will result in a 502 error
+            # Failure to backoff will result in a 502 error (throttle_violation)
             if response.json().get('backoff'):
                 backoff_time = response.json().get('backoff') + 1
                 print(f"API backoff request received. Waiting {backoff_time} seconds...")
@@ -212,7 +315,6 @@ class V2Client(object):
 
         return items
     
-
 class V3Client(object):
 
     def __init__(self, args):
@@ -414,6 +516,7 @@ def process_tags(tags):
             'questions_accepted_answer': 0,
             'questions_self_answered': 0,
             'answer_count': 0,
+            'sme_answers': 0,
             'answer_upvotes': 0,
             'answer_downvotes': 0,
             'answer_comments': 0,
@@ -507,6 +610,11 @@ def process_answers(tag_data, answers, question):
         tag_data['metrics']['answer_upvotes'] += answer['up_vote_count']
         tag_data['users'][answerer_id]['answer_upvotes'] += answer['up_vote_count']
         tag_data['metrics']['answer_downvotes'] += answer['down_vote_count']
+
+        # Calculate number of answers from SMEs
+        if (answerer_id in tag_data['contributors']['group_smes'] 
+            or answerer_id in tag_data['contributors']['individual_smes']):
+            tag_data['metrics']['sme_answers'] += 1
 
         if answer.get('comments'):
             tag_data['metrics']['answer_comments'] += len(answer['comments'])
@@ -646,7 +754,7 @@ def export_to_json(data_name, data):
     file_path = os.path.join(directory, file_name)
 
     with open(file_path, 'w') as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=4)
 
     print(f'JSON file created: {file_name}')
 
