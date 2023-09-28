@@ -6,7 +6,7 @@ An API script for Stack Overflow for Teams that creates a report (CSV file) of h
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
 * Python 3.8 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
-* [optional] Chrome web browser, if using --scraper argument (details in Advanced Usage section)
+* [optional] Chrome web browser, if using the `--scraper` argument (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--scraper) section)
 
 ## Setup
 
