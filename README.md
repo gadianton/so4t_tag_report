@@ -1,14 +1,12 @@
 # Stack Overflow for Teams Tag Report (so4t_tag_report)
 An API script for Stack Overflow for Teams that creates a report (CSV file) of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
 
-All data obtained via the API is handled locally on the device from which the script is run. The script does not transmit data to other parties, such as Stack Overflow. All of the API calls performed are read only, so there is no risk of editing or adding content on your Stack Overflow for Teams instance.
-
-This script is offered with no formal support from Stack Overflow. If you run into issues using the script, please [open an issue](https://github.com/jklick-so/so4t_tag_report/issues) and/or reach out to the person who provided it to you. You are also welcome to edit the script to suit your needs.
 
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
-* Python 3.x ([download](https://www.python.org/downloads/))
+* Python 3.8 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
+* [optional] Chrome web browser, if using --scraper argument (details in Advanced Usage section)
 
 ## Setup
 
@@ -21,7 +19,6 @@ This script is offered with no formal support from Stack Overflow. If you run in
 * Install the dependencies: `pip3 install -r requirements.txt`
 
 **API Authentication**
-
 For the Basic and Business tiers, you'll need an API token. For Enterprise, you'll need to obtain both an API key and an API token.
 
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
@@ -35,6 +32,7 @@ Creating an access token for Enterpise can sometimes be tricky for people who ha
 * In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
 
 ## Basic Usage
+
 In a terminal window, navigate to the directory where you unpacked the script. 
 Run the script using the following format, replacing the URL, token, and/or key with your own:
 * For Basic and Business: `python3 so4t_tag_report.py --url "https://stackoverflowteams.com/c/TEAM-NAME" --token "YOUR_TOKEN"`
@@ -45,12 +43,15 @@ The script can take several minutes to run, particularly as it gathers data via 
 When the script completes, it will indicate the CSV has been exported, along with the name of file. You can see an example of what the output looks like [here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv).
 
 ## Advanced Usage
-There are two additional arguments you can add to the command line: `--days` and `--no-api`. All arguments (and instructions) can also be found by running the `--help` argument: `python3 so4t_tag_report.py --help`
+
+There are some additional arguments you can add to the command line to customize the script's behavior, which are described below. All arguments (and instructions) can also be found by running the `--help` argument: `python3 so4t_tag_report.py --help` 
+
+### `--no-api` and `--days`
 
 By default, the CSV report aggregates all historical data for the tags. If you'd like to filter this based on a certain amount of history, the `--days` argument can be used to indicate how many days of history you want to use for the CSV report. If you wanted to pull just the last 90 days worth of data, it would look like this:
 `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --days 90`
 
-In conjunction with the `--days` argument, `--no-api` allows you to use leverage preexisting JSON data from an earlier series of API calls (via this script). This is significantly faster than running all the API calls again; in fact, it's nearly instantaneous. If you were looking to generate tag metrics based on a variety of time ranges (via `--days`), using the `--no-api` argument would sigificantly speed up the process. 
+In conjunction with the `--days` argument, `--no-api` allows you to use leverage preexisting JSON data from previous execution of this script. This is significantly faster than running all the API calls again; in fact, it's nearly instantaneous. If you were looking to generate tag metrics based on a variety of time ranges (via `--days`), using the `--no-api` argument sigificantly speeds up the process. 
 
 Example:
 * You generate an initial CSV report via the Basic Usage instructions: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN"`
@@ -60,3 +61,21 @@ Example:
 
 Note: when using `--no-api`, the `--url`, `--key`, and `--token` arguments are unecessary. When you'd like to update the JSON data via fresh API calls, simply remove the `no-api` argument and add back the required authentication arguments.
 
+### `--scraper`
+The `--scraper` argument allows you to scrape additional data from the Teams instance, particularly data that is **not** available via the API (yet). Today, that includes:
+
+* The number of configured webhooks (ChatOps notifications) for each tag
+* The number of tag watcher per tag
+
+More data will be added to the scraper in the future.
+
+To use this scraping function, simply append the `--scaper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
+
+**NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run. 
+
+## Support, security, and legal
+Disclaimer: the creator of this project works at Stack Overflow, but it is a labor of love that comes with no formal support from Stack Overflow. 
+
+If you run into issues using the script, please [open an issue](https://github.com/jklick-so/so4t_tag_cloud/issues). You are also welcome to edit the script to suit your needs, steal the code, or do whatever you want with it. It is provided as-is, with no warranty or guarantee of any kind. If the creator wasn't so lazy, there would likely be an MIT license file included.
+
+All data is handled locally on the device from which the script is run. The script does not transmit data to other parties, such as Stack Overflow. All of the API calls performed are read only, so there is no risk of editing or adding content on your Stack Overflow for Teams instance.

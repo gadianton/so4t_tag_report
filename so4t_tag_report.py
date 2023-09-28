@@ -1,5 +1,5 @@
 '''
-This Python script is offered with no formal support from Stack Overflow. 
+This Python script is a labor of love and has no formal support from Stack Overflow. 
 If you run into difficulties, reach out to the person who provided you with this script.
 Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 '''
@@ -9,11 +9,14 @@ import argparse
 import csv
 import json
 import os
+import re
 import time
 from statistics import median
 
 # Third-party libraries
 import requests
+from selenium import webdriver
+from bs4 import BeautifulSoup
 
 
 def main():
@@ -23,7 +26,12 @@ def main():
 
     # If --no-api is used, skip API calls and use existing JSON data
     if args.no_api:
-        api_data = read_json('api_data.json')
+        api_data = {}
+        api_data['questions'] = read_json('questions.json')
+        api_data['articles'] = read_json('articles.json')
+        api_data['tags'] = read_json('tags.json')
+        api_data['users'] = read_json('users.json')
+        api_data['webhooks'] = read_json('webhooks.json')
     else:
         api_data = data_collector(args)
 
@@ -48,6 +56,7 @@ def get_args():
                 'Example for Stack Overflow Enterprise: \n'
                 'python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" '
                 '--key "YOUR_KEY" --token "YOUR_TOKEN"\n\n')
+    
     parser.add_argument('--url', 
                         type=str,
                         help='Base URL for your Stack Overflow for Teams instance. '
@@ -59,6 +68,7 @@ def get_args():
     parser.add_argument('--key',
                     type=str,
                     help='API key value. Required if using Enterprise and --no-api is not used')
+    
     parser.add_argument('--no-api',
                         action='store_true',
                         help='If API data has already been collected, skip API calls and use '
@@ -67,30 +77,59 @@ def get_args():
                         type=int,
                         help='Only include metrics for content created within the past X days. '
                         'Default is to include all history')
+    parser.add_argument('--scraper',
+                        action='store_true',
+                        help='Enables web scraping for extra data not available via API. Will open a Chrome '
+                        'window and prompt manual login.')
 
     return parser.parse_args()
 
 
 def data_collector(args):
 
-    # Import V2Client and V3Client classes to make API calls
+    # Only create a web scraping session if the --scraper flag is used
+    if args.scraper:
+        scraper = WebScraper(args)
+
+    # Instantiate V2Client and V3Client classes to make API calls
     v2client = V2Client(args)
     v3client = V3Client(args)
     
-    # Get all questions, articles, tags, and SMEs
-    api_data = {}
-    api_data['questions'] = get_questions_answers_comments(v2client)
-    api_data['articles'] = get_articles(v2client)
-    api_data['tags'] = get_tags(v3client)
+    # Get all questions, answers, comments, articles, tags, and SMEs via API
+    so4t_data = {}
+    so4t_data['questions'] = get_questions_answers_comments(v2client) # also gets answers/comments
+    so4t_data['articles'] = get_articles(v2client)
+    so4t_data['tags'] = get_tags(v3client) # also gets tag SMEs
+    so4t_data['users'] = get_users(v2client)
+
+    # Get additional data via web scraping
+    if args.scraper:
+        # Get watched tags for users
+        so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
+ 
+        # Get webhooks
+        so4t_data['webhooks'] = scraper.get_webhooks(args.url)
+
+        ### DISABLED SCRAPING FUNCTIONS ###
+        #     # Get user title and department
+        #     so4t_data['users'] = scraper.get_user_title_and_dept(so4t_data['users'])
+
+        #     # Get login histories for users
+        #     so4t_data['users'] = scraper.get_user_login_history(so4t_data['users'])
 
     # Export API data to JSON file
-    export_to_json('api_data', api_data)
+    for name, data in so4t_data.items():
+        export_to_json(name, data)
 
-    return api_data
+    return so4t_data
 
 
 def get_questions_answers_comments(v2client):
-
+    
+    # The API filter used for the /questions endpoint makes it so that the API returns
+    # all answers and comments for each question. This is more efficient than making
+    # separate API calls for answers and comments.
+    # Filter documentation: https://api.stackexchange.com/docs/filters
     if v2client.soe: # Stack Overflow Enterprise requires the generation of a custom filter
         filter_attributes = [
             "answer.body",
@@ -149,26 +188,376 @@ def get_articles(v2client):
 
 def get_tags(v3client):
 
-    # API v3 has additional tag data that API v2 does not have
+    # While API v2 is more robust for collecting tag data, it does not return the tag ID field, 
+    # which is needed to get the SMEs for each tag. Therefore, API v3 is used to get the tag ID
     tags = v3client.get_all_tags()
 
-    # get subject matter experts (SMEs) for each tag
+    # Get subject matter experts (SMEs) for each tag. This API call is only available in v3.
+    # There's no way to get SME configurations in bulk, so this call must be made for each tag, 
+    # making it a bit slower to get through. 
+    # FUTURE WORK: implementing some form of concurrency would speed this up.
     for tag in tags:
         tag['smes'] = v3client.get_tag_smes(tag['id']) 
 
     return tags
 
 
+def get_users(v2client):
+
+    if v2client.soe: # Stack Overflow Enterprise requires the generation of a custom filter
+        filter_attributes = [
+                "user.about_me",
+                "user.answer_count",
+                "user.down_vote_count",
+                "user.question_count",
+                "user.up_vote_count",
+                "user.email" # email is only available for Stack Overflow Enterprise
+        ]
+        filter_string = v2client.create_filter(filter_attributes)
+    else: # Stack Overflow Business or Basic
+        filter_string = '!6WPIommaBqvsI'
+
+    # Get all users via API
+    users = v2client.get_all_users(filter_string)
+
+    # Exclude users with an ID of less than 1 (i.e. Community user and user groups)
+    users = [user for user in users if user['user_id'] > 1]
+
+    return users
+
+
+class WebScraper(object):
+    
+    def __init__(self, args):
+    
+        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
+            self.soe = False
+        else: # Stack Overflow Enterprise
+            self.soe = True
+        
+        self.base_url = args.url
+        self.s = self.create_session() # create a Requests session with authentication cookies
+        self.admin = self.validate_admin_permissions() # check if user has admin permissions
+
+
+    def create_session(self):
+
+        # Configure Chrome driver
+        options = webdriver.ChromeOptions()
+        options.add_argument("--window-size=500,800")
+        options.add_experimental_option("excludeSwitches", ['enable-automation'])
+        driver = webdriver.Chrome(options=options)
+
+        # Check if URL is valid
+        try:
+            response = requests.get(self.base_url)
+        except requests.exceptions.SSLError:
+            print(f"SSL certificate error when trying to access {self.base_url}.")
+            print("Please check your URL and try again.")
+            raise SystemExit
+        except requests.exceptions.ConnectionError:
+            print(f"Connection error when trying to access {self.base_url}.")
+            print("Please check your URL and try again.")
+            raise SystemExit
+        
+        if response.status_code != 200:
+            print(f"Error when trying to access {self.base_url}.")
+            print(f"Status code: {response.status_code}")
+            print("Please check your URL and try again.")
+            raise SystemExit
+        
+        # Open a Chrome window and log in to the site
+        driver.get(self.base_url)
+        while True:
+            try:
+                # if user card is found, login is complete
+                driver.find_element("class name", "s-user-card")
+                break
+            except:
+                time.sleep(1)
+        
+        # pass authentication cookies from Selenium driver to Requests session
+        cookies = driver.get_cookies()
+        s = requests.Session()
+        for cookie in cookies:
+            s.cookies.set(cookie['name'], cookie['value'])
+        driver.close()
+        driver.quit()
+        
+        return s
+    
+
+    def validate_admin_permissions(self):
+
+        # The following URLs are only accessible to users with admin permissions
+        # If the user does not have admin permissions, the page will return a 404 error
+        if self.soe:
+            admin_url = self.base_url + '/enterprise/admin-settings'
+        else:
+            admin_url = self.base_url + '/admin/settings'
+
+        response = self.get_page_response(admin_url)
+        if response.status_code != 200:
+            return False
+        else:
+            return True
+
+
+    def get_user_title_and_dept(self, users):
+        # This function goes to the profile page of each user and gets their title and department
+        # This data is not available via the API
+        # Requires that the title and departement assertions have been configured in the SAML
+        # settings; otherwise, the title and department will not be displayed on the profile page
+
+        for user in users:
+            if user['user_id'] <= 1: # skip the Community user and user groups
+                continue
+
+            print(f"Getting title and department for user ID {user['user_id']}")
+            user_url = f"{self.base_url}/users/{user['user_id']}"
+            soup = self.get_page_soup(user_url)
+            title_dept = soup.find('div', {'class': 'mb8 fc-light fs-title lh-xs'})
+            try:
+                user['department'] = title_dept.text.split(', ')[-1]
+                user['title'] = title_dept.text.split(f", {user['department']}")[0]
+            except AttributeError: # if no title/dept returned, `text` method will not work on None
+                user['department'] = ''
+            except IndexError: # if using old title format
+                user['title'] = title_dept.text
+                user['department'] = ''
+        
+        return users
+    
+
+    def get_user_watched_tags(self, users):
+        # This function goes to the watched tags page of each user and gets their watched tags
+        # This data is not available via the API
+        # It requires Stack Overflow Enterprise and admin permissions, both of which are checked
+
+        if not self.soe: # check if using Stack Overflow Enterprise
+            print('Not able to obtain user watched tags. This is only available on '
+                  'Stack Overflow Enterprise.')
+            return users
+        
+        if not self.admin: # check if user has admin permissions
+            print('Not able to obtain user watched tags. This requires admin permissions.')
+            return users
+
+        for user in users:
+            if user['user_id'] <= 1: # skip the Community user and user groups
+                continue
+
+            print(f"Getting watched tags for user ID {user['user_id']}")
+            watched_tags_url = f"{self.base_url}/users/tag-notifications/{user['user_id']}"
+            soup = self.get_page_soup(watched_tags_url)
+            try:
+                watched_tag_rows = soup.find('table', {'class': '-settings'}).find_all('tr')
+                user['watched_tags'] = [self.strip_html(tag.find('td').text) 
+                                        for tag in watched_tag_rows]
+            except AttributeError: # if user has no watched tags
+                print(f"User ID {user['user_id']} does not have a watched tags page")
+                user['watched_tags'] = []
+                pass
+
+        return users
+
+
+    def get_user_login_history(self, users):
+        # This function goes to the account page of each user and gets their login history and
+        # presents it as a list of timestamps
+        # This data is not available via the API
+        # It requires Stack Overflow Enterprise and admin permissions, both of which are checked
+
+        if not self.soe: # check if using Stack Overflow Enterprise
+            print('Not able to obtain user login history. This is only available on '
+                  'Stack Overflow Enterprise.')
+            return users
+        
+        if not self.admin: # check if user has admin permissions
+            print('Not able to obtain user login history. This requires admin permissions.')
+            return users
+
+        for user in users:
+            if user['user_id'] <= 1: # skip the Community user and user groups
+                continue
+
+            print(f"Getting login history for account ID {user['account_id']}")
+            account_url = f"{self.base_url}/accounts/{user['account_id']}"
+            soup = self.get_page_soup(account_url)
+            try:
+                login_history = soup.find(
+                    'h2', string=re.compile('Login Histories')).find_next_sibling('table')
+            except AttributeError: # if user has no login history
+                user['login_history'] = []
+                continue
+            
+            login_timestamps = []
+            for row in login_history.find_all('tr'):
+                if row.find('th'): # skip the header row
+                    continue
+                timestamp = row.find('td').find('span')['title']
+                # create datetime object from timestamp string
+                # timestamp = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%SZ')
+                login_timestamps.append(timestamp)
+            user['login_history'] = login_timestamps
+
+        return users
+    
+
+    def get_webhooks(self, base_url):
+        # This function gets all webhooks configured for Stack Overflow for Teams instance
+        # This data is not available via the API
+        # It requires admin permissions, which is checked for
+        # The scraped data requires a bit of processing to get it into a usable format, which has
+        # been split off into a separate process_webhooks function
+
+        if not self.admin: # check if user has admin permissions
+            print('Not able to obtain webhook data. User is not an admin or URL is invalid')
+            return None
+        
+        # FUTURE WORK: add in webhook collection for Stack Overflow Business
+
+        webhooks_url = base_url + '/enterprise/webhooks'
+        page_count = self.get_page_count(webhooks_url + '?page=1&pagesize=50')
+
+        # get the webhook urls from each page
+        webhooks = []
+        for page in range(1, page_count + 1):
+            print(f"Getting webhooks from page {page} of {page_count}")
+            page_url = webhooks_url + f'?page={page}&pagesize=50'
+            response = self.get_page_response(page_url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            webhook_rows = soup.find_all('tr')
+            webhooks += self.process_webhooks(webhook_rows)
+
+        return webhooks
+    
+
+    def process_webhooks(self, webhook_rows):
+
+        # A webhook description has three parts: tags, activity type, and channel
+        # Example scenarios to be accounted for:
+            # All post activity to Private Channel > Private Channel
+            # Any aws kubernetes github amazon-web-services (added via synonyms) kube 
+                # (added via synonyms) posts to Engineering > Platform Engineering
+            # Any admiral python aws amazon-web-services (added via synonyms) questions, 
+                # answers to #admiral
+            # Any questions, answers to #help-desk
+            # Any machine-learning posts to #mits-demo
+
+        activity_types = ['edited questions', 'updated answers', 'accepted answers', 'questions', 
+                        'answers', 'comments']
+        webhooks = []
+        for row in webhook_rows:
+            if row.find('th'):
+                continue
+            columns = row.find_all('td')
+            # Description always starts with "Any" unless it's "All post activity to..."
+                # Which means all tags and activity types
+            # In the description string, the space-delimited words after "Any" are tags
+                # unless the notifications trigger for all tags, in which case it skips to activity type
+                # some tags have suffixes like "(added via synonyms)"
+            # The word "posts" is used to denote all activity types
+            # Activity types are comma-delimited; everything else is space-delimited
+            # The words after "to" are the channel; also, surrounded by <b></b> tags
+            description = self.strip_html(columns[2].text).replace(
+                '(added via synonyms) ', '').replace(',', '')
+
+            if description.startswith('All post activity to'):
+                tags = ['all']
+                activities = activity_types
+                channel = description.split('All post activity to ')[1]
+            else:
+                description = description.split('Any ')[1] # strip "Any"
+                channel = description.split(' to ')[1]
+                if 'posts to' in description: # all activity types
+                    activities = activity_types
+                    tags = description.split(' posts to ')[0].split(' ')
+                else: 
+                    # Activity types are specified, but tags may or may not be
+                    # Of the remaining words, find which are tags and activity types
+                    # Activity types are comma-delimited
+                    # Tags are space-delimited
+                    # Tags are always first
+                    # Tags are always followed by activity types
+                    description = description.split(' to ')[0] # strip off channel
+                    activities = []
+                    for activity_type in activity_types:
+                        if activity_type in description:
+                            activities.append(activity_type)
+                            description = description.replace(activity_type, '').strip()
+                    if description:
+                        tags = description.split(' ')
+                    else:
+                        tags = ['all']
+
+            webhook_type = self.strip_html(columns[0].text)
+            
+            webhook = {
+                'type': webhook_type,
+                'channel': channel,
+                'tags': tags,
+                'activities': activities,
+                'creation_date': columns[4].text
+            }
+            webhooks.append(webhook)
+
+        return webhooks
+
+        
+    def get_page_response(self, url):
+        # Uses the Requests session to get page response
+
+        response = self.s.get(url)
+        if response.status_code == 200:
+            return response
+        else:
+            print(f'Error getting page {url}')
+            print(f'Response code: {response.status_code}')
+            return None
+    
+
+    def get_page_soup(self, url):
+        # Uses the Requests session to get page response and returns a BeautifulSoup object
+
+        response = self.get_page_response(url)
+        try:
+            return BeautifulSoup(response.text, 'html.parser')
+        except AttributeError:
+            return None
+        
+
+    def get_page_count(self, url):
+        # Returns the number of pages that need to be scraped
+
+        response = self.get_page_response(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        pagination = soup.find_all('a', {'class': 's-pagination--item js-pagination-item'})
+        try:
+            page_count = int(pagination[-2].text)
+        except IndexError: # only one page
+            page_count = 1
+
+        return page_count
+
+
+    def strip_html(self, text):
+        # Remove HTML tags and newlines from text
+        # There are various scenarios where these characters are present in the text when scraped
+        return re.sub('<[^<]+?>', '', text).replace('\n', '').replace('\r', '').strip()
+        
+
 class V2Client(object):
 
     def __init__(self, args):
 
-        if not args.url:
+        if not args.url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
             print("See --help for more information")
             raise SystemExit
         
-        if "stackoverflowteams.com" in args.url:
+        # Establish the class variables based on which product is being used
+        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
             self.soe = False
             self.api_url = "https://api.stackoverflowteams.com/2.3"
             self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
@@ -179,7 +568,7 @@ class V2Client(object):
                 print("Missing required argument. Please provide an API token.")
                 print("See --help for more information")
                 raise SystemExit
-        else:
+        else: # Stack Overflow Enterprise
             self.soe = True
             self.api_url = args.url + "/api/2.3"
             self.team_slug = None
@@ -191,6 +580,7 @@ class V2Client(object):
                 print("See --help for more information")
                 raise SystemExit
 
+        # Test the API connection and set the SSL verification variable
         self.ssl_verify = self.test_connection()
 
 
@@ -227,6 +617,8 @@ class V2Client(object):
         # filter_attributes should be a list variable containing strings of the attributes
         # base can be 'default', 'withbody', 'none', or 'total'
 
+        # Filter documentation: https://api.stackexchange.com/docs/filters
+        # Documentation for API endpoint: https://api.stackexchange.com/docs/create-filter
         endpoint = "/filters/create"
         endpoint_url = self.api_url + endpoint
 
@@ -236,7 +628,8 @@ class V2Client(object):
         }
 
         if filter_attributes:
-            # convert list of attributes to semi-colon separated string
+            # The API endpoint requires a semi-colon separated string of attributes
+            # This converts the list of attributes into a string
             params['include'] = ';'.join(filter_attributes)
 
         response = self.get_items(endpoint_url, params)
@@ -248,6 +641,7 @@ class V2Client(object):
 
     def get_all_questions(self, filter_string=''):
 
+        # API endpoint documentation: https://api.stackexchange.com/docs/questions
         endpoint = "/questions"
         endpoint_url = self.api_url + endpoint
 
@@ -263,7 +657,24 @@ class V2Client(object):
 
     def get_all_articles(self, filter_string=''):
 
+        # API endpoint documentation: https://api.stackexchange.com/docs/articles
         endpoint = "/articles"
+        endpoint_url = self.api_url + endpoint
+
+        params = {
+            'page': 1,
+            'pagesize': 100,
+        }
+        if filter_string:
+            params['filter'] = filter_string
+
+        return self.get_items(endpoint_url, params)
+    
+
+    def get_all_users(self, filter_string=''):
+        
+        # API endpoint documentation: https://api.stackexchange.com/docs/users
+        endpoint = "/users"
         endpoint_url = self.api_url + endpoint
 
         params = {
@@ -306,6 +717,7 @@ class V2Client(object):
 
             # If the endpoint gets overloaded, it will send a backoff request in the response
             # Failure to backoff will result in a 502 error (throttle_violation)
+            # Rate limiting documentation: https://api.stackexchange.com/docs/throttle
             if response.json().get('backoff'):
                 backoff_time = response.json().get('backoff') + 1
                 print(f"API backoff request received. Waiting {backoff_time} seconds...")
@@ -315,16 +727,17 @@ class V2Client(object):
 
         return items
     
+
 class V3Client(object):
 
     def __init__(self, args):
 
-        if not args.url:
+        if not args.url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
             print("See --help for more information")
             raise SystemExit
 
-        if not args.token:
+        if not args.token: # check if API token is provided; if not, exit
             print("Missing required argument. Please provide an API token.")
             print("See --help for more information")
             raise SystemExit
@@ -332,13 +745,13 @@ class V3Client(object):
             self.token = args.token
             self.headers = {'Authorization': f'Bearer {self.token}'}
 
-        if "stackoverflowteams.com" in args.url:
+        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
             self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
             self.api_url = f"https://api.stackoverflowteams.com/v3/teams/{self.team_slug}"
-        else:
+        else: # Stack Overflow Enterprise
             self.api_url = args.url + "/api/v3"
 
-        self.ssl_verify = self.test_connection()
+        self.ssl_verify = self.test_connection() # test the API connection
 
     
     def test_connection(self):
@@ -449,13 +862,11 @@ def filter_api_data_by_date(api_data, days):
 
 def create_tag_report(api_data, days=None):
 
-    questions = api_data['questions']
-    tags = api_data['tags']
-    articles = api_data['articles']
+    api_data['tags'] = process_api_data(api_data)
+    export_to_json('tag_data', api_data['tags'])
 
-    tags, tag_metrics = calculate_tag_metrics(tags, questions, articles)
-
-    export_to_json('tag_data', tags)
+    tag_metrics = [tag['metrics'] for tag in api_data['tags']]
+    tag_metrics = sorted(tag_metrics, key=lambda k: k['total_page_views'], reverse=True)
 
     if days:
         export_to_csv(f'tag_metrics_past_{days}_days', tag_metrics)
@@ -463,12 +874,17 @@ def create_tag_report(api_data, days=None):
         export_to_csv('tag_metrics', tag_metrics)
 
 
-def calculate_tag_metrics(tags, questions, articles):
+def process_api_data(api_data):
+
+    tags = api_data['tags']
 
     tags = process_tags(tags)
-    tags = process_questions(tags, questions)
-    tags = process_articles(tags, articles)
+    tags = process_questions(tags, api_data['questions'])
+    tags = process_articles(tags, api_data['articles'])
+    tags = process_users(tags, api_data['users'])
+    tags = process_webhooks(tags, api_data['webhooks'])
 
+    # tally up miscellaneous metrics for each tag
     for tag in tags:
         tag['metrics']['unique_askers'] = len(tag['contributors']['askers'])
         tag['metrics']['unique_answerers'] = len(tag['contributors']['answerers'])
@@ -485,13 +901,8 @@ def calculate_tag_metrics(tags, questions, articles):
             tag['metrics']['median_answer_time_hours'] = round(median(tag['answer_times']),2)
         except ValueError: # if there are no answers for a tag
             pass
-
-    tag_metrics = [tag['metrics'] for tag in tags]
-
-    # sort tag_metrics by total page views
-    tag_metrics = sorted(tag_metrics, key=lambda k: k['total_page_views'], reverse=True)
     
-    return tags, tag_metrics
+    return tags
 
 
 def process_tags(tags):
@@ -500,6 +911,8 @@ def process_tags(tags):
         tag['metrics'] = {
             'tag_name': tag['name'],
             'total_page_views': 0,
+            'webhooks': 0,
+            'tag_watchers': 0,
             'individual_smes': 0,
             'group_smes': 0,
             'total_unique_smes': 0,
@@ -672,11 +1085,54 @@ def process_articles(tags, articles):
     return tags
 
 
+def process_users(tags, users):
+
+    if users[0].get('watched_tags'): # if this field exists, the data was collected
+        for user in users:
+            for tag in user['watched_tags']:
+                tag_index = get_tag_index(tags, tag)
+                try:
+                    tags[tag_index]['metrics']['tag_watchers'] += 1
+                except TypeError: # get_tag_index returned None
+                    print(f"Watched tag [{tag}] no longer exists for user ID {user['user_id']}")
+                    pass
+    else: # if this field does not exist, the data was not collected; therefore, remove the metric
+        for tag in tags:
+            del tag['metrics']['tag_watchers']
+
+    # this is where the user title and department would be added to the report
+    # this is also where the user login history would be added to the report
+
+    return tags
+
+
+def process_webhooks(tags, webhooks):
+
+    if webhooks == None: # if no webhooks were collected, remove the metric from the report
+        for tag in tags:
+            del tag['metrics']['webhooks']
+
+        return tags
+    
+    # Search for tags in webhook descriptions and add webhook count to tag metrics
+    for webhook in webhooks:
+        for tag_name in webhook['tags']:
+            tag_index = get_tag_index(tags, tag_name)
+            try:
+                tags[tag_index]['metrics']['webhooks'] += 1
+            except TypeError: # get_tag_index returned None
+                pass
+
+    return tags
+
+
 def get_tag_index(tags, tag_name):
 
     for index, tag in enumerate(tags):
         if tag['name'] == tag_name:
             return index
+    
+    return None # if tag is not found
 
 
 def add_user_to_list(user_id, user_list):
