@@ -6,7 +6,8 @@ An API script for Stack Overflow for Teams that creates a report (CSV file) of h
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
 * Python 3.8 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
-* [optional] Chrome web browser, if using the `--scraper` argument (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--scraper) section)
+
+If using the `--scraper` argument, there are additional requirements (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--scraper) section)
 
 ## Setup
 
@@ -62,16 +63,18 @@ Example:
 Note: when using `--no-api`, the `--url`, `--key`, and `--token` arguments are unecessary. When you'd like to update the JSON data via fresh API calls, simply remove the `no-api` argument and add back the required authentication arguments.
 
 ### `--scraper`
-The `--scraper` argument allows you to scrape additional data from the Teams instance, particularly data that is **not** available via the API (yet). Today, that includes:
+The `--scraper` argument allows you to scrape additional data from the Teams instance, particularly data that is **not** available via the API (yet). 
 
-* The number of configured webhooks (ChatOps notifications) for each tag
-* The number of tag watcher per tag
+> **NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run. Additional requirements are listed below, on a per-data point basis.
 
-More data will be added to the scraper in the future.
+Additional data points that can be scraped:
+
+* The number of configured webhooks (ChatOps notifications) for each tag [Requirements: admin permissions]
+* The number of tag watcher per tag [Requirements: Stack Overflow Enterprise and admin permissions]
+
+More data will be added to the scraper in the future. If requirements are not met for a particular piece of data, the scraper will simply skip that data point and continue to run.
 
 To use this scraping function, simply append the `--scaper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
-
-**NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run. 
 
 ## Support, security, and legal
 Disclaimer: the creator of this project works at Stack Overflow, but it is a labor of love that comes with no formal support from Stack Overflow. 
