@@ -255,7 +255,6 @@ def get_users(v2client):
 
     return users
 
-
 class WebScraper(object):
     
     def __init__(self, args):
@@ -337,6 +336,7 @@ class WebScraper(object):
 
         response = self.get_page_response(admin_url)
         if response.status_code != 200:
+            print("User does not have admin permissions.")
             return False
         else:
             return True

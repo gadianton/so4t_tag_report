@@ -1,33 +1,1094 @@
 [
     {
-        "type": "Slack",
-        "channel": "#admiral",
+        "type": "slack",
+        "channel": "#python",
         "tags": [
-            "admiral",
-            "python",
-            "aws",
-            "amazon-web-services"
+            "python"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 19, 2020 at 11:59"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "demo"
         ],
         "activities": [
             "questions",
             "answers"
         ],
-        "creation_date": "Nov 16, 2021 at 20:28"
+        "creation_date": "Nov 16, 2020 at 13:40"
     },
     {
-        "type": "Slack",
-        "channel": "#apac-engineering-",
+        "type": "slack",
+        "channel": "#platform-engineering",
+        "tags": [
+            "kubernetes",
+            "aws",
+            "demo",
+            "python",
+            "sre",
+            "architecture",
+            "google-cloud-platform",
+            "platform-engineering",
+            "looker",
+            "error-code"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 20, 2020 at 14:01"
+    },
+    {
+        "type": "slack",
+        "channel": "@Matt Champion",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 7, 2020 at 16:58"
+    },
+    {
+        "type": "slack",
+        "channel": "#python",
+        "tags": [
+            "demo"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 29, 2021 at 13:21"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "@mentions"
+        ],
+        "activities": [],
+        "creation_date": "Mar 18, 2021 at 17:19"
+    },
+    {
+        "type": "slack",
+        "channel": "@Vania Sung",
+        "tags": [
+            "@mentions"
+        ],
+        "activities": [],
+        "creation_date": "Apr 23, 2021 at 20:08"
+    },
+    {
+        "type": "slack",
+        "channel": "#project-starlight",
+        "tags": [
+            "starlight"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 18, 2021 at 21:54"
+    },
+    {
+        "type": "slack",
+        "channel": "@Angela Kanavas",
+        "tags": [
+            "@mentions"
+        ],
+        "activities": [],
+        "creation_date": "Aug 27, 2021 at 19:33"
+    },
+    {
+        "type": "slack",
+        "channel": "#user-management",
+        "tags": [
+            "user-info"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 30, 2021 at 16:05"
+    },
+    {
+        "type": "slack",
+        "channel": "#z-tech",
+        "tags": [
+            "bees"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 20, 2021 at 17:51"
+    },
+    {
+        "type": "slack",
+        "channel": "#josh-demo",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 5, 2021 at 18:50"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 19, 2021 at 15:17"
+    },
+    {
+        "type": "slack",
+        "channel": "#odi",
+        "tags": [
+            "starlight"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 20, 2021 at 14:46"
+    },
+    {
+        "type": "slack",
+        "channel": "@Angela Kanavas",
+        "tags": [
+            "soteams"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 22, 2021 at 18:49"
+    },
+    {
+        "type": "slack",
+        "channel": "@Angela Kanavas",
+        "tags": [
+            "@mentions"
+        ],
+        "activities": [],
+        "creation_date": "Oct 28, 2021 at 19:53"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
         "tags": [
             "java"
         ],
         "activities": [
+            "questions"
+        ],
+        "creation_date": "Nov 15, 2021 at 15:16"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-services",
+        "tags": [
+            "databases"
+        ],
+        "activities": [
             "questions",
             "answers"
         ],
-        "creation_date": "May 10, 2021 at 11:29"
+        "creation_date": "Jan 18, 2022 at 17:36"
     },
     {
-        "type": "Slack",
+        "type": "slack",
+        "channel": "#core",
+        "tags": [
+            "core"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 1, 2022 at 22:04"
+    },
+    {
+        "type": "slack",
+        "channel": "#core",
+        "tags": [
+            "feature-flags"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 1, 2022 at 22:11"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-center",
+        "tags": [
+            "dev-center"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 24, 2022 at 16:17"
+    },
+    {
+        "type": "slack",
+        "channel": "#tanzu",
+        "tags": [
+            "tanzu-build-service"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 17, 2022 at 15:10"
+    },
+    {
+        "type": "slack",
+        "channel": "#prisma-cloud",
+        "tags": [
+            "checkov"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 24, 2022 at 17:48"
+    },
+    {
+        "type": "slack",
+        "channel": "@Dillon Hayutin",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Mar 29, 2022 at 14:50"
+    },
+    {
+        "type": "slack",
+        "channel": "@Dillon Hayutin",
+        "tags": [
+            "solutionbuilder"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 20, 2022 at 20:19"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-center",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 22, 2022 at 20:01"
+    },
+    {
+        "type": "slack",
+        "channel": "@Alison Rogstad",
+        "tags": [
+            "azure",
+            "python"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "May 2, 2022 at 19:27"
+    },
+    {
+        "type": "slack",
+        "channel": "@Alison Rogstad",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 3, 2022 at 15:51"
+    },
+    {
+        "type": "slack",
+        "channel": "@Tiago Torre",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 12, 2022 at 10:43"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 19, 2022 at 21:15"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "golang"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 24, 2022 at 18:28"
+    },
+    {
+        "type": "slack",
+        "channel": "@Dillon Hayutin",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 24, 2022 at 20:36"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "account-management"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 1, 2022 at 16:22"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "creative-cloud"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 3, 2022 at 19:23"
+    },
+    {
+        "type": "slack",
+        "channel": "@Alison Rogstad",
+        "tags": [
+            "jira",
+            "github"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 13, 2022 at 15:33"
+    },
+    {
+        "type": "slack",
+        "channel": "@Dillon Hayutin",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jul 18, 2022 at 13:31"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-center",
+        "tags": [
+            "developer"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 11, 2022 at 19:28"
+    },
+    {
+        "type": "slack",
+        "channel": "@James Sweeney",
+        "tags": [
+            "sre"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 16, 2022 at 17:24"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-support-team",
+        "tags": [
+            "developer"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Aug 19, 2022 at 16:00"
+    },
+    {
+        "type": "slack",
+        "channel": "@James Sweeney",
+        "tags": [
+            "sre",
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 31, 2022 at 14:57"
+    },
+    {
+        "type": "slack",
+        "channel": "@James Sweeney",
+        "tags": [
+            "sre"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 1, 2022 at 19:23"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "sre"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 1, 2022 at 19:36"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "sre",
+            "it"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 1, 2022 at 19:42"
+    },
+    {
+        "type": "slack",
+        "channel": "@Reid Cathcart",
+        "tags": [
+            "miso"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 1, 2022 at 20:44"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "sre"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 7, 2022 at 21:54"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "updated answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 14, 2022 at 13:22"
+    },
+    {
+        "type": "slack",
+        "channel": "#billing-questions",
+        "tags": [
+            "billing-exchange"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 14, 2022 at 13:23"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-tech",
+        "tags": [
+            "developer"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 14, 2022 at 17:24"
+    },
+    {
+        "type": "slack",
+        "channel": "#dev-tech",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 14, 2022 at 17:24"
+    },
+    {
+        "type": "slack",
+        "channel": "#biz-freni",
+        "tags": [
+            "devops",
+            "architecture",
+            "azure",
+            "python"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 14, 2022 at 17:26"
+    },
+    {
+        "type": "slack",
+        "channel": "#azure-migration",
+        "tags": [
+            "azure"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 14, 2022 at 19:09"
+    },
+    {
+        "type": "slack",
+        "channel": "#cloud-migration",
+        "tags": [
+            "cloud"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 14, 2022 at 19:25"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 15, 2022 at 17:19"
+    },
+    {
+        "type": "slack",
+        "channel": "#example",
+        "tags": [
+            "platform-engineering"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 15, 2022 at 19:06"
+    },
+    {
+        "type": "slack",
+        "channel": "@Brian Daly",
+        "tags": [
+            "platform-engineering"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 15, 2022 at 19:07"
+    },
+    {
+        "type": "slack",
+        "channel": "#cx-team",
+        "tags": [
+            "customer-success"
+        ],
+        "activities": [
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 15, 2022 at 19:14"
+    },
+    {
+        "type": "slack",
+        "channel": "#cx-team",
+        "tags": [
+            "customer-experience"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 15, 2022 at 19:37"
+    },
+    {
+        "type": "slack",
+        "channel": "#customer-experience-team",
+        "tags": [
+            "customer-experience"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 15, 2022 at 23:37"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "sre",
+            "cloud",
+            "database"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 26, 2022 at 20:19"
+    },
+    {
+        "type": "slack",
+        "channel": "#unbroken-studios-ask-channel",
+        "tags": [
+            "unbroken"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 28, 2022 at 18:23"
+    },
+    {
+        "type": "slack",
+        "channel": "#unbroken-studios-ask-channel",
+        "tags": [
+            "justice"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 28, 2022 at 21:42"
+    },
+    {
+        "type": "slack",
+        "channel": "#field-solutions",
+        "tags": [
+            "field-solutions"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 12, 2022 at 16:52"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "python",
+            "python-3.x",
+            "google-cloud-python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 13, 2022 at 21:36"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "sre"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 14, 2022 at 18:56"
+    },
+    {
+        "type": "slack",
+        "channel": "#devops",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 19, 2022 at 14:43"
+    },
+    {
+        "type": "slack",
+        "channel": "#\ud558\ub8e8-\uc5b4\ub560\uc5b4\uc694",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 21, 2022 at 17:58"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "vpn"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 25, 2022 at 18:58"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-lake-support",
+        "tags": [
+            "it"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 7, 2022 at 19:32"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "it",
+            "gitlab"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 16, 2022 at 21:51"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "mysql",
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 11 at 20:28"
+    },
+    {
+        "type": "slack",
+        "channel": "#kubernetes",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Jan 12 at 18:56"
+    },
+    {
+        "type": "slack",
+        "channel": "#emily-demo-2023-01-30",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 30 at 15:45"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 13 at 22:50"
+    },
+    {
+        "type": "slack",
+        "channel": "#data-engineering",
+        "tags": [
+            "hris-migration"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 15 at 16:28"
+    },
+    {
+        "type": "slack",
+        "channel": "#support",
+        "tags": [
+            "it",
+            "people"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 17 at 0:22"
+    },
+    {
+        "type": "slack",
+        "channel": "#help-platform-manager",
+        "tags": [
+            "platman"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 1 at 19:01"
+    },
+    {
+        "type": "slack",
+        "channel": "#help-platform-manager",
+        "tags": [
+            "platformmanager"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 1 at 19:02"
+    },
+    {
+        "type": "slack",
+        "channel": "@Jonathan",
+        "tags": [
+            "mephistopheles"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 23 at 16:10"
+    },
+    {
+        "type": "slack",
+        "channel": "@Jonathan",
+        "tags": [
+            "tag-by-slack"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 23 at 16:33"
+    },
+    {
+        "type": "slack",
+        "channel": "#react",
+        "tags": [
+            "react-native"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 24 at 18:59"
+    },
+    {
+        "type": "slack",
+        "channel": "#react",
+        "tags": [
+            "reactjs"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 24 at 19:00"
+    },
+    {
+        "type": "slack",
+        "channel": "#xo-ui",
+        "tags": [
+            "xo"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 5 at 20:52"
+    },
+    {
+        "type": "slack",
+        "channel": "#validation-engineering",
+        "tags": [
+            "memory"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 3 at 18:24"
+    },
+    {
+        "type": "slack",
+        "channel": "#general",
+        "tags": [
+            "all-hands"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 29 at 18:24"
+    },
+    {
+        "type": "slack",
+        "channel": "#product-support",
+        "tags": [
+            "product-support"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 30 at 0:54"
+    },
+    {
+        "type": "slack",
+        "channel": "#project-flair",
+        "tags": [
+            "project-flair",
+            "product-support"
+        ],
+        "activities": [
+            "edited questions",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 30 at 2:00"
+    },
+    {
+        "type": "slack",
         "channel": "#architecture",
         "tags": [
             "architecture"
@@ -36,1157 +1097,23 @@
             "questions",
             "answers"
         ],
-        "creation_date": "Jun 14 at 11:59"
+        "creation_date": "Jul 18 at 12:26"
     },
     {
-        "type": "Slack",
-        "channel": "#ask-data-sci",
-        "tags": [
-            "data-mining",
-            "data",
-            "dataset",
-            "bigdata",
-            "visualization",
-            "data-cleaning",
-            "datasicence"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 25 at 15:33"
-    },
-    {
-        "type": "Slack",
-        "channel": "#ask-engineers",
-        "tags": [
-            "feature-engineering"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 12 at 15:14"
-    },
-    {
-        "type": "Slack",
-        "channel": "#ask-engineers",
-        "tags": [
-            "feature-engineering",
-            "google-app-engine",
-            "systems-engineering",
-            "google-kubernetes-engine"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 12 at 15:11"
-    },
-    {
-        "type": "Slack",
-        "channel": "#aws-migration",
-        "tags": [
-            "amazon-web-services"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 3 at 19:00"
-    },
-    {
-        "type": "Slack",
-        "channel": "#aws-migration",
-        "tags": [
-            "amazon-web-services",
-            "aws"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jun 21 at 13:40"
-    },
-    {
-        "type": "Slack",
-        "channel": "#cloud-migration",
-        "tags": [
-            "amazon-cloudformation"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 3 at 20:49"
-    },
-    {
-        "type": "Slack",
-        "channel": "#customer-success",
-        "tags": [
-            "kubernetes",
-            "kube"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 29 at 15:11"
-    },
-    {
-        "type": "Slack",
-        "channel": "#customer-success",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 2 at 15:33"
-    },
-    {
-        "type": "Slack",
-        "channel": "#dev-ops",
-        "tags": [
-            "devops",
-            "azure-devops"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 22 at 7:04"
-    },
-    {
-        "type": "Slack",
-        "channel": "#dev-ops",
-        "tags": [
-            "devops"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jun 14 at 11:59"
-    },
-    {
-        "type": "Slack",
+        "type": "slack",
         "channel": "#general",
         "tags": [
-            "jenkins"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 12 at 6:23"
-    },
-    {
-        "type": "Slack",
-        "channel": "#general",
-        "tags": [
-            "security-zone"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 12 at 6:05"
-    },
-    {
-        "type": "Slack",
-        "channel": "#general",
-        "tags": [
-            "m2"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 5 at 3:36"
-    },
-    {
-        "type": "Slack",
-        "channel": "#help-",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 16, 2022 at 18:03"
-    },
-    {
-        "type": "Slack",
-        "channel": "#help-",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 16, 2022 at 18:03"
-    },
-    {
-        "type": "Slack",
-        "channel": "#help-aws",
-        "tags": [
-            "amazon-web-services",
-            "aws"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 28, 2022 at 16:12"
-    },
-    {
-        "type": "Slack",
-        "channel": "#help-monolith",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 16, 2021 at 21:34"
-    },
-    {
-        "type": "Slack",
-        "channel": "#help-monolith",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 16, 2021 at 21:34"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "questions"
-        ],
-        "creation_date": "Jul 7, 2022 at 18:40"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "jira"
-        ],
-        "activities": [
-            "edited questions",
-            "questions"
-        ],
-        "creation_date": "Jun 15, 2022 at 17:37"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 25, 2022 at 18:00"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 9, 2022 at 18:23"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
             "architecture"
         ],
         "activities": [
-            "edited questions",
-            "updated answers",
             "questions",
             "answers"
         ],
-        "creation_date": "Feb 1, 2022 at 20:22"
+        "creation_date": "Jul 18 at 13:26"
     },
     {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 26, 2022 at 22:10"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 25, 2022 at 18:47"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "ruby"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 11, 2022 at 20:26"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Dec 16, 2021 at 15:07"
-    },
-    {
-        "type": "Slack",
-        "channel": "#josh-devops-demo",
-        "tags": [
-            "software-development",
-            "cicd"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 23, 2021 at 14:57"
-    },
-    {
-        "type": "Slack",
-        "channel": "#karina-demo",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 29, 2021 at 16:40"
-    },
-    {
-        "type": "Slack",
-        "channel": "#karina-demo",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 4, 2021 at 23:25"
-    },
-    {
-        "type": "Slack",
-        "channel": "#megan_demo",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 31, 2020 at 17:51"
-    },
-    {
-        "type": "Slack",
-        "channel": "#megan_demo",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 31, 2020 at 16:48"
-    },
-    {
-        "type": "Slack",
-        "channel": "#mits-demo",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Mar 31, 2021 at 13:35"
-    },
-    {
-        "type": "Slack",
-        "channel": "#mits-demo",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 11, 2021 at 18:52"
-    },
-    {
-        "type": "Slack",
-        "channel": "#mits-demo",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 11, 2021 at 18:51"
-    },
-    {
-        "type": "Slack",
-        "channel": "#mits-demo",
-        "tags": [
-            "machine-learning",
-            "r",
-            "statistics"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 9, 2021 at 22:48"
-    },
-    {
-        "type": "Slack",
-        "channel": "#mits-demo",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Feb 4, 2021 at 21:27"
-    },
-    {
-        "type": "Slack",
-        "channel": "#monolith-productivity-support",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 2, 2021 at 21:53"
-    },
-    {
-        "type": "Slack",
-        "channel": "#na-azure-engineering",
-        "tags": [
-            "azure",
-            "azure-ml"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 18, 2022 at 21:33"
-    },
-    {
-        "type": "Slack",
-        "channel": "#na-engineering",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 20, 2021 at 20:46"
-    },
-    {
-        "type": "Slack",
-        "channel": "#p72-q323",
-        "tags": [
-            "p72-q323"
-        ],
-        "activities": [
-            "accepted answers",
-            "questions"
-        ],
-        "creation_date": "Aug 14 at 13:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#product-support",
-        "tags": [
-            "product-support"
-        ],
-        "activities": [
-            "accepted answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 9, 2020 at 19:15"
-    },
-    {
-        "type": "Slack",
-        "channel": "#product-support",
-        "tags": [
-            "product-development"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Oct 9, 2020 at 19:11"
-    },
-    {
-        "type": "Slack",
-        "channel": "#random",
-        "tags": [
-            "zoom"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 28 at 16:37"
-    },
-    {
-        "type": "Slack",
-        "channel": "#sedemo",
-        "tags": [
-            "pto"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 24 at 20:38"
-    },
-    {
-        "type": "Slack",
-        "channel": "#sedemo",
-        "tags": [
-            "terraform"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 18 at 16:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#sedemo",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Dec 16, 2022 at 15:29"
-    },
-    {
-        "type": "Slack",
-        "channel": "#sedemo",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 1, 2020 at 18:03"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "python",
-            "architecture",
-            "billing",
-            "conglomerate"
-        ],
-        "activities": [
-            "edited questions",
-            "accepted answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 21, 2022 at 14:39"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "python",
-            "conglomerate",
-            "billing",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 21, 2022 at 14:37"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "python",
-            "conglomerate",
-            "billing",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 21, 2022 at 14:36"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 14, 2022 at 17:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 14, 2022 at 17:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "python",
-            "soefreni"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 14, 2022 at 14:06"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "python",
-            "soefreni"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 14, 2022 at 14:06"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "vpn"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "vpn"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "architecture",
-            "azure",
-            "vpn"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:21"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "frenidemo",
-            "azure",
-            "vpn",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:20"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "frenidemo",
-            "azure",
-            "vpn",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:20"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "frenidemo",
-            "azure",
-            "vpn",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:20"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-freni",
-        "tags": [
-            "frenidemo",
-            "azure",
-            "vpn",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 13, 2022 at 21:20"
-    },
-    {
-        "type": "Slack",
-        "channel": "#soe-test-1",
-        "tags": [
-            "clusters"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 4, 2020 at 19:16"
-    },
-    {
-        "type": "Slack",
-        "channel": "#superhelp-2",
-        "tags": [
-            "hr"
-        ],
-        "activities": [
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 28, 2021 at 1:52"
-    },
-    {
-        "type": "Slack",
-        "channel": "#support",
-        "tags": [
-            "customer-support"
-        ],
-        "activities": [
-            "accepted answers",
-            "questions",
-            "comments"
-        ],
-        "creation_date": "Oct 8, 2020 at 23:15"
-    },
-    {
-        "type": "Slack",
-        "channel": "#support",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 8, 2020 at 15:42"
-    },
-    {
-        "type": "Slack",
-        "channel": "#tfd-techissues",
-        "tags": [
-            "techissues"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jun 14 at 16:34"
-    },
-    {
-        "type": "Slack",
-        "channel": "#top-secret",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 5, 2022 at 17:41"
-    },
-    {
-        "type": "Slack",
-        "channel": "#top-secret",
-        "tags": [
-            "amazon-web-services"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Mar 30, 2022 at 15:28"
-    },
-    {
-        "type": "Slack",
-        "channel": "#top-secret",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 22, 2021 at 9:18"
-    },
-    {
-        "type": "Slack",
-        "channel": "#user-management",
-        "tags": [
-            "authentication"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 19, 2022 at 21:41"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Alison Rogstad",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 1 at 4:58"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Bianca Richardson",
-        "tags": [
-            "@mentions"
-        ],
-        "activities": [],
-        "creation_date": "Jan 26 at 19:47"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Bryan Haney",
-        "tags": [
-            "python",
-            "vpn"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 25 at 17:49"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Derek Astle",
-        "tags": [
-            "csv"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Jun 9, 2022 at 16:27"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Greg Sheedy",
-        "tags": [
-            "in",
-            "ML/AI",
-            "Guild"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 19 at 4:05"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Hope Tetreault",
-        "tags": [
-            "@mentions"
-        ],
-        "activities": [],
-        "creation_date": "Aug 18, 2022 at 19:09"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Hope Tetreault",
-        "tags": [
-            "@mentions"
-        ],
-        "activities": [],
-        "creation_date": "Aug 18, 2022 at 19:09"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilana",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 20 at 18:49"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilana",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Dec 13, 2022 at 23:43"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilianna Soto",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 8, 2022 at 13:45"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilianna Soto",
-        "tags": [
-            "python",
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 10, 2021 at 20:23"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilianna Soto",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 10, 2021 at 19:37"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilianna Soto",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 14, 2021 at 15:12"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Ilianna Soto",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 14, 2021 at 15:12"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Jonathan Klick",
+        "type": "slack",
+        "channel": "#stormtroopers",
         "tags": [
             "data"
         ],
@@ -1194,1253 +1121,235 @@
             "questions",
             "answers"
         ],
-        "creation_date": "Sep 29 at 13:16"
+        "creation_date": "Jul 18 at 16:03"
     },
     {
-        "type": "Slack",
-        "channel": "@Jonathan Klick",
+        "type": "slack",
+        "channel": "#fes-rep",
         "tags": [
-            "in",
-            "data"
+            "polr",
+            "puc-guidelines",
+            "fes-legal"
         ],
         "activities": [
             "questions",
             "answers"
         ],
-        "creation_date": "Sep 29 at 13:16"
+        "creation_date": "Aug 6 at 17:12"
     },
     {
-        "type": "Slack",
-        "channel": "@Jonathan Klick",
-        "tags": [
-            "in",
-            "DevOps"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 29 at 13:09"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Jonathan Klick",
-        "tags": [
-            "amazon-web-services"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 3 at 19:00"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Michael Akinsanya",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 22, 2021 at 10:45"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Mits Kinoshita",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jan 27, 2022 at 18:30"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Mits Kinoshita",
-        "tags": [
-            "@mentions"
-        ],
-        "activities": [],
-        "creation_date": "Feb 4, 2021 at 21:26"
-    },
-    {
-        "type": "Slack",
-        "channel": "@roger",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 3 at 17:16"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Vania Sung",
-        "tags": [
-            "architecture"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 4, 2022 at 18:31"
-    },
-    {
-        "type": "Slack",
-        "channel": "@Vania Sung",
-        "tags": [
-            "@mentions"
-        ],
-        "activities": [],
-        "creation_date": "Jun 17, 2021 at 21:22"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "AWS > Database Monitoring",
-        "tags": [
-            "db-monitoring"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 21 at 20:15"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Billing too - Electric Boogaloo > Billing too - Electric Boogaloo",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "answers"
-        ],
-        "creation_date": "Apr 20 at 21:10"
-    },
-    {
-        "type": "Generic",
-        "channel": "CS Team Webhook",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 12, 2018 at 17:03"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "DCSA > Engineering",
-        "tags": [
-            "amazon-web-services",
-            "azure"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 4, 2022 at 21:10"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "DCSA > General",
-        "tags": [
-            "infographics"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Oct 4, 2022 at 21:24"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "DCSA > General",
-        "tags": [
-            "deliverable"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Oct 4, 2022 at 21:16"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "DSCA > General",
-        "tags": [
-            "sars"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Oct 4, 2022 at 21:18"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Architecture",
+        "type": "slack",
+        "channel": "#platform-engineering",
         "tags": [
             "architecture"
         ],
         "activities": [
             "questions"
         ],
-        "creation_date": "Jul 18 at 18:58"
+        "creation_date": "Sep 12 at 18:24"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Architecture Review Group",
-        "tags": [
-            "architecture-review"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 10, 2022 at 14:52"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > AWS",
-        "tags": [
-            "amazon-web-services"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 18 at 11:24"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Billing - Ex",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Apr 20 at 20:48"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Center for Digital Health",
-        "tags": [
-            "cdh"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 31 at 16:50"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Cloud Migration",
-        "tags": [
-            "azure"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 14 at 17:32"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Cloud Migration",
-        "tags": [
-            "cloud-migration"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 14 at 16:54"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Customer Success",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 23 at 15:43"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps",
-        "tags": [
-            "in",
-            "DevOps"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jul 19 at 8:42"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "vpn"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 13 at 21:23"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "cicd"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 13, 2022 at 16:25"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "cicd"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 29, 2022 at 18:42"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 6, 2022 at 14:17"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "cicd"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 24, 2022 at 19:08"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "nlp",
-            "nltk"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 23, 2022 at 22:04"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 6, 2022 at 20:58"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "cicd",
-            "architecture"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 10, 2022 at 17:29"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "cicd",
-            "patterns"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 9, 2022 at 19:14"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > DevOps - Questions",
-        "tags": [
-            "software-development",
-            "cicd",
-            "python",
-            "kubernetes",
-            "kube"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Dec 1, 2021 at 19:13"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Digital Products and Services",
-        "tags": [
-            "dps"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 31 at 16:56"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Enablement",
-        "tags": [
-            "python",
-            "machine-learning",
-            "javascript",
-            "music",
-            "amazon-web-services",
-            "c++"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 19 at 19:43"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > error testing",
-        "tags": [
-            "test"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Jul 19 at 13:45"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Expediters - (EE)",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 18, 2021 at 22:16"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 10 at 17:18"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "hr",
-            "sales",
-            "machine-learning",
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 19 at 18:42"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "hr"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 19 at 17:30"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Apr 6 at 15:28"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 13 at 14:28"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "kubernetes",
-            "kube"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Feb 17 at 15:47"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "kubernetes",
-            "kube"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 14 at 20:28"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "macos"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 23 at 22:27"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "ipython"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 18, 2022 at 17:50"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 7, 2022 at 15:38"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "hr"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 20, 2022 at 0:25"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 18, 2021 at 13:27"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jun 17, 2021 at 9:18"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 18, 2021 at 10:43"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "github"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Mar 17, 2021 at 10:47"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "dataset"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Mar 17, 2021 at 10:44"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 4, 2021 at 10:30"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "privatetag"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Dec 14, 2020 at 14:26"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "accepted answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Dec 7, 2020 at 15:41"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > General",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Oct 30, 2020 at 14:39"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > IT Support",
-        "tags": [
-            "it-support",
-            "ist"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 8, 2022 at 19:54"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Labs",
-        "tags": [
-            "labs"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "11 hours ago"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Labs",
-        "tags": [
-            "labs"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 7 at 12:44"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Platform Engineering",
-        "tags": [
-            "vpn",
-            "devhub",
-            "virtual-desktop"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jan 4 at 11:52"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Platform Engineering",
+        "type": "slack",
+        "channel": "#aws",
         "tags": [
             "aws",
-            "kubernetes",
-            "github",
-            "amazon-web-services",
-            "kube"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Sep 21, 2021 at 17:51"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Python",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "May 6, 2022 at 12:40"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Python",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Mar 11, 2022 at 16:52"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Python",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Feb 24, 2022 at 19:18"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > QA Engineering",
-        "tags": [
-            "ab-test",
-            "testing"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jun 15 at 18:48"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Software",
-        "tags": [
-            "microsoft365",
-            "software-recommendation",
-            "mac",
-            "windows",
-            "office2021",
-            "onedrive"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jul 11 at 8:34"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > Systems Engineering",
-        "tags": [
-            "edp"
-        ],
-        "activities": [
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 31 at 14:39"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Engineering > UAT",
-        "tags": [
-            "ab-test",
-            "test",
-            "testing"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 26 at 21:41"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Machine Learning > Machine Learning",
-        "tags": [
-            "javascript",
-            "python",
-            "machine-learning"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 26 at 21:28"
-    },
-    {
-        "type": "Generic",
-        "channel": "Mattermost 2",
-        "tags": [
-            "collegeboard"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 25 at 21:23"
-    },
-    {
-        "type": "Generic",
-        "channel": "Mattermost Integration",
-        "tags": [
-            "collegeboard"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Sep 25 at 21:34"
-    },
-    {
-        "type": "Generic",
-        "channel": "Mattermost Webhook",
-        "tags": [
-            "collegeboard"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 25 at 18:14"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Operations > Foresite",
-        "tags": [
-            "foresite"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 14 at 19:09"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Operations > Foresite",
-        "tags": [
-            "flow"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jul 14 at 19:04"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Platform Engineering Team > Platform Engineering Team",
-        "tags": [
-            "edp"
-        ],
-        "activities": [
-            "updated answers",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 31 at 14:37"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Platform-Engineering > General",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 8 at 20:34"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Private Channel > Private Channel",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Mar 16, 2022 at 14:26"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Private Test > Private Test",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jul 6 at 15:06"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Project Workspace > Billing",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "answers"
-        ],
-        "creation_date": "Apr 20 at 21:55"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Project Workspace > Billing",
-        "tags": [
-            "billing"
-        ],
-        "activities": [
-            "answers"
-        ],
-        "creation_date": "Apr 20 at 21:04"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "Public Test Team > Development",
-        "tags": [
-            "devtools"
-        ],
-        "activities": [
-            "edited questions",
-            "updated answers",
-            "accepted answers",
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "May 25 at 22:52"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Antonio DS)",
-        "tags": [
             "amazon-web-services"
         ],
         "activities": [
-            "questions"
+            "questions",
+            "answers",
+            "comments"
         ],
-        "creation_date": "Aug 23 at 12:17"
+        "creation_date": "Sep 26 at 14:41"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Evelin)",
+        "type": "microsoft-teams",
+        "channel": "Demo > Field Engineering",
         "tags": [
-            "in",
-            "ML/AI",
-            "Guild"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jul 19 at 8:54"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Jason L.)",
-        "tags": [
-            "all"
+            "powergen"
         ],
         "activities": [
             "questions",
             "answers"
         ],
-        "creation_date": "May 25 at 23:10"
+        "creation_date": "Sep 1, 2020 at 17:04"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Andrew H.)",
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
         "tags": [
-            "billing",
-            "architecture"
-        ],
-        "activities": [
-            "questions",
-            "comments"
-        ],
-        "creation_date": "May 5 at 16:26"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Alexa M)",
-        "tags": [
-            "billing"
+            "java"
         ],
         "activities": [
             "questions"
         ],
-        "creation_date": "Apr 20 at 20:47"
+        "creation_date": "Sep 10, 2020 at 12:01"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Alexa M)",
+        "type": "microsoft-teams",
+        "channel": "Demo > platform engineering",
+        "tags": [
+            "kubernetes"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 1, 2020 at 15:34"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Demo > Field Engineering",
+        "tags": [
+            "kubernetes",
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 15, 2020 at 13:25"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Demo > platform engineering",
+        "tags": [
+            "kubernetes",
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 6, 2020 at 15:41"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Demo > General",
         "tags": [
             "all"
         ],
         "activities": [
+            "questions"
+        ],
+        "creation_date": "Dec 14, 2020 at 14:14"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Jan 15, 2021 at 19:06"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Demo > DevOps",
+        "tags": [
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 19, 2021 at 12:46"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "machine-learning",
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Feb 1, 2021 at 11:52"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "demo"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 9, 2021 at 9:56"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Demo > Python",
+        "tags": [
+            "data",
+            "data-science",
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 1, 2021 at 19:22"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Apr 6, 2021 at 9:58"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "typescript"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Apr 6, 2021 at 9:59"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "weather"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Apr 15, 2021 at 18:24"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Customer Support",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
             "updated answers",
+            "accepted answers",
             "questions",
             "answers",
             "comments"
         ],
-        "creation_date": "Apr 20 at 17:28"
+        "creation_date": "Apr 21, 2021 at 13:05"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Rob A)",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "edited questions",
-            "questions"
-        ],
-        "creation_date": "Apr 20 at 16:20"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y)",
-        "tags": [
-            "hr"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 19 at 17:29"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Miki)",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Apr 5 at 20:57"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Miki)",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 23 at 15:44"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Miki)",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 21 at 19:50"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y)",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Mar 2 at 18:39"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y)",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 24 at 0:44"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Greg S.)",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Feb 9 at 6:05"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Community)",
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Shared Services",
         "tags": [
             "all"
         ],
@@ -2448,190 +1357,44 @@
             "questions",
             "answers"
         ],
-        "creation_date": "Feb 1 at 5:04"
+        "creation_date": "May 4, 2021 at 19:44"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Hope T.)",
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
         "tags": [
-            "javascript"
+            "azureusslg"
         ],
         "activities": [
             "questions"
         ],
-        "creation_date": "Jan 17 at 18:52"
+        "creation_date": "May 12, 2021 at 18:58"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Hope T.)",
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
         "tags": [
-            "python"
-        ],
-        "activities": [
-            "updated answers"
-        ],
-        "creation_date": "Dec 22, 2022 at 17:12"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Bianca)",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions",
-            "answers",
-            "comments"
-        ],
-        "creation_date": "Dec 7, 2022 at 20:50"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 21, 2022 at 23:38"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 21, 2022 at 20:50"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 18, 2022 at 23:47"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "java"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 18, 2022 at 23:32"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 18, 2022 at 23:26"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 17, 2022 at 21:51"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
-        "tags": [
-            "machine-learning"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Nov 7, 2022 at 19:48"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Irene)",
-        "tags": [
-            "all"
+            "kezia-tag-test2"
         ],
         "activities": [
             "questions"
         ],
-        "creation_date": "Nov 4, 2022 at 14:46"
+        "creation_date": "May 12, 2021 at 18:59"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Ilana Y.)",
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
         "tags": [
-            "python"
+            "pandas"
         ],
         "activities": [
             "questions",
             "answers"
         ],
-        "creation_date": "Oct 18, 2022 at 17:53"
+        "creation_date": "May 17, 2021 at 14:07"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Reid)",
-        "tags": [
-            "javascript"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Aug 31, 2022 at 19:36"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Rhianna)",
-        "tags": [
-            "python"
-        ],
-        "activities": [
-            "edited questions",
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Aug 2, 2022 at 18:28"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self (Jen G)",
-        "tags": [
-            "google",
-            "hr",
-            "python"
-        ],
-        "activities": [
-            "questions",
-            "answers"
-        ],
-        "creation_date": "Jun 15, 2022 at 18:45"
-    },
-    {
-        "type": "MicrosoftTeams",
+        "type": "microsoft-teams",
         "channel": "self (Vania)",
         "tags": [
             "all"
@@ -2644,54 +1407,1659 @@
             "answers",
             "comments"
         ],
-        "creation_date": "Nov 2, 2021 at 20:17"
+        "creation_date": "May 25, 2021 at 18:30"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "self (Jesse L.)",
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
         "tags": [
-            "in",
-            "ML/AI",
-            "Guild"
+            "java"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Jul 5, 2021 at 11:14"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "java"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jul 14, 2021 at 10:58"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Support Public Team > General",
+        "tags": [
+            "test"
         ],
         "activities": [
             "questions"
         ],
-        "creation_date": "Mar 18, 2020 at 22:13"
+        "creation_date": "Jul 21, 2021 at 21:55"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "SOEDemo > Engineering",
+        "type": "microsoft-teams",
+        "channel": "Support Public Team > General",
         "tags": [
-            "csv",
+            "test"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Jul 22, 2021 at 0:00"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "looker"
+        ],
+        "activities": [
+            "edited questions",
+            "questions"
+        ],
+        "creation_date": "Aug 6, 2021 at 13:40"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "looker"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Aug 16, 2021 at 13:59"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
             "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 17, 2021 at 10:15"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "looker"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Aug 24, 2021 at 9:30"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "data-mining"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 27, 2021 at 11:23"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 17, 2021 at 16:52"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 17, 2021 at 16:52"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Health Information Systems",
+        "tags": [
+            "his"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 20, 2021 at 16:06"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > BEES_",
+        "tags": [
+            "bees"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 21, 2021 at 13:03"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 1, 2021 at 10:49"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "python",
+            "css"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Oct 14, 2021 at 16:30"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Clinical Trials",
+        "tags": [
+            "rise"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 20, 2021 at 14:01"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Rob)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 21, 2021 at 8:31"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Digital Technology Innovation",
+        "tags": [
+            "dti"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 28, 2021 at 20:05"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Joel)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Oct 29, 2021 at 17:04"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "MS Teams v2 > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Oct 29, 2021 at 17:19"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Support Private Team > General",
+        "tags": [
+            "python",
+            "kubernetes"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 2, 2021 at 20:55"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Platforms",
+        "tags": [
+            "python",
+            "devops"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 4, 2021 at 12:25"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "MS Collaboration Team > General",
+        "tags": [
+            "all"
         ],
         "activities": [
             "accepted answers",
             "questions",
             "answers"
         ],
-        "creation_date": "Apr 8, 2020 at 15:09"
+        "creation_date": "Nov 17, 2021 at 16:51"
     },
     {
-        "type": "MicrosoftTeams",
-        "channel": "UI Software Development > UI Software Development",
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
         "tags": [
-            "javascript",
-            "billing",
-            "architecture"
+            "onboarding"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 22, 2021 at 17:00"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Field Engineering",
+        "tags": [
+            "python",
+            "kubernetes",
+            "devops"
+        ],
+        "activities": [
+            "edited questions",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 3, 2021 at 13:50"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > R",
+        "tags": [
+            "r"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 17, 2021 at 18:10"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > DevOps",
+        "tags": [
+            "devops",
+            "azure-devops"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Dec 22, 2021 at 16:00"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Jen G)",
+        "tags": [
+            "so-enterprise",
+            "python",
+            "java"
         ],
         "activities": [
             "updated answers",
             "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 7, 2022 at 20:48"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Python",
+        "tags": [
+            "python",
+            "django",
+            "data-science"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 11, 2022 at 21:12"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Python",
+        "tags": [
+            "python",
+            "data-science",
+            "django",
+            "pandas"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 13, 2022 at 15:43"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "hr",
+            "people"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 20, 2022 at 13:43"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Developer Marketplace",
+        "tags": [
+            "developer-marketplace"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 20, 2022 at 15:58"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Jason)",
+        "tags": [
+            "innersource"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 31, 2022 at 17:11"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Quark",
+        "tags": [
+            "innersource"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 31, 2022 at 17:11"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 10, 2022 at 15:40"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Python",
+        "tags": [
+            "devops",
+            "ci-cd",
+            "git"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 11, 2022 at 15:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
             "answers",
             "comments"
         ],
-        "creation_date": "Jul 12 at 18:29"
+        "creation_date": "Feb 21, 2022 at 21:58"
     },
     {
-        "type": "Generic",
-        "channel": "Webhook Tester",
+        "type": "microsoft-teams",
+        "channel": "Test Team > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 11, 2022 at 10:41"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Jonathan)",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 16, 2022 at 11:36"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Ryan)",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 16, 2022 at 13:01"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "training"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 28, 2022 at 17:26"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "vpn",
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 28, 2022 at 18:19"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 1, 2022 at 5:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Apr 4, 2022 at 15:34"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > R COE",
+        "tags": [
+            "r"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 11, 2022 at 16:23"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > SE TC. - Front-End Development",
+        "tags": [
+            "user-interface"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 13, 2022 at 10:36"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Apr 20, 2022 at 15:32"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 28, 2022 at 11:42"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Azure Migration Project",
+        "tags": [
+            "azure",
+            "blueshift"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 5, 2022 at 14:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "json"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "May 6, 2022 at 13:05"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Azure AD",
+        "tags": [
+            "azure-ad"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 6, 2022 at 18:05"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 13, 2022 at 19:09"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "transformer"
+        ],
+        "activities": [
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 3, 2022 at 15:31"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Ultifi",
+        "tags": [
+            "ultifi"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 3, 2022 at 19:14"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "people"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 7, 2022 at 16:03"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "javascript"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 13, 2022 at 20:53"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Control Center",
+        "tags": [
+            "data-science"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 17, 2022 at 16:13"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Control Center",
+        "tags": [
+            "machine-learning"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 17, 2022 at 16:13"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "machine-learning"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 20, 2022 at 16:43"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "hrsystem"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 23, 2022 at 16:28"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "java"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 27, 2022 at 13:24"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Mitsuo)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 28, 2022 at 21:55"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "c++"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 29, 2022 at 15:06"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "SO Demo Channel - Questions > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jul 6, 2022 at 22:27"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > DeltaV",
+        "tags": [
+            "deltav"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jul 7, 2022 at 15:31"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "javascript"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Jul 29, 2022 at 10:52"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Centene Public Cloud Community",
+        "tags": [
+            "azure"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 3, 2022 at 18:52"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Centene Public Cloud Community",
+        "tags": [
+            "aws"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 3, 2022 at 18:53"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "so-for-teams"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Aug 18, 2022 at 19:33"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "customer-success"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Aug 18, 2022 at 22:00"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "so-for-teams",
+            "so-enterprise"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 18, 2022 at 22:01"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 22, 2022 at 10:29"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "carbon"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions"
+        ],
+        "creation_date": "Aug 23, 2022 at 11:46"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Infrastructure TC - Cloud Role Family",
+        "tags": [
+            "azure-ad"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 23, 2022 at 13:56"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Infrastructure TC - Cloud Role Family",
+        "tags": [
+            "azure"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 23, 2022 at 13:57"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 24, 2022 at 7:30"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 24, 2022 at 7:59"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 24, 2022 at 12:42"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions"
+        ],
+        "creation_date": "Aug 24, 2022 at 14:17"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 25, 2022 at 11:13"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 26, 2022 at 8:40"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 26, 2022 at 14:50"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 31, 2022 at 10:27"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "accepted answers",
+            "questions"
+        ],
+        "creation_date": "Aug 31, 2022 at 11:54"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Jason)",
+        "tags": [
+            "expenses"
+        ],
+        "activities": [
+            "edited questions",
+            "questions"
+        ],
+        "creation_date": "Aug 31, 2022 at 14:15"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Tracr",
+        "tags": [
+            "tracr"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 31, 2022 at 14:42"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > Brian Test",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 31, 2022 at 14:50"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Jason)",
+        "tags": [
+            "benefits"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 31, 2022 at 15:06"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Karina)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Sep 13, 2022 at 20:50"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > Brian Test",
+        "tags": [
+            "platform-engineering",
+            "aws"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 14, 2022 at 13:47"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Emily C)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Oct 13, 2022 at 15:18"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Product Support > Product Support",
+        "tags": [
+            "product-support"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Nov 1, 2022 at 0:28"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Miki)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Nov 3, 2022 at 18:15"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "so-enterprise",
+            "implementation",
+            "soteams",
+            "customer-success"
+        ],
+        "activities": [
+            "answers"
+        ],
+        "creation_date": "Nov 8, 2022 at 20:19"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Platforms",
+        "tags": [
+            "vpn"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 4 at 11:38"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "macos"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 10 at 19:57"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Matt H)",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 19 at 13:51"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 19 at 19:51"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Engineering > General",
+        "tags": [
+            "macos"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 23 at 21:59"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "implementation",
+            "customer-success"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Jan 24 at 22:38"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Commercial Mobile",
+        "tags": [
+            "reactjs"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jan 26 at 17:47"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Emily 2023-01-23",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "edited questions",
+            "questions"
+        ],
+        "creation_date": "Jan 26 at 18:23"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Azure Migration Project",
+        "tags": [
+            "machine-learning"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 6 at 20:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Architecture",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 15 at 15:27"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > HR",
+        "tags": [
+            "hrsystem"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 15 at 16:30"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > HR",
+        "tags": [
+            "hris-migration"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 15 at 16:31"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Cloud Enablement",
+        "tags": [
+            "cloud",
+            "google-cloud-platform",
+            "amazon-cloudformation",
+            "azure"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Feb 22 at 21:55"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Ask It",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Feb 24 at 21:20"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Azure Migration Project",
+        "tags": [
+            "machine-learning"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Feb 27 at 16:07"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Pedro Demo",
+        "tags": [
+            "azure"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 8 at 15:27"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Freni Demo > General",
+        "tags": [
+            "azure",
+            "azure-ad",
+            "azure-devops",
+            "azure-web-app-service",
+            "azure-blob-storage",
+            "azure-functions",
+            "architecture",
+            "knowledge-article",
+            "knowledge-sharing"
+        ],
+        "activities": [
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Mar 8 at 21:18"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Platforms",
+        "tags": [
+            "azure"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 9 at 14:37"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Data Science Resources",
+        "tags": [
+            "wrestling-the-snake"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 15 at 19:56"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Data Science Resources",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 15 at 19:56"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "machine-learning"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Mar 21 at 18:36"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Pedro C)",
+        "tags": [
+            "azure",
+            "java"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 28 at 15:24"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Shreyas)",
+        "tags": [
+            "java"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Mar 31 at 14:44"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Community)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Apr 20 at 22:03"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Emily C)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "May 2 at 17:40"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Munaf Dalvi)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "May 18 at 12:25"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > Blueshift",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "May 30 at 6:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Deanna Demo > General",
+        "tags": [
+            "demo"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "May 31 at 19:17"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Bianca)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 16 at 16:03"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Product Support > General",
+        "tags": [
+            "product-support"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 29 at 18:21"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Product Support > Project Flair",
+        "tags": [
+            "product-support",
+            "project-flair"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jun 30 at 1:08"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Antonio DS)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "answers"
+        ],
+        "creation_date": "Jul 3 at 14:27"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Ilana)",
+        "tags": [
+            "python"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Jul 26 at 16:51"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Sam B)",
+        "tags": [
+            "billing"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Aug 10 at 18:07"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > DevOps",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Aug 15 at 20:58"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Fab C)",
+        "tags": [
+            "devops"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Aug 25 at 0:53"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > Drew test",
+        "tags": [
+            "design",
+            "pdec",
+            "product",
+            "so-for-teams",
+            "so-for-teams-enterprise",
+            "design-photoshop"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Sep 8 at 14:11"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > PowerEdge Product Team",
+        "tags": [
+            "poweredge"
+        ],
+        "activities": [
+            "updated answers",
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 18 at 20:03"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "AI/ML Guild > General",
+        "tags": [
+            "machine-learning",
+            "classification",
+            "neuralnetwork",
+            "image-classification",
+            "image-recognition",
+            "virtual-machine"
+        ],
+        "activities": [
+            "questions"
+        ],
+        "creation_date": "Sep 19 at 1:47"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Design Test > General",
         "tags": [
             "all"
         ],
@@ -2703,6 +3071,87 @@
             "answers",
             "comments"
         ],
-        "creation_date": "Nov 6, 2018 at 18:02"
+        "creation_date": "Sep 19 at 20:38"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Drew Meacham)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 19 at 20:40"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Kirti Thorat)",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 20 at 22:10"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Test > Kirtis Test",
+        "tags": [
+            "all"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 20 at 22:11"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "Enterprise Architecture > AWS",
+        "tags": [
+            "aws",
+            "amazon-web-services"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 26 at 14:38"
+    },
+    {
+        "type": "microsoft-teams",
+        "channel": "self (Alex S)",
+        "tags": [
+            "python",
+            "machine-learning",
+            "azure",
+            "azure-devops"
+        ],
+        "activities": [
+            "edited questions",
+            "updated answers",
+            "accepted answers",
+            "questions",
+            "answers",
+            "comments"
+        ],
+        "creation_date": "Sep 28 at 8:17"
     }
 ]
