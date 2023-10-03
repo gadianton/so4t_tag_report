@@ -128,6 +128,19 @@
         "type": "Slack",
         "channel": "#customer-success",
         "tags": [
+            "kubernetes",
+            "kube"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 29 at 15:11"
+    },
+    {
+        "type": "Slack",
+        "channel": "#customer-success",
+        "tags": [
             "machine-learning"
         ],
         "activities": [
@@ -1175,6 +1188,44 @@
         "type": "Slack",
         "channel": "@Jonathan Klick",
         "tags": [
+            "data"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 29 at 13:16"
+    },
+    {
+        "type": "Slack",
+        "channel": "@Jonathan Klick",
+        "tags": [
+            "in",
+            "data"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 29 at 13:16"
+    },
+    {
+        "type": "Slack",
+        "channel": "@Jonathan Klick",
+        "tags": [
+            "in",
+            "DevOps"
+        ],
+        "activities": [
+            "questions",
+            "answers"
+        ],
+        "creation_date": "Sep 29 at 13:09"
+    },
+    {
+        "type": "Slack",
+        "channel": "@Jonathan Klick",
+        "tags": [
             "amazon-web-services"
         ],
         "activities": [
@@ -1908,6 +1959,19 @@
             "answers",
             "comments"
         ],
+        "creation_date": "11 hours ago"
+    },
+    {
+        "type": "MicrosoftTeams",
+        "channel": "Engineering > Labs",
+        "tags": [
+            "labs"
+        ],
+        "activities": [
+            "questions",
+            "answers",
+            "comments"
+        ],
         "creation_date": "Sep 7 at 12:44"
     },
     {
@@ -2064,7 +2128,7 @@
             "questions",
             "answers"
         ],
-        "creation_date": "2 days ago"
+        "creation_date": "Sep 25 at 21:23"
     },
     {
         "type": "Generic",
@@ -2076,7 +2140,7 @@
             "questions",
             "answers"
         ],
-        "creation_date": "2 days ago"
+        "creation_date": "Sep 25 at 21:34"
     },
     {
         "type": "Generic",
@@ -2206,7 +2270,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Antonio DS)",
         "tags": [
             "amazon-web-services"
         ],
@@ -2217,7 +2281,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Evelin)",
         "tags": [
             "in",
             "ML/AI",
@@ -2230,18 +2294,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
-        "tags": [
-            "all"
-        ],
-        "activities": [
-            "questions"
-        ],
-        "creation_date": "Jul 11 at 8:38"
-    },
-    {
-        "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Jason L.)",
         "tags": [
             "all"
         ],
@@ -2253,7 +2306,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Andrew H.)",
         "tags": [
             "billing",
             "architecture"
@@ -2266,7 +2319,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Alexa M)",
         "tags": [
             "billing"
         ],
@@ -2277,7 +2330,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Alexa M)",
         "tags": [
             "all"
         ],
@@ -2291,7 +2344,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Rob A)",
         "tags": [
             "machine-learning"
         ],
@@ -2303,7 +2356,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y)",
         "tags": [
             "hr"
         ],
@@ -2315,7 +2368,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Miki)",
         "tags": [
             "python"
         ],
@@ -2327,7 +2380,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Miki)",
         "tags": [
             "java"
         ],
@@ -2339,7 +2392,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Miki)",
         "tags": [
             "javascript"
         ],
@@ -2351,7 +2404,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y)",
         "tags": [
             "machine-learning"
         ],
@@ -2363,7 +2416,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y)",
         "tags": [
             "python"
         ],
@@ -2375,7 +2428,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Greg S.)",
         "tags": [
             "python"
         ],
@@ -2387,7 +2440,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Community)",
         "tags": [
             "all"
         ],
@@ -2399,7 +2452,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Hope T.)",
         "tags": [
             "javascript"
         ],
@@ -2410,7 +2463,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Hope T.)",
         "tags": [
             "python"
         ],
@@ -2421,7 +2474,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Bianca)",
         "tags": [
             "javascript"
         ],
@@ -2434,7 +2487,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "javascript"
         ],
@@ -2446,7 +2499,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "java"
         ],
@@ -2458,7 +2511,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "java"
         ],
@@ -2470,7 +2523,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "java"
         ],
@@ -2482,7 +2535,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "machine-learning"
         ],
@@ -2494,7 +2547,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "machine-learning"
         ],
@@ -2506,7 +2559,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "machine-learning"
         ],
@@ -2518,7 +2571,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Irene)",
         "tags": [
             "all"
         ],
@@ -2529,7 +2582,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Ilana Y.)",
         "tags": [
             "python"
         ],
@@ -2541,7 +2594,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Reid)",
         "tags": [
             "javascript"
         ],
@@ -2552,7 +2605,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Rhianna)",
         "tags": [
             "python"
         ],
@@ -2565,7 +2618,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Jen G)",
         "tags": [
             "google",
             "hr",
@@ -2579,7 +2632,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Vania)",
         "tags": [
             "all"
         ],
@@ -2595,7 +2648,7 @@
     },
     {
         "type": "MicrosoftTeams",
-        "channel": "self",
+        "channel": "self (Jesse L.)",
         "tags": [
             "in",
             "ML/AI",

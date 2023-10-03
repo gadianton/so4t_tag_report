@@ -9,6 +9,7 @@ import argparse
 import csv
 import json
 import os
+import pickle
 import re
 import time
 from statistics import median
@@ -26,21 +27,26 @@ def main():
 
     # If --no-api is used, skip API calls and use existing JSON data
     if args.no_api:
-        api_data = {}
-        api_data['questions'] = read_json('questions.json')
-        api_data['articles'] = read_json('articles.json')
-        api_data['tags'] = read_json('tags.json')
-        api_data['users'] = read_json('users.json')
-        api_data['webhooks'] = read_json('webhooks.json')
+        so4t_data = {}
+        try:
+            so4t_data['questions'] = read_json('questions.json')
+            so4t_data['articles'] = read_json('articles.json')
+            so4t_data['tags'] = read_json('tags.json')
+            so4t_data['users'] = read_json('users.json')
+            so4t_data['webhooks'] = read_json('webhooks.json')
+        except FileNotFoundError:
+            print('Required JSON data not found.')
+            print('Please run the script without the --no-api argument to collect data via API.')
+            raise SystemExit
     else:
-        api_data = data_collector(args)
+        so4t_data = data_collector(args)
 
     # If --days is used, filter API data by date
     if args.days:
-        api_data = filter_api_data_by_date(api_data, args.days)
-        create_tag_report(api_data, args.days)
+        so4t_data = filter_api_data_by_date(so4t_data, args.days)
+        create_tag_report(so4t_data, args.days)
     else:
-        create_tag_report(api_data)
+        create_tag_report(so4t_data)
 
 
 def get_args():
@@ -79,8 +85,12 @@ def get_args():
                         'Default is to include all history')
     parser.add_argument('--scraper',
                         action='store_true',
-                        help='Enables web scraping for extra data not available via API. Will open a Chrome '
-                        'window and prompt manual login.')
+                        help='Enables web scraping for extra data not available via API. Will '
+                        'open a Chrome window and prompt manual login.')
+    parser.add_argument('--save-session',
+                        action='store_true',
+                        help='Saves the authenticated scraping session (cookies) to a file. This '
+                        'mitigates the need to log in manually each time the script is run.')
 
     return parser.parse_args()
 
@@ -89,7 +99,25 @@ def data_collector(args):
 
     # Only create a web scraping session if the --scraper flag is used
     if args.scraper:
-        scraper = WebScraper(args)
+        session_file = 'so4t_session'
+        try:
+            with open(session_file, 'rb') as f:
+                session_data = pickle.load(f)
+            scraper = session_data[0]
+            scraper.s.cookies = session_data[1]
+            if scraper.base_url != args.url or not scraper.test_session():
+                print('Previous session is invalid or expired. Creating new session...')
+                scraper = WebScraper(args)
+            else:
+                print('Using previously saved session...')
+        except FileNotFoundError:
+            print('Previous session not found. Creating new session...')
+            scraper = WebScraper(args)
+            # If --save-session is used, save the authenticated session to a file
+            if args.save_session:
+                session_data = [scraper, scraper.s.cookies]
+                pickle.dump(session_data, open(session_file, 'wb'))
+                print(f"Session saved to file: '{session_file}'")
 
     # Instantiate V2Client and V3Client classes to make API calls
     v2client = V2Client(args)
@@ -116,6 +144,8 @@ def data_collector(args):
 
         #     # Get login histories for users
         #     so4t_data['users'] = scraper.get_user_login_history(so4t_data['users'])
+    else:
+        so4t_data['webhooks'] = []
 
     # Export API data to JSON file
     for name, data in so4t_data.items():
@@ -287,6 +317,15 @@ class WebScraper(object):
         return s
     
 
+    def test_session(self):
+
+        soup = self.get_page_soup(f"{self.base_url}/users")
+        if soup.find('div', {'class': 's-user-card'}):
+            return True
+        else:
+            return False
+
+
     def validate_admin_permissions(self):
 
         # The following URLs are only accessible to users with admin permissions
@@ -413,27 +452,52 @@ class WebScraper(object):
 
         if not self.admin: # check if user has admin permissions
             print('Not able to obtain webhook data. User is not an admin or URL is invalid')
-            return None
+            return []
         
-        # FUTURE WORK: add in webhook collection for Stack Overflow Business
-
-        webhooks_url = base_url + '/enterprise/webhooks'
-        page_count = self.get_page_count(webhooks_url + '?page=1&pagesize=50')
-
-        # get the webhook urls from each page
         webhooks = []
-        for page in range(1, page_count + 1):
-            print(f"Getting webhooks from page {page} of {page_count}")
-            page_url = webhooks_url + f'?page={page}&pagesize=50'
-            response = self.get_page_response(page_url)
-            soup = BeautifulSoup(response.text, 'html.parser')
-            webhook_rows = soup.find_all('tr')
-            webhooks += self.process_webhooks(webhook_rows)
+        if self.soe: # Stack Overflow Enterprise
+            webhooks_url = f"{self.base_url}/enterprise/webhooks"
+            page_count = self.get_page_count(webhooks_url + '?page=1&pagesize=50')
+            for page in range(1, page_count + 1):
+                print(f"Getting webhooks from page {page} of {page_count}")
+                page_url = webhooks_url + f'?page={page}&pagesize=50'
+                webhooks += self.scrape_webhooks_page(page_url)
+            print(f"Found {len(webhooks)} webhooks")
+
+        else: # Stack Overflow Business or Basic
+            slack_webhooks_url = f"{self.base_url}/admin/integrations/slack"
+            print(f"Getting webhooks from {slack_webhooks_url}")
+            webhooks += self.scrape_webhooks_page(slack_webhooks_url)
+            print(f"Found {len(webhooks)} Slack webhooks")
+
+            msteams_webhooks_url = f"{self.base_url}/admin/integrations/microsoft-teams"
+            print(f"Getting webhooks from {msteams_webhooks_url}")
+            webhooks += self.scrape_webhooks_page(msteams_webhooks_url)
+            print(f"Found {len(webhooks)} Microsoft Teams webhooks")
 
         return webhooks
     
 
-    def process_webhooks(self, webhook_rows):
+    def scrape_webhooks_page(self, page_url):
+        # For Stack Overflow Enterprise, the webhook_type is a column in the table
+        # For Stack Overflow Business or Basic, the webhook type isn't in the table, so it's
+        # inferred from the URL
+
+        response = self.get_page_response(page_url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        webhook_rows = soup.find_all('tr')
+
+        if self.soe: # Stack Overflow Enterprise
+            webhooks = self.process_webhooks(webhook_rows)
+        else: # Stack Overflow Business or Basic
+            # type should be the the last part of the URL
+            type = page_url.split('/')[-1]
+            webhooks = self.process_webhooks(webhook_rows, webhook_type=type)
+
+        return webhooks
+
+
+    def process_webhooks(self, webhook_rows, webhook_type=None):
 
         # A webhook description has three parts: tags, activity type, and channel
         # Example scenarios to be accounted for:
@@ -460,14 +524,24 @@ class WebScraper(object):
             # The word "posts" is used to denote all activity types
             # Activity types are comma-delimited; everything else is space-delimited
             # The words after "to" are the channel; also, surrounded by <b></b> tags
-            description = self.strip_html(columns[2].text).replace(
-                '(added via synonyms) ', '').replace(',', '')
 
+            if self.soe: # For Stack Overflow Enterprise
+                webhook_type = self.strip_html(columns[0].text)
+                description = self.strip_html(columns[2].text).replace(
+                    '(added via synonyms) ', '').replace(',', '')
+                creator = columns[3].text
+                creation_date = columns[4].text
+            else: # For Stack Overflow Business or Basic
+                description = self.strip_html(columns[0].text).replace(
+                    '(added via synonyms) ', '').replace(',', '')
+                creator = columns[1].text
+                creation_date = columns[2].text
+        
             if description.startswith('All post activity to'):
                 tags = ['all']
                 activities = activity_types
                 channel = description.split('All post activity to ')[1]
-            else:
+            elif description.startswith('Any'):
                 description = description.split('Any ')[1] # strip "Any"
                 channel = description.split(' to ')[1]
                 if 'posts to' in description: # all activity types
@@ -490,15 +564,24 @@ class WebScraper(object):
                         tags = description.split(' ')
                     else:
                         tags = ['all']
+            else: # likely a webhook that is disabled
+                # If a webhook is disabled, it will usually start with the text:
+                # "Notification failed, please re-authorize it."
+                print(f"Unable to process webhook description: '{description}'")
+                continue
 
-            webhook_type = self.strip_html(columns[0].text)
-            
+            if channel == 'self':
+                # For Microsoft Teams' webhooks, when a user selects private notifications,
+                # the channel is reported as "self", which isn't very informative. To improve on 
+                # that, append "self" with the user's name, who is the creator of the webhook.
+                channel = f"{channel} ({creator})"
+
             webhook = {
                 'type': webhook_type,
                 'channel': channel,
                 'tags': tags,
                 'activities': activities,
-                'creation_date': columns[4].text
+                'creation_date': creation_date
             }
             webhooks.append(webhook)
 
@@ -509,12 +592,11 @@ class WebScraper(object):
         # Uses the Requests session to get page response
 
         response = self.s.get(url)
-        if response.status_code == 200:
-            return response
-        else:
+        if not response.status_code == 200:
             print(f'Error getting page {url}')
             print(f'Response code: {response.status_code}')
-            return None
+        
+        return response
     
 
     def get_page_soup(self, url):
@@ -882,7 +964,9 @@ def process_api_data(api_data):
     tags = process_questions(tags, api_data['questions'])
     tags = process_articles(tags, api_data['articles'])
     tags = process_users(tags, api_data['users'])
-    tags = process_webhooks(tags, api_data['webhooks'])
+
+    if api_data['webhooks']:
+        tags = process_webhooks(tags, api_data['webhooks'])
 
     # tally up miscellaneous metrics for each tag
     for tag in tags:
@@ -1219,8 +1303,13 @@ def read_json(file_name):
     
     directory = 'data'
     file_path = os.path.join(directory, file_name)
-    with open(file_path, 'r') as f:
-        data = json.load(f)
+    try:
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        raise FileNotFoundError
+    
     return data
 
 
