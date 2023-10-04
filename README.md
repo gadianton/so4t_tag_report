@@ -74,7 +74,7 @@ Additional data points that can be scraped:
 
 More data will be added to the scraper in the future. If requirements are not met for a particular piece of data, the scraper will simply skip that data point and continue to run.
 
-To use this scraping function, simply append the `--scaper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
+To use this scraping function, simply append the `--scraper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
 
 ## Support, security, and legal
 Disclaimer: the creator of this project works at Stack Overflow, but it is a labor of love that comes with no formal support from Stack Overflow. 
