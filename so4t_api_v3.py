@@ -9,14 +9,14 @@ class V3Client(object):
 
     def __init__(self, url, token):
 
+        print("Initializing API v3 client...")
+
         if not url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
-            print("See --help for more information")
             raise SystemExit
 
         if not token: # check if API token is provided; if not, exit
             print("Missing required argument. Please provide an API token.")
-            print("See --help for more information")
             raise SystemExit
         else:
             self.token = token
@@ -87,6 +87,19 @@ class V3Client(object):
         smes = self.send_api_call(method, endpoint)
 
         return smes
+
+
+    def get_all_users(self):
+            
+            method = "get"
+            endpoint = "/users"
+            params = {
+                'page': 1,
+                'pagesize': 100,
+            }
+            users = self.send_api_call(method, endpoint, params)
+    
+            return users
 
 
     def send_api_call(self, method, endpoint, params={}):

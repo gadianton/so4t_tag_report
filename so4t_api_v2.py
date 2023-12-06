@@ -9,9 +9,10 @@ class V2Client(object):
 
     def __init__(self, url, key=None, token=None):
 
+        print("Initializing API v2.3 client...")
+
         if not url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
-            print("See --help for more information")
             raise SystemExit
         
         # Establish the class variables based on which product is being used
@@ -24,7 +25,6 @@ class V2Client(object):
             self.headers = {'X-API-Access-Token': self.token}
             if not self.token:
                 print("Missing required argument. Please provide an API token.")
-                print("See --help for more information")
                 raise SystemExit
         else: # Stack Overflow Enterprise
             self.soe = True
@@ -35,7 +35,6 @@ class V2Client(object):
             self.headers = {'X-API-Key': self.api_key}
             if not self.api_key:
                 print("Missing required argument. Please provide an API key.")
-                print("See --help for more information")
                 raise SystemExit
 
         # Test the API connection and set the SSL verification variable

@@ -119,11 +119,11 @@ def data_collector(args):
     so4t_data['questions'] = get_questions_answers_comments(v2client) # also gets answers/comments
     so4t_data['articles'] = get_articles(v2client)
     so4t_data['tags'] = get_tags(v3client) # also gets tag SMEs
-    so4t_data['users'] = get_users(v2client)
+    # so4t_data['users'] = get_users(v3client)
 
     # Get additional data via web scraping
     if args.scraper:
-        so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
+        # so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
         so4t_data['communities'] = scraper.get_communities()
         so4t_data['webhooks'] = scraper.get_webhooks(communities=so4t_data['communities'])
     else:
@@ -215,31 +215,17 @@ def get_tags(v3client):
     return tags
 
 
-def get_users(v2client):
+# def get_users(v3client):
 
-    if v2client.soe: # Stack Overflow Enterprise requires the generation of a custom filter
-        filter_attributes = [
-                "user.about_me",
-                "user.answer_count",
-                "user.down_vote_count",
-                "user.question_count",
-                "user.up_vote_count",
-                "user.email" # email is only available for Stack Overflow Enterprise
-        ]
-        filter_string = v2client.create_filter(filter_attributes)
-    else: # Stack Overflow Business or Basic
-        filter_string = '!6WPIommaBqvsI'
+#     users = v3client.get_all_users()
 
-    # Get all users via API
-    users = v2client.get_all_users(filter_string)
+#     # Exclude users with an ID of less than 1 (i.e. Community user and user groups)
+#     users = [user for user in users if user['id'] > 1]
 
-    # Exclude users with an ID of less than 1 (i.e. Community user and user groups)
-    users = [user for user in users if user['user_id'] > 1]
+#     if 'soedemo' in v3client.api_url: # for internal testing only
+#         users = [user for user in users if user['id'] > 28000]
 
-    if 'soedemo' in v2client.api_url: # for internal testing only
-        users = [user for user in users if user['user_id'] > 28000]
-
-    return users
+#     return users
 
 
 def filter_api_data_by_date(api_data, days):
@@ -282,7 +268,7 @@ def process_api_data(api_data):
     tags = process_tags(tags)
     tags = process_questions(tags, api_data['questions'])
     tags = process_articles(tags, api_data['articles'])
-    tags = process_users(tags, api_data['users'])
+    # tags = process_users(tags, api_data['users']
     tags = process_communities(tags, api_data.get('communities'))
     tags = process_webhooks(tags, api_data['webhooks'])
 
@@ -314,7 +300,7 @@ def process_tags(tags):
             'tag_name': tag['name'],
             'total_page_views': 0,
             'webhooks': 0,
-            'tag_watchers': 0,
+            'tag_watchers': tag['watcherCount'],
             'communities': 0,
             'individual_smes': 0,
             'group_smes': 0,
@@ -488,22 +474,9 @@ def process_articles(tags, articles):
     return tags
 
 
-def process_users(tags, users):
+# def process_users(tags, users):
 
-    if users[0].get('watched_tags'): # if this field exists, the data was collected
-        for user in users:
-            for tag in user['watched_tags']:
-                tag_index = get_tag_index(tags, tag)
-                try:
-                    tags[tag_index]['metrics']['tag_watchers'] += 1
-                except TypeError: # get_tag_index returned None
-                    print(f"Watched tag [{tag}] no longer exists for user ID {user['user_id']}")
-                    pass
-    else: # if this field does not exist, the data was not collected; therefore, remove the metric
-        for tag in tags:
-            del tag['metrics']['tag_watchers']
-
-    return tags
+#     return tags
 
 
 def process_communities(tags, communities):
