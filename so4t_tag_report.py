@@ -33,6 +33,7 @@ def main():
             so4t_data['tags'] = read_json('tags.json')
             so4t_data['users'] = read_json('users.json')
             so4t_data['webhooks'] = read_json('webhooks.json')
+            so4t_data['communities'] = read_json('communities.json')
         except FileNotFoundError:
             print('Required JSON data not found.')
             print('Please run the script without the --no-api argument to collect data via API.')
@@ -86,10 +87,6 @@ def get_args():
                         action='store_true',
                         help='Enables web scraping for extra data not available via API. Will '
                         'open a Chrome window and prompt manual login.')
-    parser.add_argument('--save-session',
-                        action='store_true',
-                        help='Saves the authenticated scraping session (cookies) to a file. This '
-                        'mitigates the need to log in manually each time the script is run.')
 
     return parser.parse_args()
 
@@ -101,26 +98,21 @@ def data_collector(args):
         session_file = 'so4t_session'
         try:
             with open(session_file, 'rb') as f:
-                session_data = pickle.load(f)
-            scraper = session_data[0]
-            scraper.s.cookies = session_data[1]
+                scraper = pickle.load(f)
             if scraper.base_url != args.url or not scraper.test_session():
-                print('Previously saved session is invalid or expired. Creating new session...')
-                scraper = WebScraper(args)
+                raise FileNotFoundError # force creation of new session
             else:
                 print('Using previously saved session...')
         except FileNotFoundError:
-            print('Previous session not found. Creating new session...')
-            scraper = WebScraper(args)
-            # If --save-session is used, save the authenticated session to a file
-            if args.save_session:
-                session_data = [scraper, scraper.s.cookies]
-                pickle.dump(session_data, open(session_file, 'wb'))
-                print(f"Session saved to file: '{session_file}'")
-
+            print('Previous scraper session does not exist or is expired. Creating new session...')
+            scraper = WebScraper(args.url)
+            with open(session_file, 'wb') as f:
+                pickle.dump(scraper, f)
+            print(f"Scraper session saved to file: '{session_file}'")
+        
     # Instantiate V2Client and V3Client classes to make API calls
-    v2client = V2Client(args)
-    v3client = V3Client(args)
+    v2client = V2Client(args.url, args.key, args.token)
+    v3client = V3Client(args.url, args.token)
     
     # Get all questions, answers, comments, articles, tags, and SMEs via API
     so4t_data = {}
@@ -131,20 +123,12 @@ def data_collector(args):
 
     # Get additional data via web scraping
     if args.scraper:
-        # Get watched tags for users
         so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
- 
-        # Get webhooks
-        so4t_data['webhooks'] = scraper.get_webhooks(args.url)
-
-        ### DISABLED SCRAPING FUNCTIONS ###
-        #     # Get user title and department
-        #     so4t_data['users'] = scraper.get_user_title_and_dept(so4t_data['users'])
-
-        #     # Get login histories for users
-        #     so4t_data['users'] = scraper.get_user_login_history(so4t_data['users'])
+        so4t_data['communities'] = scraper.get_communities()
+        so4t_data['webhooks'] = scraper.get_webhooks(communities=so4t_data['communities'])
     else:
-        so4t_data['webhooks'] = []
+        so4t_data['webhooks'] = None
+        so4t_data['communities'] = None
 
     # Export API data to JSON file
     for name, data in so4t_data.items():
@@ -252,6 +236,9 @@ def get_users(v2client):
     # Exclude users with an ID of less than 1 (i.e. Community user and user groups)
     users = [user for user in users if user['user_id'] > 1]
 
+    if 'soedemo' in v2client.api_url: # for internal testing only
+        users = [user for user in users if user['user_id'] > 28000]
+
     return users
 
 
@@ -292,14 +279,12 @@ def create_tag_report(api_data, days=None):
 def process_api_data(api_data):
 
     tags = api_data['tags']
-
     tags = process_tags(tags)
     tags = process_questions(tags, api_data['questions'])
     tags = process_articles(tags, api_data['articles'])
     tags = process_users(tags, api_data['users'])
-
-    if api_data['webhooks']:
-        tags = process_webhooks(tags, api_data['webhooks'])
+    tags = process_communities(tags, api_data.get('communities'))
+    tags = process_webhooks(tags, api_data['webhooks'])
 
     # tally up miscellaneous metrics for each tag
     for tag in tags:
@@ -330,6 +315,7 @@ def process_tags(tags):
             'total_page_views': 0,
             'webhooks': 0,
             'tag_watchers': 0,
+            'communities': 0,
             'individual_smes': 0,
             'group_smes': 0,
             'total_unique_smes': 0,
@@ -517,8 +503,28 @@ def process_users(tags, users):
         for tag in tags:
             del tag['metrics']['tag_watchers']
 
-    # this is where the user title and department would be added to the report
-    # this is also where the user login history would be added to the report
+    return tags
+
+
+def process_communities(tags, communities):
+
+    if communities == None: # if no communities were collected, remove the metric from the report
+        for tag in tags:
+            del tag['metrics']['communities']
+        return tags
+    
+    # Search for tags in community descriptions and add community count to tag metrics
+    for community in communities:
+        for tag in community['tags']:
+            tag_index = get_tag_index(tags, tag['name'])
+            try:
+                tags[tag_index]['metrics']['communities'] += 1
+                try:
+                    tags[tag_index]['communities'] += community
+                except KeyError: # if communities key does not exist, create it
+                    tags[tag_index]['communities'] = [community]
+            except TypeError: # get_tag_index returned None
+                pass
 
     return tags
 
@@ -528,7 +534,6 @@ def process_webhooks(tags, webhooks):
     if webhooks == None: # if no webhooks were collected, remove the metric from the report
         for tag in tags:
             del tag['metrics']['webhooks']
-
         return tags
     
     # Search for tags in webhook descriptions and add webhook count to tag metrics
@@ -539,7 +544,7 @@ def process_webhooks(tags, webhooks):
                 tags[tag_index]['metrics']['webhooks'] += 1
             except TypeError: # get_tag_index returned None
                 pass
-
+        
     return tags
 
 

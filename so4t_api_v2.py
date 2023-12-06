@@ -7,20 +7,20 @@ import requests
 
 class V2Client(object):
 
-    def __init__(self, args):
+    def __init__(self, url, key=None, token=None):
 
-        if not args.url: # check if URL is provided; if not, exit
+        if not url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
             print("See --help for more information")
             raise SystemExit
         
         # Establish the class variables based on which product is being used
-        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
+        if "stackoverflowteams.com" in url: # Stack Overflow Business or Basic
             self.soe = False
             self.api_url = "https://api.stackoverflowteams.com/2.3"
-            self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
-            self.token = args.token
-            self.api_key = None
+            self.team_slug = url.split("https://stackoverflowteams.com/c/")[1]
+            self.token = token
+            self.api_key = key
             self.headers = {'X-API-Access-Token': self.token}
             if not self.token:
                 print("Missing required argument. Please provide an API token.")
@@ -28,10 +28,10 @@ class V2Client(object):
                 raise SystemExit
         else: # Stack Overflow Enterprise
             self.soe = True
-            self.api_url = args.url + "/api/2.3"
+            self.api_url = url + "/api/2.3"
             self.team_slug = None
-            self.token = None
-            self.api_key = args.key
+            self.token = token
+            self.api_key = key
             self.headers = {'X-API-Key': self.api_key}
             if not self.api_key:
                 print("Missing required argument. Please provide an API key.")
@@ -48,11 +48,11 @@ class V2Client(object):
         ssl_verify = True
 
         params = {}
-        if self.token:
+        if self.soe:
+            headers = {'X-API-Key': self.api_key}
+        else:
             headers = {'X-API-Access-Token': self.token}
             params['team'] = self.team_slug
-        else:
-            headers = {'X-API-Key': self.api_key}
 
         print("Testing API 2.3 connection...")
         try:
@@ -143,7 +143,7 @@ class V2Client(object):
             params['filter'] = filter_string
 
         return self.get_items(endpoint_url, params)
-
+    
 
     def get_items(self, endpoint_url, params):
         
@@ -168,8 +168,14 @@ class V2Client(object):
                 print(response.text)
                 print(f"Failed request URL and params: {response.request.url}")
                 break
+            
+            try:
+                items += response.json().get('items')
+            except requests.exceptions.JSONDecodeError:
+                print(f"Unexpected response from {endpoint_url}")
+                print(f"Expected JSON response, but received this instead: {response.text}")
+                raise SystemExit
 
-            items += response.json().get('items')
             if not response.json().get('has_more'):
                 break
 

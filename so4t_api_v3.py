@@ -7,26 +7,26 @@ import requests
 
 class V3Client(object):
 
-    def __init__(self, args):
+    def __init__(self, url, token):
 
-        if not args.url: # check if URL is provided; if not, exit
+        if not url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
             print("See --help for more information")
             raise SystemExit
 
-        if not args.token: # check if API token is provided; if not, exit
+        if not token: # check if API token is provided; if not, exit
             print("Missing required argument. Please provide an API token.")
             print("See --help for more information")
             raise SystemExit
         else:
-            self.token = args.token
+            self.token = token
             self.headers = {'Authorization': f'Bearer {self.token}'}
 
-        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
-            self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
+        if "stackoverflowteams.com" in url: # Stack Overflow Business or Basic
+            self.team_slug = url.split("https://stackoverflowteams.com/c/")[1]
             self.api_url = f"https://api.stackoverflowteams.com/v3/teams/{self.team_slug}"
         else: # Stack Overflow Enterprise
-            self.api_url = args.url + "/api/v3"
+            self.api_url = url + "/api/v3"
 
         self.ssl_verify = self.test_connection() # test the API connection
 
@@ -52,6 +52,19 @@ class V3Client(object):
             print("Unable to connect to API. Please check your URL and API token.")
             print(response.text)
             raise SystemExit
+
+
+    def get_all_questions(self):
+            
+            method = "get"
+            endpoint = "/questions"
+            params = {
+                'page': 1,
+                'pagesize': 100,
+            }
+            questions = self.send_api_call(method, endpoint, params)
+    
+            return questions
 
 
     def get_all_tags(self):
@@ -90,8 +103,6 @@ class V3Client(object):
                 response = get_response(endpoint_url, headers=self.headers, json=params, 
                                         verify=self.ssl_verify)
 
-            # check for rate limiting thresholds
-            # print(response.headers) 
             if response.status_code not in [200, 201, 204]:
                 print(f"API call to {endpoint_url} failed with status code {response.status_code}")
                 print(response.text)

@@ -1,6 +1,7 @@
 # Standard Python libraries
 import re
 import time
+import pickle
 
 # Third-party libraries
 import requests
@@ -10,19 +11,21 @@ from bs4 import BeautifulSoup
 
 class WebScraper(object):
     
-    def __init__(self, args):
+    def __init__(self, url):
     
-        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
+        if "stackoverflowteams.com" in url: # Stack Overflow Business or Basic
             self.soe = False
         else: # Stack Overflow Enterprise
             self.soe = True
         
-        self.base_url = args.url
+        self.base_url = url
         self.s = self.create_session() # create a Requests session with authentication cookies
         self.admin = self.validate_admin_permissions() # check if user has admin permissions
 
 
     def create_session(self):
+
+        s = requests.Session()
 
         # Configure Chrome driver
         options = webdriver.ChromeOptions()
@@ -60,7 +63,6 @@ class WebScraper(object):
         
         # pass authentication cookies from Selenium driver to Requests session
         cookies = driver.get_cookies()
-        s = requests.Session()
         for cookie in cookies:
             s.cookies.set(cookie['name'], cookie['value'])
         driver.close()
@@ -72,7 +74,7 @@ class WebScraper(object):
     def test_session(self):
 
         soup = self.get_page_soup(f"{self.base_url}/users")
-        if soup.find('div', {'class': 's-user-card'}):
+        if soup.find('li', {'role': 'none'}): # this element is only shows if the user is logged in
             return True
         else:
             return False
@@ -95,11 +97,100 @@ class WebScraper(object):
             return True
 
 
+    def test_session(self):
+
+        soup = self.get_page_soup(f"{self.base_url}/users")
+        if soup.find('div', {'class': 's-avatar'}):
+            return True
+        else:
+            return False
+
+
+    def get_communities(self):
+        """
+        This function gets all communities on the Stack Overflow for Teams instance
+        Returns:
+            communities: list of dictionaries, where each dictionary is a community
+        
+        Each community has the following keys:
+            name: str
+            id: int
+            url: str
+            description: str
+            tags: list of dictionaries, where each dictionary is a tag
+            members: list of dictionaries, where each dictionary is a user
+        """
+
+        print("Getting communities")
+        communities_url = f"{self.base_url}/communities"
+        communities_page = self.get_page_soup(communities_url)
+        community_grid = communities_page.find('div', {'class': 'd-grid'})
+
+        try:
+            community_cards = community_grid.find_all('article')
+        except AttributeError: # no communities found
+            print('Communities feature not turned on.')
+            return None
+
+        communities = []
+        for card in community_cards:
+            community = {
+                'name': card.find('h3').text,
+                'id': int(card.find('a')['href'].split('/')[-1]),
+                'url': f"{communities_url}/{card.find('a')['href'].split('/')[-1]}",
+                'description': card.find('p').text,
+                'tags': [],
+                'members': []
+            }
+
+            # Get community tags
+            tags = card.find('ul').find_all('li')
+            for tag in tags:
+                tag_info = {
+                    'name': tag.find('span').text,
+                    'id': int(tag.find('a')['href'].split('/')[-1]),
+                    'url': f"{self.base_url}/tags/{tag.find('a')['href'].split('/')[-1]}"
+                }
+                community['tags'].append(tag_info)
+
+            # Get community members
+            print(f"Getting membership for the {community['name']} community")
+            members_url = f"{community['url']}/members"
+            member_table = self.get_page_soup(members_url).find('tbody')
+
+            try:
+                member_rows = member_table.find_all('tr')
+            except AttributeError: # no members found
+                print(f"No members found for the {community['name']} community")
+                continue
+
+            for row in member_rows:
+                name_column = row.find('th')
+                name_field = name_column.find_all('a')[-1]
+                member = {
+                    'name': self.strip_html(name_field.text),
+                    'id': int(name_field['href'].split('/')[-1]),
+                    'url': f"{self.base_url}/users/{name_field['href'].split('/')[-1]}"
+                }
+                community['members'].append(member)
+
+            communities.append(community)
+
+        return communities
+
+
     def get_user_title_and_dept(self, users):
-        # This function goes to the profile page of each user and gets their title and department
-        # This data is not available via the API
-        # Requires that the title and departement assertions have been configured in the SAML
-        # settings; otherwise, the title and department will not be displayed on the profile page
+        """
+        This function goes to the profile page of each user and gets their title and department
+        Requires that the title and department assertions have been configured in the SAML
+        settings; otherwise, the title and department will not be displayed on the profile page
+        
+        Args:
+            users: list of user dictionaries obtained from the /users API endpoint
+
+        Returns:
+            users: list of user dictionaries with 'title' and 'department' keys added
+        """
 
         for user in users:
             if user['user_id'] <= 1: # skip the Community user and user groups
@@ -122,9 +213,16 @@ class WebScraper(object):
     
 
     def get_user_watched_tags(self, users):
-        # This function goes to the watched tags page of each user and gets their watched tags
-        # This data is not available via the API
-        # It requires Stack Overflow Enterprise and admin permissions, both of which are checked
+        """
+        This function goes to the watched tags page of each user and gets their watched tags
+        It requires Stack Overflow Enterprise and admin permissions, both of which are checked for
+
+        Args:
+            users: list of user dictionaries obtained from the /users API endpoint
+
+        Returns:
+            users: list of user dictionaries with 'watched_tags' key added
+        """
 
         if not self.soe: # check if using Stack Overflow Enterprise
             print('Not able to obtain user watched tags. This is only available on '
@@ -155,10 +253,17 @@ class WebScraper(object):
 
 
     def get_user_login_history(self, users):
-        # This function goes to the account page of each user and gets their login history and
+        """
+        This function goes to the account page of each user and gets their login history and
         # presents it as a list of timestamps
-        # This data is not available via the API
-        # It requires Stack Overflow Enterprise and admin permissions, both of which are checked
+        It requires Stack Overflow Enterprise and admin permissions, both of which are checked for
+
+        Args:
+            users: list of user dictionaries obtained from the /users API endpoint
+        
+        Returns:
+            users: list of user dictionaries with 'login_history' key added
+        """
 
         if not self.soe: # check if using Stack Overflow Enterprise
             print('Not able to obtain user login history. This is only available on '
@@ -196,16 +301,27 @@ class WebScraper(object):
         return users
     
 
-    def get_webhooks(self, base_url):
-        # This function gets all webhooks configured for Stack Overflow for Teams instance
-        # This data is not available via the API
-        # It requires admin permissions, which is checked for
-        # The scraped data requires a bit of processing to get it into a usable format, which has
-        # been split off into a separate process_webhooks function
+    def get_webhooks(self, communities=None):
+        """
+        This function gets all webhooks configured for Stack Overflow for Teams instance
+        It requires admin permissions, which is checked for
+        The scraped data requires a bit of processing to get it into a usable format, which has
+        been split off into a separate process_webhooks function
+        
+        Returns:
+            webhooks: list of dictionaries, where each dictionary is a webhook
+
+        Each webhook has the following keys:
+            type: str
+            channel: str
+            tags: list of strings
+            activities: list of strings
+            creation_date: str
+        """
 
         if not self.admin: # check if user has admin permissions
             print('Not able to obtain webhook data. User is not an admin or URL is invalid')
-            return []
+            return None
         
         webhooks = []
         if self.soe: # Stack Overflow Enterprise
@@ -214,24 +330,24 @@ class WebScraper(object):
             for page in range(1, page_count + 1):
                 print(f"Getting webhooks from page {page} of {page_count}")
                 page_url = webhooks_url + f'?page={page}&pagesize=50'
-                webhooks += self.scrape_webhooks_page(page_url)
+                webhooks += self.scrape_webhooks_page(page_url, communities)
             print(f"Found {len(webhooks)} webhooks")
 
         else: # Stack Overflow Business or Basic
             slack_webhooks_url = f"{self.base_url}/admin/integrations/slack"
             print(f"Getting webhooks from {slack_webhooks_url}")
-            webhooks += self.scrape_webhooks_page(slack_webhooks_url)
+            webhooks += self.scrape_webhooks_page(slack_webhooks_url, communities)
             print(f"Found {len(webhooks)} Slack webhooks")
 
             msteams_webhooks_url = f"{self.base_url}/admin/integrations/microsoft-teams"
             print(f"Getting webhooks from {msteams_webhooks_url}")
-            webhooks += self.scrape_webhooks_page(msteams_webhooks_url)
+            webhooks += self.scrape_webhooks_page(msteams_webhooks_url, communities)
             print(f"Found {len(webhooks)} Microsoft Teams webhooks")
 
         return webhooks
     
 
-    def scrape_webhooks_page(self, page_url):
+    def scrape_webhooks_page(self, page_url, communities):
         # For Stack Overflow Enterprise, the webhook_type is a column in the table
         # For Stack Overflow Business or Basic, the webhook type isn't in the table, so it's
         # inferred from the URL
@@ -241,16 +357,16 @@ class WebScraper(object):
         webhook_rows = soup.find_all('tr')
 
         if self.soe: # Stack Overflow Enterprise
-            webhooks = self.process_webhooks(webhook_rows)
+            webhooks = self.process_webhooks(webhook_rows, communities)
         else: # Stack Overflow Business or Basic
             # type should be the the last part of the URL
             type = page_url.split('/')[-1]
-            webhooks = self.process_webhooks(webhook_rows, webhook_type=type)
+            webhooks = self.process_webhooks(webhook_rows, communities, webhook_type=type)
 
         return webhooks
 
 
-    def process_webhooks(self, webhook_rows, webhook_type=None):
+    def process_webhooks(self, webhook_rows, communities, webhook_type=None):
 
         # A webhook description has three parts: tags, activity type, and channel
         # Example scenarios to be accounted for:
@@ -261,6 +377,7 @@ class WebScraper(object):
                 # answers to #admiral
             # Any questions, answers to #help-desk
             # Any machine-learning posts to #mits-demo
+            # Any questions, answer in Customer Success to @Jonathan
 
         activity_types = ['edited questions', 'updated answers', 'accepted answers', 'questions', 
                         'answers', 'comments']
@@ -297,9 +414,17 @@ class WebScraper(object):
             elif description.startswith('Any'):
                 description = description.split('Any ')[1] # strip "Any"
                 channel = description.split(' to ')[1]
-                if 'posts to' in description: # all activity types
+                if 'posts to' in description: # i.e. all activity types
                     activities = activity_types
                     tags = description.split(' posts to ')[0].split(' ')
+                elif ' in ' in description: # community is specified; use community tags
+                    community_name = description.split(' in ')[1].split(' to')[0]
+                    for community in communities:
+                        if community['name'] == community_name:
+                            break
+                    tags = [tag['name'] for tag in community['tags']]
+                    activities, description = self.process_webhook_activities(
+                        description, activity_types)
                 else: 
                     # Activity types are specified, but tags may or may not be
                     # Of the remaining words, find which are tags and activity types
@@ -308,11 +433,8 @@ class WebScraper(object):
                     # Tags are always first
                     # Tags are always followed by activity types
                     description = description.split(' to ')[0] # strip off channel
-                    activities = []
-                    for activity_type in activity_types:
-                        if activity_type in description:
-                            activities.append(activity_type)
-                            description = description.replace(activity_type, '').strip()
+                    activities, description = self.process_webhook_activities(
+                        description, activity_types)
                     if description:
                         tags = description.split(' ')
                     else:
@@ -336,10 +458,22 @@ class WebScraper(object):
                 'activities': activities,
                 'creation_date': creation_date
             }
+
             webhooks.append(webhook)
 
         return webhooks
 
+
+    def process_webhook_activities(self, description, activity_types):
+
+        activities = []
+        for activity_type in activity_types:
+            if activity_type in description:
+                activities.append(activity_type)
+                description = description.replace(activity_type, '').strip()
+
+        return activities, description
+    
         
     def get_page_response(self, url):
         # Uses the Requests session to get page response
