@@ -6,7 +6,7 @@ Here is a list of current metrics that are included in the CSV report, as well a
 |------------|--------------------------------------------------------------------------------------|
 | Total Page Views | The aggregate number of page views across all questions and articles for a given tag. This can be a helpful measurement of how popular the tag is, as well as how often knowledge is being reused within a given tag.|
 | Tag Watchers | The number of users who have subscribed to email notifications for a given tag. This can be a gauge of how much visibility this tag receives when a new question, answer, or article is posted.|
-| Communities | The number of communities associated with a given tag. This can be a gauge of how much visibility this tag receives when a new questions, answer, or article is posted.|
+| Communities | The number of communities associated with a given tag. This can be a gauge of how much visibility this tag receives when a new question, answer, or article is posted.|
 | Webhooks | The number of webhooks configured for a given tag (i.e. subscriptions to tag notifications via Slack or Microsoft Teams). This can be a gauge of how much visibility this tag receives when a new questions, answer, or article is posted.| 
 | Total SMEs | The number of unique users who have been configured as a Subject Matter Expert (SME) for a given tag. Configuring SMEs makes it easier for users to route questions to the right people. It also provides a baseline level of ownership/acountability for a given tag.|
 | Median Time to First Answer | The median amount of time it takes for a question to receive its first answer (in hours). This can be a gauge of how quickly questions are being answered within a given tag.|
