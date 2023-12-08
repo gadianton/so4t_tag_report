@@ -1,10 +1,20 @@
 # Stack Overflow for Teams Tag Report (so4t_tag_report)
-An API script for Stack Overflow for Teams that creates a report (CSV file) of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
+An Python script that uses the Stack Overflow for Teams API to creates a CSV report of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
 
+For a detailed list of metrics included in the report, see [Metrics in the CSV Report](https://github.com/jklick-so/so4t_tag_report/blob/main/Docs/metrics.md)
+
+## Table of Contents
+* [Requirements](https://github.com/jklick-so/so4t_tag_report#requirements)
+* [Setup](https://github.com/jklick-so/so4t_tag_report#setup)
+* [Basic Usage](https://github.com/jklick-so/so4t_tag_report#basic-usage)
+* [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#advanced-usage)
+  * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report#--no-api-and---days)
+  * [`--scraper`](https://github.com/jklick-so/so4t_tag_report#--scraper)
+* [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report#support-security-and-legal)
 
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
-* Python 3.8 or higher ([download](https://www.python.org/downloads/))
+* Python 3.9 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
 
 If using the `--scraper` argument, there are additional requirements (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--scraper) section)
@@ -65,14 +75,12 @@ Note: when using `--no-api`, the `--url`, `--key`, and `--token` arguments are u
 ### `--scraper`
 The `--scraper` argument allows you to scrape additional data from the Teams instance, particularly data that is **not** available via the API (yet). 
 
-> **NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run. Additional requirements are listed below, on a per-data point basis.
+> **NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run.
 
-Additional data points that can be scraped:
+Here are the additional data points that are obtained when scraping is enabled, along with any additional requirements for obtaining those data points:
 
 * The number of configured webhooks (ChatOps notifications) for each tag [Requirements: admin permissions]
-* The number of tag watcher per tag [Requirements: Stack Overflow Enterprise and admin permissions]
-
-More data will be added to the scraper in the future. If requirements are not met for a particular piece of data, the scraper will simply skip that data point and continue to run.
+* The number of communities associated with a tag. If there are webhooks configured for a community, the webhook count will be included in the webhook count for the tag. [Requirements: admin permissions]
 
 To use this scraping function, simply append the `--scraper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
 

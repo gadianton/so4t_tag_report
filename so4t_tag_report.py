@@ -328,9 +328,7 @@ def process_tags(tags):
             'webhooks': 0,
             'tag_watchers': tag['watcherCount'],
             'communities': 0,
-            'individual_smes': 0,
-            'group_smes': 0,
-            'total_unique_smes': 0,
+            'total_smes': 0,
             'median_time_to_first_answer_hours': 0,
             'median_time_to_first_response_hours': 0,
             'total_unique_contributors': 0,
@@ -375,10 +373,7 @@ def process_tags(tags):
                 tag['contributors']['group_smes'] = add_user_to_list(
                     user['id'], tag['contributors']['group_smes'])
         
-        tag['metrics']['individual_smes'] = len(
-            tag['contributors']['individual_smes'])
-        tag['metrics']['group_smes'] = len(tag['contributors']['group_smes'])
-        tag['metrics']['total_unique_smes'] = len(set(
+        tag['metrics']['total_smes'] = len(set(
             tag['contributors']['individual_smes'] + tag['contributors']['group_smes']))
         
     return tags
