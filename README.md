@@ -1,5 +1,5 @@
 # Stack Overflow for Teams Tag Report (so4t_tag_report)
-A Python script that uses the Stack Overflow for Teams API to creates a CSV report of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
+A Python script that uses the Stack Overflow for Teams API to create a CSV report of how well each tag is performing. You can see an example of what the output looks like in the Examples directory ([here](https://github.com/jklick-so/so4t_tag_report/blob/main/Examples/tag_metrics.csv)).
 
 For a detailed list of metrics included in the report, see [Metrics in the CSV Report](https://github.com/jklick-so/so4t_tag_report/blob/main/Docs/metrics.md)
 
