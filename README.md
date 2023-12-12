@@ -4,13 +4,13 @@ A Python script that uses the Stack Overflow for Teams API to create a CSV repor
 For a detailed list of metrics included in the report, see [Metrics in the CSV Report](https://github.com/jklick-so/so4t_tag_report/blob/main/Docs/metrics.md)
 
 ## Table of Contents
-* [Requirements](https://github.com/jklick-so/so4t_tag_report#requirements)
-* [Setup](https://github.com/jklick-so/so4t_tag_report#setup)
-* [Basic Usage](https://github.com/jklick-so/so4t_tag_report#basic-usage)
-* [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#advanced-usage)
-  * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report#--no-api-and---days)
-  * [`--scraper`](https://github.com/jklick-so/so4t_tag_report#--scraper)
-* [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report#support-security-and-legal)
+* [Requirements](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#requirements)
+* [Setup](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#setup)
+* [Basic Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#basic-usage)
+* [Advanced Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#advanced-usage)
+  * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--no-api-and---days)
+  * [`--scraper`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--scraper)
+* [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#support-security-and-legal)
 
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
