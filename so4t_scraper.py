@@ -1,7 +1,6 @@
 # Standard Python libraries
 import re
 import time
-import pickle
 
 # Third-party libraries
 import requests
