@@ -10,14 +10,14 @@ from bs4 import BeautifulSoup
 
 class WebScraper(object):
     
-    def __init__(self, args):
+    def __init__(self, base_url):
     
-        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
+        if "stackoverflowteams.com" in base_url: # Stack Overflow Business or Basic
             self.soe = False
         else: # Stack Overflow Enterprise
             self.soe = True
         
-        self.base_url = args.url
+        self.base_url = base_url
         self.s = self.create_session() # create a Requests session with authentication cookies
         self.admin = self.validate_admin_permissions() # check if user has admin permissions
 

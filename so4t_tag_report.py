@@ -86,10 +86,6 @@ def get_args():
                         action='store_true',
                         help='Enables web scraping for extra data not available via API. Will '
                         'open a Chrome window and prompt manual login.')
-    parser.add_argument('--save-session',
-                        action='store_true',
-                        help='Saves the authenticated scraping session (cookies) to a file. This '
-                        'mitigates the need to log in manually each time the script is run.')
 
     return parser.parse_args()
 
@@ -101,22 +97,14 @@ def data_collector(args):
         session_file = 'so4t_session'
         try:
             with open(session_file, 'rb') as f:
-                session_data = pickle.load(f)
-            scraper = session_data[0]
-            scraper.s.cookies = session_data[1]
+                scraper = pickle.load(f)
             if scraper.base_url != args.url or not scraper.test_session():
-                print('Previously saved session is invalid or expired. Creating new session...')
-                scraper = WebScraper(args)
-            else:
-                print('Using previously saved session...')
+                raise FileNotFoundError # if the session is invalid, create a new one
         except FileNotFoundError:
-            print('Previous session not found. Creating new session...')
-            scraper = WebScraper(args)
-            # If --save-session is used, save the authenticated session to a file
-            if args.save_session:
-                session_data = [scraper, scraper.s.cookies]
-                pickle.dump(session_data, open(session_file, 'wb'))
-                print(f"Session saved to file: '{session_file}'")
+            print('Opening a Chrome window to authenticate web scraping...')
+            scraper = WebScraper(args.url)
+            with open(session_file, 'wb') as f:
+                pickle.dump(scraper, f)
 
     # Instantiate V2Client and V3Client classes to make API calls
     v2client = V2Client(args)
@@ -131,20 +119,10 @@ def data_collector(args):
 
     # Get additional data via web scraping
     if args.scraper:
-        # Get watched tags for users
         so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
- 
-        # Get webhooks
         so4t_data['webhooks'] = scraper.get_webhooks(args.url)
-
-        ### DISABLED SCRAPING FUNCTIONS ###
-        #     # Get user title and department
-        #     so4t_data['users'] = scraper.get_user_title_and_dept(so4t_data['users'])
-
-        #     # Get login histories for users
-        #     so4t_data['users'] = scraper.get_user_login_history(so4t_data['users'])
     else:
-        so4t_data['webhooks'] = []
+        so4t_data['webhooks'] = None
 
     # Export API data to JSON file
     for name, data in so4t_data.items():
@@ -252,6 +230,10 @@ def get_users(v2client):
     # Exclude users with an ID of less than 1 (i.e. Community user and user groups)
     users = [user for user in users if user['user_id'] > 1]
 
+    # For internal test environment:
+    if 'soedemo' in v2client.api_url:
+        users = [user for user in users if user['user_id'] > 28000]
+
     return users
 
 
@@ -330,8 +312,6 @@ def process_tags(tags):
             'total_page_views': 0,
             'webhooks': 0,
             'tag_watchers': 0,
-            'individual_smes': 0,
-            'group_smes': 0,
             'total_unique_smes': 0,
             'unique_askers': 0,
             'unique_answerers': 0,
@@ -375,9 +355,6 @@ def process_tags(tags):
                 tag['contributors']['group_smes'] = add_user_to_list(
                     user['id'], tag['contributors']['group_smes'])
         
-        tag['metrics']['individual_smes'] = len(
-            tag['contributors']['individual_smes'])
-        tag['metrics']['group_smes'] = len(tag['contributors']['group_smes'])
         tag['metrics']['total_unique_smes'] = len(set(
             tag['contributors']['individual_smes'] + tag['contributors']['group_smes']))
         
@@ -390,13 +367,10 @@ def process_questions(tags, questions):
         for tag in question['tags']:
             tag_index = get_tag_index(tags, tag)
             tag_data = tags[tag_index]
-            tag_data, asker_id = validate_tag_user(tag_data, question['owner'])
+            asker_id = validate_tag_user(question['owner'])
             
             tag_data['contributors']['askers'] = add_user_to_list(
                 asker_id, tag_data['contributors']['askers'])
-
-            tag_data['users'][asker_id]['question_upvotes'] += question['up_vote_count']
-            tag_data['users'][asker_id]['questions'] += 1
 
             tag_data['metrics']['question_count'] += 1
             tag_data['metrics']['total_page_views'] += question['view_count']
@@ -406,12 +380,9 @@ def process_questions(tags, questions):
             if question.get('comments'):
                 tag_data['metrics']['question_comments'] += len(question['comments'])
                 for comment in question['comments']:
-                    tag_data, commenter_id = validate_tag_user(tag_data, comment['owner'])
+                    commenter_id = validate_tag_user(comment['owner'])
                     tag_data['contributors']['commenters'] = add_user_to_list(
                         commenter_id, tag_data['contributors']['commenters'])
-                    
-                    tag_data['users'][commenter_id]['comments'] += 1
-                    tag_data['users'][commenter_id]['comment_upvotes'] += comment['score']
             
             # calculate tag metrics for answers
             if question.get('answers'):
@@ -428,17 +399,13 @@ def process_answers(tag_data, answers, question):
 
     answer_times = []
     for answer in answers:
-        tag_data, answerer_id = validate_tag_user(
-            tag_data, answer['owner'])
+        answerer_id = validate_tag_user(answer['owner'])
         tag_data['contributors']['answerers'] = add_user_to_list(
             answerer_id, tag_data['contributors']['answerers'])
         if answer['is_accepted']:
             tag_data['metrics']['questions_accepted_answer'] += 1
-            tag_data['users'][answerer_id]['answers_accepted'] += 1
         tag_data['metrics']['answer_count'] += 1
-        tag_data['users'][answerer_id]['answers'] += 1
         tag_data['metrics']['answer_upvotes'] += answer['up_vote_count']
-        tag_data['users'][answerer_id]['answer_upvotes'] += answer['up_vote_count']
         tag_data['metrics']['answer_downvotes'] += answer['down_vote_count']
 
         # Calculate number of answers from SMEs
@@ -449,14 +416,10 @@ def process_answers(tag_data, answers, question):
         if answer.get('comments'):
             tag_data['metrics']['answer_comments'] += len(answer['comments'])
             for comment in answer['comments']:
-                tag_data, commenter_id = validate_tag_user(
-                    tag_data, comment['owner']
-                )
+                commenter_id = validate_tag_user(comment['owner'])
                 tag_data['contributors']['commenters'] = add_user_to_list(
                     commenter_id, tag_data['contributors']['commenters']
                 )
-                tag_data['users'][commenter_id]['comments'] += 1
-                tag_data['users'][commenter_id]['comment_upvotes'] += comment['score']
 
         answer_times.append(answer['creation_date'] - question['creation_date'])
 
@@ -476,12 +439,10 @@ def process_articles(tags, articles):
         for tag in article['tags']:
             tag_index = get_tag_index(tags, tag)
             tag_data = tags[tag_index]
-            tag_data, article_author_id = validate_tag_user(tag_data, article['owner'])
+            article_author_id = validate_tag_user(article['owner'])
             tag_data['metrics']['total_page_views'] += article['view_count']
             tag_data['metrics']['article_count'] += 1
-            tag_data['users'][article_author_id]['articles'] += 1
             tag_data['metrics']['article_upvotes'] += article['score']
-            tag_data['users'][article_author_id]['article_upvotes'] += article['score']
             tag_data['metrics']['article_comments'] += article['comment_count']
             tag_data['contributors']['article_contributors'] = add_user_to_list(
                 article_author_id, tag_data['contributors']['article_contributors']
@@ -516,9 +477,6 @@ def process_users(tags, users):
     else: # if this field does not exist, the data was not collected; therefore, remove the metric
         for tag in tags:
             del tag['metrics']['tag_watchers']
-
-    # this is where the user title and department would be added to the report
-    # this is also where the user login history would be added to the report
 
     return tags
 
@@ -568,38 +526,36 @@ def add_user_to_list(user_id, user_list):
     return user_list
 
 
-def validate_tag_user(tag, user):
+def validate_tag_user(user):
 
     try:
         user_id = user['user_id']
     except KeyError:
-        user_id = 'unknown'
-        user['display_name'] = None
-        user['link'] = None
+        user_id = f"{user['display_name']} (DELETED)"
     
-    if user_id not in tag['users']:
-        tag['users'][user_id] = {
-            'id': user_id,
-            'name': user['display_name'],
-            'profile_url': user['link'],
-            'questions': 0,
-            'question_upvotes': 0,
-            'answers': 0,
-            'answer_upvotes': 0,
-            'answers_accepted': 0,
-            'articles': 0,
-            'article_upvotes': 0,
-            'comments': 0,
-            'comment_upvotes': 0,
-            'sme_individual': False,
-            'sme_group': False
-        }
-        if user_id in tag['contributors']['individual_smes']:
-            tag['users'][user_id]['sme_individual'] = True
-        if user_id in tag['contributors']['group_smes']:
-            tag['users'][user_id]['sme_group'] = True
+    # if user_id not in tag['users']:
+    #     tag['users'][user_id] = {
+    #         'id': user_id,
+    #         'name': user['display_name'],
+    #         'profile_url': user['link'],
+    #         'questions': 0,
+    #         'question_upvotes': 0,
+    #         'answers': 0,
+    #         'answer_upvotes': 0,
+    #         'answers_accepted': 0,
+    #         'articles': 0,
+    #         'article_upvotes': 0,
+    #         'comments': 0,
+    #         'comment_upvotes': 0,
+    #         'sme_individual': False,
+    #         'sme_group': False
+    #     }
+    #     if user_id in tag['contributors']['individual_smes']:
+    #         tag['users'][user_id]['sme_individual'] = True
+    #     if user_id in tag['contributors']['group_smes']:
+    #         tag['users'][user_id]['sme_group'] = True
 
-    return tag, user_id
+    return user_id
 
 
 def export_to_csv(data_name, data):
