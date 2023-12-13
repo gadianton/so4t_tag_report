@@ -101,7 +101,7 @@ def data_collector(args):
             if scraper.base_url != args.url or not scraper.test_session():
                 raise FileNotFoundError # if the session is invalid, create a new one
         except FileNotFoundError:
-            print('Opening a Chrome window to authenticate web scraping...')
+            print('Opening a Chrome window to authenticate Stack Overflow for Teams...')
             scraper = WebScraper(args.url)
             with open(session_file, 'wb') as f:
                 pickle.dump(scraper, f)
@@ -120,9 +120,11 @@ def data_collector(args):
     # Get additional data via web scraping
     if args.scraper:
         so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
-        so4t_data['webhooks'] = scraper.get_webhooks(args.url)
+        so4t_data['communities'] = scraper.get_communities()
+        so4t_data['webhooks'] = scraper.get_webhooks(so4t_data['communities'])
     else:
         so4t_data['webhooks'] = None
+        so4t_data['communities'] = None
 
     # Export API data to JSON file
     for name, data in so4t_data.items():
@@ -279,9 +281,13 @@ def process_api_data(api_data):
     tags = process_questions(tags, api_data['questions'])
     tags = process_articles(tags, api_data['articles'])
     tags = process_users(tags, api_data['users'])
+    tags = process_communities(tags, api_data['communities'])
 
     if api_data['webhooks']:
         tags = process_webhooks(tags, api_data['webhooks'])
+    else:
+        for tag in tags:
+            del tag['metrics']['webhooks']
 
     # tally up miscellaneous metrics for each tag
     for tag in tags:
@@ -290,7 +296,7 @@ def process_api_data(api_data):
         tag['metrics']['unique_commenters'] = len(tag['contributors']['commenters'])
         tag['metrics']['unique_article_contributors'] = len(
             tag['contributors']['article_contributors'])
-        tag['metrics']['unique_contributors'] = len(set(
+        tag['metrics']['total_unique_contributors'] = len(set(
             tag['contributors']['askers'] + 
             tag['contributors']['answerers'] +
             tag['contributors']['commenters'] + 
@@ -312,11 +318,13 @@ def process_tags(tags):
             'total_page_views': 0,
             'webhooks': 0,
             'tag_watchers': 0,
-            'total_unique_smes': 0,
+            'communities': 0,
+            'total_smes': 0,
+            'median_answer_time_hours': 0,
+            'total_unique_contributors': 0,
             'unique_askers': 0,
             'unique_answerers': 0,
             'unique_commenters': 0,
-            'unique_contributors': 0,
             'unique_article_contributors': 0,
             'question_count': 0,
             'question_upvotes': 0,
@@ -330,10 +338,9 @@ def process_tags(tags):
             'answer_upvotes': 0,
             'answer_downvotes': 0,
             'answer_comments': 0,
-            'median_answer_time_hours': 0,
             'article_count': 0,
             'article_upvotes': 0,
-            'article_comments': 0,
+            'article_comments': 0
         }
         tag['contributors'] = {
             'askers': [],
@@ -355,7 +362,7 @@ def process_tags(tags):
                 tag['contributors']['group_smes'] = add_user_to_list(
                     user['id'], tag['contributors']['group_smes'])
         
-        tag['metrics']['total_unique_smes'] = len(set(
+        tag['metrics']['total_smes'] = len(set(
             tag['contributors']['individual_smes'] + tag['contributors']['group_smes']))
         
     return tags
@@ -477,6 +484,29 @@ def process_users(tags, users):
     else: # if this field does not exist, the data was not collected; therefore, remove the metric
         for tag in tags:
             del tag['metrics']['tag_watchers']
+
+    return tags
+
+
+def process_communities(tags, communities):
+
+    if communities == None: # if no communities were collected, remove the metric from the report
+        for tag in tags:
+            del tag['metrics']['communities']
+        return tags
+    
+    # Search for tags in community descriptions and add community count to tag metrics
+    for community in communities:
+        for tag in community['tags']:
+            tag_index = get_tag_index(tags, tag['name'])
+            try:
+                tags[tag_index]['metrics']['communities'] += 1
+                try:
+                    tags[tag_index]['communities'] += community
+                except KeyError: # if communities key does not exist, create it
+                    tags[tag_index]['communities'] = [community]
+            except TypeError: # get_tag_index returned None
+                pass
 
     return tags
 
