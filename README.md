@@ -14,6 +14,7 @@ For a detailed list of metrics included in the report, see [Metrics in the CSV R
 
 ## Requirements
 * A Stack Overflow for Teams instance (Basic, Business, or Enterprise)
+  * If using a version of Stack Overflow Enterprise prior to 2023.3, please use the 2023.2 branch of this repository instead
 * Python 3.9 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
 
