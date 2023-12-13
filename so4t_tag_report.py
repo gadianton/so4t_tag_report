@@ -102,7 +102,7 @@ def data_collector(args):
             if scraper.base_url != args.url or not scraper.test_session():
                 raise FileNotFoundError # force creation of new session
         except FileNotFoundError:
-            print('Opening a Chrome window to authenticate web scraping...')
+            print('Opening a Chrome window to authenticate Stack Overflow for Teams...')
             scraper = WebScraper(args.url)
             with open(session_file, 'wb') as f:
                 pickle.dump(scraper, f)
