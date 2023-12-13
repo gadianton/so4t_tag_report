@@ -7,19 +7,19 @@ import requests
 
 class V2Client(object):
 
-    def __init__(self, args):
+    def __init__(self, url, token, key):
 
-        if not args.url: # check if URL is provided; if not, exit
+        if not url: # check if URL is provided; if not, exit
             print("Missing required argument. Please provide a URL.")
             print("See --help for more information")
             raise SystemExit
         
         # Establish the class variables based on which product is being used
-        if "stackoverflowteams.com" in args.url: # Stack Overflow Business or Basic
+        if "stackoverflowteams.com" in url: # Stack Overflow Business or Basic
             self.soe = False
             self.api_url = "https://api.stackoverflowteams.com/2.3"
-            self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
-            self.token = args.token
+            self.team_slug = url.split("https://stackoverflowteams.com/c/")[1]
+            self.token = token
             self.api_key = None
             self.headers = {'X-API-Access-Token': self.token}
             if not self.token:
@@ -28,10 +28,10 @@ class V2Client(object):
                 raise SystemExit
         else: # Stack Overflow Enterprise
             self.soe = True
-            self.api_url = args.url + "/api/2.3"
+            self.api_url = url + "/api/2.3"
             self.team_slug = None
             self.token = None
-            self.api_key = args.key
+            self.api_key = key
             self.headers = {'X-API-Key': self.api_key}
             if not self.api_key:
                 print("Missing required argument. Please provide an API key.")

@@ -107,8 +107,8 @@ def data_collector(args):
                 pickle.dump(scraper, f)
 
     # Instantiate V2Client and V3Client classes to make API calls
-    v2client = V2Client(args)
-    v3client = V3Client(args)
+    v2client = V2Client(args.url, args.token, args.key)
+    v3client = V3Client(args.url, args.token)
     
     # Get all questions, answers, comments, articles, tags, and SMEs via API
     so4t_data = {}
