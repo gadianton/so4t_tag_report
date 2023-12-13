@@ -20,6 +20,7 @@ If using the `--scraper` argument, there are additional requirements (details in
 * Install the dependencies: `pip3 install -r requirements.txt`
 
 **API Authentication**
+
 For the Basic and Business tiers, you'll need an API token. For Enterprise, you'll need to obtain both an API key and an API token.
 
 * For Basic or Business, instructions for creating a personal access token (PAT) can be found in [this KB article](https://stackoverflow.help/en/articles/4385859-stack-overflow-for-teams-api).
