@@ -116,11 +116,9 @@ def data_collector(args):
     so4t_data['questions'] = get_questions_answers_comments(v2client) # also gets answers/comments
     so4t_data['articles'] = get_articles(v2client)
     so4t_data['tags'] = get_tags(v3client) # also gets tag SMEs
-    # so4t_data['users'] = get_users(v3client)
 
     # Get additional data via web scraping
     if args.scraper:
-        # so4t_data['users'] = scraper.get_user_watched_tags(so4t_data['users'])
         so4t_data['communities'] = scraper.get_communities()
         so4t_data['webhooks'] = scraper.get_webhooks(communities=so4t_data['communities'])
     else:
@@ -627,28 +625,6 @@ def validate_user_id(user):
         user_id = user['user_id']
     except KeyError: # if user_id is not present, the user was deleted
         user_id = f"{user['display_name']} (DELETED)"
-
-    # if user_id not in tag['users']:
-    #     tag['users'][user_id] = {
-    #         'id': user_id,
-    #         'name': user['display_name'],
-    #         'profile_url': user['link'],
-    #         'questions': 0,
-    #         'question_upvotes': 0,
-    #         'answers': 0,
-    #         'answer_upvotes': 0,
-    #         'answers_accepted': 0,
-    #         'articles': 0,
-    #         'article_upvotes': 0,
-    #         'comments': 0,
-    #         'comment_upvotes': 0,
-    #         'sme_individual': False,
-    #         'sme_group': False
-    #     }
-    #     if user_id in tag['contributors']['individual_smes']:
-    #         tag['users'][user_id]['sme_individual'] = True
-    #     if user_id in tag['contributors']['group_smes']:
-    #         tag['users'][user_id]['sme_group'] = True
 
     return user_id
 
