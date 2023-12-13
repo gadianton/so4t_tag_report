@@ -101,14 +101,11 @@ def data_collector(args):
                 scraper = pickle.load(f)
             if scraper.base_url != args.url or not scraper.test_session():
                 raise FileNotFoundError # force creation of new session
-            else:
-                print('Using previously saved session...')
         except FileNotFoundError:
-            print('Previous scraper session does not exist or is expired. Creating new session...')
+            print('Opening a Chrome window to authenticate web scraping...')
             scraper = WebScraper(args.url)
             with open(session_file, 'wb') as f:
                 pickle.dump(scraper, f)
-            print(f"Scraper session saved to file: '{session_file}'")
         
     # Instantiate V2Client and V3Client classes to make API calls
     v2client = V2Client(args.url, args.key, args.token)
