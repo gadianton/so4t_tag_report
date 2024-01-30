@@ -7,7 +7,7 @@ import requests
 
 class V2Client(object):
 
-    def __init__(self, url, key=None, token=None):
+    def __init__(self, url, key=None, token=None, proxies=None):
 
         print("Initializing API v2.3 client...")
 
@@ -36,6 +36,8 @@ class V2Client(object):
             if not self.api_key:
                 print("Missing required argument. Please provide an API key.")
                 raise SystemExit
+            
+        self.proxies = proxies
 
         # Test the API connection and set the SSL verification variable
         self.ssl_verify = self.test_connection()
@@ -55,10 +57,12 @@ class V2Client(object):
 
         print("Testing API 2.3 connection...")
         try:
-            response = requests.get(url, params=params, headers=headers)
+            response = requests.get(url, params=params, headers=headers, 
+                                    proxies=self.proxies)
         except requests.exceptions.SSLError:
             print("SSL error. Trying again without SSL verification...")
-            response = requests.get(url, params=params, headers=headers, verify=False)
+            response = requests.get(url, params=params, headers=headers, 
+                                    verify=False, proxies=self.proxies)
             ssl_verify = False
         
         if response.status_code == 200:
@@ -66,7 +70,8 @@ class V2Client(object):
             return ssl_verify
         else:
             print("Unable to connect to API. Please check your URL and API key/token.")
-            print(response.text)
+            print(f"Status code: {response.status_code}")
+            print(f"Response from server: {response.text}")
             raise SystemExit
         
 
@@ -157,7 +162,7 @@ class V2Client(object):
             else:
                 print(f"Getting data from {endpoint_url}")
             response = requests.get(endpoint_url, headers=self.headers, params=params, 
-                                    verify=self.ssl_verify)
+                                    verify=self.ssl_verify, proxies=self.proxies)
             
             if response.status_code != 200:
                 # Many API call failures result in an HTTP 400 status code (Bad Request)

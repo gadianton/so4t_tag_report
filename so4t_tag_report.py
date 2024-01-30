@@ -7,11 +7,13 @@ Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 # Standard Python libraries
 import argparse
 import csv
+import getpass
 import json
 import os
 import pickle
 import time
 import statistics
+from urllib.request import getproxies
 
 # Local libraries
 from so4t_scraper import WebScraper
@@ -87,6 +89,9 @@ def get_args():
                         action='store_true',
                         help='Enables web scraping for extra data not available via API. Will '
                         'open a Chrome window and prompt manual login.')
+    parser.add_argument('--proxy',
+                        action='store_true',
+                        help='Used in situations where a proxy is required for API calls.')
 
     return parser.parse_args()
 
@@ -106,10 +111,24 @@ def data_collector(args):
             scraper = WebScraper(args.url)
             with open(session_file, 'wb') as f:
                 pickle.dump(scraper, f)
+
+    if args.proxy:
+        proxies = getproxies()
+        if proxies:
+            print(f'Proxies detected: {proxies}')
+        else:
+            print('No proxy detected on system. Please enter your proxy settings.')
+            proxy_server = input('Enter your proxy server (e.g. proxy.example.com:8080): ')
+            username = input('Enter your proxy username: ')
+            password = getpass.getpass('Enter your proxy password: ')
+            proxies = {'https': f'https://{username}:{password}@{proxy_server}'}
+    else:
+        proxies = None
+
         
     # Instantiate V2Client and V3Client classes to make API calls
-    v2client = V2Client(args.url, args.key, args.token)
-    v3client = V3Client(args.url, args.token)
+    v2client = V2Client(args.url, args.key, args.token, proxies)
+    v3client = V3Client(args.url, args.token, proxies)
     
     # Get all questions, answers, comments, articles, tags, and SMEs via API
     so4t_data = {}

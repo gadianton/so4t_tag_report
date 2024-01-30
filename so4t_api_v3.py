@@ -7,7 +7,7 @@ import requests
 
 class V3Client(object):
 
-    def __init__(self, url, token):
+    def __init__(self, url, token, proxies=None):
 
         print("Initializing API v3 client...")
 
@@ -28,6 +28,8 @@ class V3Client(object):
         else: # Stack Overflow Enterprise
             self.api_url = url + "/api/v3"
 
+        self.proxies = proxies
+
         self.ssl_verify = self.test_connection() # test the API connection
 
     
@@ -39,10 +41,12 @@ class V3Client(object):
 
         print("Testing API v3 connection...")
         try:
-            response = requests.get(endpoint_url, headers=self.headers)
+            response = requests.get(endpoint_url, headers=self.headers, 
+                                    proxies=self.proxies)
         except requests.exceptions.SSLError:
             print("SSL error. Trying again without SSL verification...")
-            response = requests.get(endpoint_url, headers=self.headers, verify=False)
+            response = requests.get(endpoint_url, headers=self.headers, verify=False, 
+                                    proxies=self.proxies)
             ssl_verify = False
         
         if response.status_code == 200:
@@ -50,7 +54,8 @@ class V3Client(object):
             return ssl_verify
         else:
             print("Unable to connect to API. Please check your URL and API token.")
-            print(response.text)
+            print(f"Status code: {response.status_code}")
+            print(f"Response from server: {response.text}")
             raise SystemExit
 
 
@@ -111,10 +116,10 @@ class V3Client(object):
         while True:
             if method == 'get':
                 response = get_response(endpoint_url, headers=self.headers, params=params, 
-                                        verify=self.ssl_verify)
+                                        verify=self.ssl_verify, proxies=self.proxies)
             else:
                 response = get_response(endpoint_url, headers=self.headers, json=params, 
-                                        verify=self.ssl_verify)
+                                        verify=self.ssl_verify, proxies=self.proxies)
 
             if response.status_code not in [200, 201, 204]:
                 print(f"API call to {endpoint_url} failed with status code {response.status_code}")
