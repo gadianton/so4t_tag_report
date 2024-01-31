@@ -10,7 +10,7 @@ For a detailed list of metrics included in the report, see [Metrics in the CSV R
 * [Advanced Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#advanced-usage)
   * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--no-api-and---days)
   * [`--web-client`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--web-client)
-  * ['--proxy'](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--proxy)
+  * [`--proxy`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--proxy)
 * [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#support-security-and-legal)
 
 ## Requirements
