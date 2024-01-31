@@ -10,6 +10,7 @@ For a detailed list of metrics included in the report, see [Metrics in the CSV R
 * [Advanced Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#advanced-usage)
   * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--no-api-and---days)
   * [`--web-client`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--web-client)
+  * ['--proxy'](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--proxy)
 * [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#support-security-and-legal)
 
 ## Requirements
@@ -85,6 +86,11 @@ Here are the additional data points that are obtained when scraping is enabled, 
 * The number of communities associated with a tag. If there are webhooks configured for a community, the webhook count will be included in the webhook count for the tag. [Requirements: admin permissions]
 
 To use this function, simply append the `--web-client` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --web-client`
+
+### `--proxy`
+The `--proxy` argument allows you to use a proxy server to make the API calls. This is useful if you're behind a corporate firewall, or if you're running the script on a server that requires a proxy to access the internet.
+
+To use this argument, simply append the `--proxy` argument to the end of the command for running the Python script, including the address of the proxy server in the argument. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --proxy "PROXY.EXAMPLE.COM:PORTNUMBER"`
 
 ## Support, security, and legal
 Disclaimer: the creator of this project works at Stack Overflow, but it is a labor of love that comes with no formal support from Stack Overflow. 
