@@ -7,7 +7,7 @@ import requests
 
 class V3Client(object):
 
-    def __init__(self, url, token, proxies=None):
+    def __init__(self, url, token, proxy=None):
 
         print("Initializing API v3 client...")
 
@@ -28,7 +28,7 @@ class V3Client(object):
         else: # Stack Overflow Enterprise
             self.api_url = url + "/api/v3"
 
-        self.proxies = proxies
+        self.proxies = {'https': proxy} if proxy else {'https': None}
 
         self.ssl_verify = self.test_connection() # test the API connection
 

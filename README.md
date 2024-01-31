@@ -9,7 +9,7 @@ For a detailed list of metrics included in the report, see [Metrics in the CSV R
 * [Basic Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#basic-usage)
 * [Advanced Usage](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#advanced-usage)
   * [`--no-api` and `--days`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--no-api-and---days)
-  * [`--scraper`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--scraper)
+  * [`--web-client`](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#--web-client)
 * [Support, security, and legal](https://github.com/jklick-so/so4t_tag_report?tab=readme-ov-file#support-security-and-legal)
 
 ## Requirements
@@ -18,7 +18,7 @@ For a detailed list of metrics included in the report, see [Metrics in the CSV R
 * Python 3.9 or higher ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
 
-If using the `--scraper` argument, there are additional requirements (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--scraper) section)
+If using the `--web-client` argument, there are additional requirements (details in [Advanced Usage](https://github.com/jklick-so/so4t_tag_report#--web-client) section)
 
 ## Setup
 
@@ -74,8 +74,8 @@ Example:
 
 Note: when using `--no-api`, the `--url`, `--key`, and `--token` arguments are unecessary. When you'd like to update the JSON data via fresh API calls, simply remove the `no-api` argument and add back the required authentication arguments.
 
-### `--scraper`
-The `--scraper` argument allows you to scrape additional data from the Teams instance, particularly data that is **not** available via the API (yet). 
+### `--web-client`
+The `--web-client` argument allows you to gather additional data from Stack Overflow for Teams, particularly data that is **not** available via the API (yet). 
 
 > **NOTE**: For this specific feature of the script, you'll need to make sure you have Google Chrome installed on your computer. When the script runs, you'll be prompted with a login window (via Chrome) for your Stack Overflow for Teams instance. Once you've logged in, that window will close and the script will continue to run.
 
@@ -84,7 +84,7 @@ Here are the additional data points that are obtained when scraping is enabled, 
 * The number of configured webhooks (ChatOps notifications) for each tag [Requirements: admin permissions]
 * The number of communities associated with a tag. If there are webhooks configured for a community, the webhook count will be included in the webhook count for the tag. [Requirements: admin permissions]
 
-To use this scraping function, simply append the `--scraper` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --scraper`
+To use this function, simply append the `--web-client` argument to the end of command for running the Python script. Example: `python3 so4t_tag_report.py --url "https://SUBDOMAIN.stackenterprise.co" --key "YOUR_KEY" --token "YOUR_TOKEN" --web-client`
 
 ## Support, security, and legal
 Disclaimer: the creator of this project works at Stack Overflow, but it is a labor of love that comes with no formal support from Stack Overflow. 

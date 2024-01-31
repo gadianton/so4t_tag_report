@@ -7,16 +7,14 @@ Or, open an issue here: https://github.com/jklick-so/so4t_tag_report/issues
 # Standard Python libraries
 import argparse
 import csv
-import getpass
 import json
 import os
 import pickle
 import time
 import statistics
-from urllib.request import getproxies
 
 # Local libraries
-from so4t_scraper import WebScraper
+from so4t_web_client import WebClient
 from so4t_api_v2 import V2Client
 from so4t_api_v3 import V3Client
 
@@ -74,8 +72,8 @@ def get_args():
                         help='API token for your Stack Overflow for Teams instance. '
                         'Required if --no-api is not used')
     parser.add_argument('--key',
-                    type=str,
-                    help='API key value. Required if using Enterprise and --no-api is not used')
+                        type=str,
+                        help='API key value. Required if using Enterprise and --no-api is not used')
     
     parser.add_argument('--no-api',
                         action='store_true',
@@ -85,50 +83,37 @@ def get_args():
                         type=int,
                         help='Only include metrics for content created within the past X days. '
                         'Default is to include all history')
-    parser.add_argument('--scraper',
+    parser.add_argument('--web-client',
                         action='store_true',
-                        help='Enables web scraping for extra data not available via API. Will '
+                        help='Enables web client for extra data not available via API. Will '
                         'open a Chrome window and prompt manual login.')
     parser.add_argument('--proxy',
-                        action='store_true',
-                        help='Used in situations where a proxy is required for API calls.')
+                        type=str,
+                        help='Used in situations where a proxy is required for API calls. The '
+                        'argument should be the proxy server address (e.g. proxy.example.com:8080).')
 
     return parser.parse_args()
 
 
 def data_collector(args):
 
-    # Only create a web scraping session if the --scraper flag is used
-    if args.scraper:
+    # Only create a web scraping session if the --web-client flag is used
+    if args.web_client:
         session_file = 'so4t_session'
         try:
             with open(session_file, 'rb') as f:
-                scraper = pickle.load(f)
-            if scraper.base_url != args.url or not scraper.test_session():
+                web_client = pickle.load(f)
+            if web_client.base_url != args.url or not web_client.test_session():
                 raise FileNotFoundError # force creation of new session
         except FileNotFoundError:
             print('Opening a Chrome window to authenticate Stack Overflow for Teams...')
-            scraper = WebScraper(args.url)
+            web_client = WebClient(args.url)
             with open(session_file, 'wb') as f:
-                pickle.dump(scraper, f)
-
-    if args.proxy:
-        proxies = getproxies()
-        if proxies:
-            print(f'Proxies detected: {proxies}')
-        else:
-            print('No proxy detected on system. Please enter your proxy settings.')
-            proxy_server = input('Enter your proxy server (e.g. proxy.example.com:8080): ')
-            username = input('Enter your proxy username: ')
-            password = getpass.getpass('Enter your proxy password: ')
-            proxies = {'https': f'https://{username}:{password}@{proxy_server}'}
-    else:
-        proxies = None
-
+                pickle.dump(web_client, f)
         
     # Instantiate V2Client and V3Client classes to make API calls
-    v2client = V2Client(args.url, args.key, args.token, proxies)
-    v3client = V3Client(args.url, args.token, proxies)
+    v2client = V2Client(args.url, args.key, args.token, args.proxy)
+    v3client = V3Client(args.url, args.token, args.proxy)
     
     # Get all questions, answers, comments, articles, tags, and SMEs via API
     so4t_data = {}
@@ -137,9 +122,9 @@ def data_collector(args):
     so4t_data['tags'] = get_tags(v3client) # also gets tag SMEs
 
     # Get additional data via web scraping
-    if args.scraper:
-        so4t_data['communities'] = scraper.get_communities()
-        so4t_data['webhooks'] = scraper.get_webhooks(communities=so4t_data['communities'])
+    if args.web_client:
+        so4t_data['communities'] = web_client.get_communities()
+        so4t_data['webhooks'] = web_client.get_webhooks(communities=so4t_data['communities'])
     else:
         so4t_data['webhooks'] = None
         so4t_data['communities'] = None
@@ -695,4 +680,3 @@ def read_json(file_name):
 if __name__ == '__main__':
 
     main()
-

@@ -6,8 +6,7 @@ import requests
 
 
 class V2Client(object):
-
-    def __init__(self, url, key=None, token=None, proxies=None):
+    def __init__(self, url, key=None, token=None, proxy=None):
 
         print("Initializing API v2.3 client...")
 
@@ -37,7 +36,7 @@ class V2Client(object):
                 print("Missing required argument. Please provide an API key.")
                 raise SystemExit
             
-        self.proxies = proxies
+        self.proxies = {'https': proxy} if proxy else {'https': None}
 
         # Test the API connection and set the SSL verification variable
         self.ssl_verify = self.test_connection()
