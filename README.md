@@ -11,7 +11,7 @@ If using the `--scraper` argument, there are additional requirements (details in
 
 ## Setup
 
-[Download](https://github.com/jklick-so/so4t_tag_report/archive/refs/heads/main.zip) and unpack the contents of this repository
+[Download](https://github.com/jklick-so/so4t_tag_report/archive/refs/heads/2023.2.zip) and unpack the contents of this repository
 
 **Installing Dependencies**
 
